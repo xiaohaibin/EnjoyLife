@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.stx.xhb.enjoylife">
+
+    <uses-sdk tools:overrideLibrary="com.android.core,com.shuyu.gsyvideoplayer"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 需要添加一个权限，获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <application
+        android:name=".base.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/enjoylife"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!-- 设置 -->
+        <activity
+            android:name=".ui.activity.SetttingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeSwipeBack"/>
+
+        <!-- 关于 -->
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeSwipeBack"/>
+
+        <!-- 视频播放界面 -->
+        <activity
+            android:name=".ui.activity.VideoDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeSwipeBack"/>
+        <!-- 注册广播 -->
+        <receiver android:name=".receiver.NetStateReceiver">
+            <intent-filter>
+
+                <!-- 接收网络连接改变广播 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
+        <!--查看大图-->
+        <activity
+            android:name=".ui.activity.PhotoViewActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 友盟appid设置 -->
+        <meta-data
+            android:name="57c79208e0f55ac973000327"
+            android:value="YOUR_APP_KEY"/>
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="wandoujia"/>
+
+         <!--视频详情-->
+        <activity
+            android:name=".ui.activity.VideoPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+
+    </application>
+
+</manifest>
