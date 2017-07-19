@@ -2,25 +2,16 @@ package com.stx.xhb.enjoylife.ui.video;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.model.entity.SwitchVideoModel;
-import com.stx.xhb.enjoylife.ui.widget.SwitchVideoTypeDialog;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -34,15 +25,9 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
 
     private TextView mMoreScale;
 
-    private TextView mSwitchSize;
-
-    private List<SwitchVideoModel> mUrlList = new ArrayList<>();
-
     //记住切换数据源类型
     private int mType = 0;
 
-    //数据源
-    private int mSourcePosition = 0;
 
     /**
      * 1.5.0开始加入，如果需要不同布局区分功能，需要重载
@@ -67,7 +52,6 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
 
     private void initView() {
         mMoreScale = (TextView) findViewById(R.id.moreScale);
-        mSwitchSize = (TextView) findViewById(R.id.switchSize);
 
         //切换清晰度
         mMoreScale.setOnClickListener(new OnClickListener() {
@@ -91,43 +75,6 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
             }
         });
 
-        //切换视频清晰度
-        mSwitchSize.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSwitchDialog();
-            }
-        });
-
-    }
-
-
-
-    /**
-     * 设置播放URL
-     *
-     * @param url           播放url
-     * @param cacheWithPlay 是否边播边缓存
-     * @param title         title
-     * @return
-     */
-    public boolean setUp(List<SwitchVideoModel> url, boolean cacheWithPlay, String title) {
-        mUrlList = url;
-        return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, title);
-    }
-
-    /**
-     * 设置播放URL
-     *
-     * @param url           播放url
-     * @param cacheWithPlay 是否边播边缓存
-     * @param cachePath     缓存路径，如果是M3U8或者HLS，请设置为false
-     * @param title         title
-     * @return
-     */
-    public boolean setUp(List<SwitchVideoModel> url, boolean cacheWithPlay, File cachePath, String title) {
-        mUrlList = url;
-        return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, cachePath, title);
     }
 
     @Override
@@ -147,9 +94,7 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
     @Override
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         CustomVideoView customVideoView = (CustomVideoView) super.startWindowFullscreen(context, actionBar, statusBar);
-        customVideoView.mSourcePosition = mSourcePosition;
         customVideoView.mType = mType;
-        customVideoView.mUrlList = mUrlList;
         customVideoView.resolveTypeUI();
         //这个播放器的demo配置切换到全屏播放器
         //这只是单纯的作为全屏播放显示，如果需要做大小屏幕切换，请记得在这里耶设置上视频全屏的需要的自定义配置
@@ -170,9 +115,7 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         if (gsyVideoPlayer != null) {
             CustomVideoView customVideoView = (CustomVideoView) gsyVideoPlayer;
-            mSourcePosition = customVideoView.mSourcePosition;
             mType = customVideoView.mType;
-            setUp(mUrlList, mCache, mCachePath, mTitle);
             resolveTypeUI();
         }
     }
@@ -224,49 +167,6 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
         changeTextureViewShowType();
         if (mTextureView != null)
             mTextureView.requestLayout();
-    }
-
-    /**
-     * 弹出切换清晰度
-     */
-    private void showSwitchDialog() {
-        if (!mHadPlay) {
-            return;
-        }
-        SwitchVideoTypeDialog switchVideoTypeDialog = new SwitchVideoTypeDialog(getContext());
-        switchVideoTypeDialog.initList(mUrlList, new SwitchVideoTypeDialog.OnListItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                final String name = mUrlList.get(position).getName();
-                if (mSourcePosition != position) {
-                    if ((mCurrentState == GSYVideoPlayer.CURRENT_STATE_PLAYING
-                            || mCurrentState == GSYVideoPlayer.CURRENT_STATE_PAUSE)
-                            && GSYVideoManager.instance().getMediaPlayer() != null) {
-                        final String url = mUrlList.get(position).getUrl();
-                        onVideoPause();
-                        final long currentPosition = mCurrentPosition;
-                        GSYVideoManager.instance().releaseMediaPlayer();
-                        cancelProgressTimer();
-                        hideAllWidget();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                setUp(url, mCache, mCachePath, mTitle);
-                                setSeekOnStart(currentPosition);
-                                startPlayLogic();
-                                cancelProgressTimer();
-                                hideAllWidget();
-                            }
-                        }, 500);
-                        mSwitchSize.setText(name);
-                        mSourcePosition = position;
-                    }
-                } else {
-                    Toast.makeText(getContext(), "已经是 " + name, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        switchVideoTypeDialog.show();
     }
 
 

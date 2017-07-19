@@ -57,14 +57,11 @@ public class ImageFragment extends BaseFragment implements BaseDataView<ImageEnt
         adapter = new ImageAdapter(getActivity(), R.layout.item_list_picture, list);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLoadingListener(this);
-        showLoadingView();
         onRefresh();
     }
 
     @Override
     public void onLoadComplete(boolean isMore) {
-        //加载完成需要做的操作
-        hideLoadingView();
         if (isMore)
             mRecyclerView.loadMoreComplete();
         else

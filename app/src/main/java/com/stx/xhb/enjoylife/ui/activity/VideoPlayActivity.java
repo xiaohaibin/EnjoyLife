@@ -22,6 +22,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.listener.OnTransitionListener;
 import com.stx.xhb.enjoylife.listener.SampleVideoPlayListener;
+import com.stx.xhb.enjoylife.ui.video.CustomVideoView;
 
 /**
  * 采用IJKPlayer播放器播放视频
@@ -34,7 +35,7 @@ public class VideoPlayActivity extends AppCompatActivity {
     public final static String VIDEO_TITLE = "title";
     public final static String VIDEO_IMAGE = "image";
 
-    private StandardGSYVideoPlayer  mVideoPlayer;
+    private CustomVideoView  mVideoPlayer;
     private OrientationUtils orientationUtils;
 
     private boolean isTransition;
@@ -72,7 +73,7 @@ public class VideoPlayActivity extends AppCompatActivity {
 
 
     private void initView() {
-        mVideoPlayer = (StandardGSYVideoPlayer) findViewById(R.id.video_player);
+        mVideoPlayer = (CustomVideoView) findViewById(R.id.video_player);
     }
 
     private void init() {
