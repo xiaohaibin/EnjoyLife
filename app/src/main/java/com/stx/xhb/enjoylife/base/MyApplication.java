@@ -1,6 +1,7 @@
 package com.stx.xhb.enjoylife.base;
 
 import com.android.core.MainApp;
+import com.android.core.api.HttpRequest;
 import com.android.core.control.crash.AndroidCrash;
 import com.android.core.control.logcat.Logcat;
 import com.android.core.model.mvp.LogicProxy;
@@ -22,5 +23,6 @@ public class MyApplication extends MainApp {
         AndroidCrash.getInstance().init(this);
         //log日志
         Logcat.init("com.android.logcat").hideThreadInfo().methodCount(3);
+        HttpRequest.getInstance().deBug(true);
     }
 }

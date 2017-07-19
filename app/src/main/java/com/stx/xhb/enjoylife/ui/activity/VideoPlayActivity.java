@@ -261,9 +261,10 @@ public class VideoPlayActivity extends AppCompatActivity {
 
     OnTransitionListener onTransitionListener = new OnTransitionListener() {
 
-        @TargetApi(Build.VERSION_CODES.KITKAT)
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onTransitionEnd(Transition transition) {
+            super.onTransitionEnd(transition);
             mVideoPlayer.startPlayLogic();
             transition.removeListener(onTransitionListener);
         }

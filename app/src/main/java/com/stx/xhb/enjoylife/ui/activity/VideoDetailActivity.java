@@ -85,8 +85,8 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
             bundle.putString(VideoPlayActivity.VIDEO_URL, video);
             bundle.putString(VideoPlayActivity.VIDEO_TITLE, title);
             bundle.putString(VideoPlayActivity.VIDEO_IMAGE, mFeed);
-            bundle.putBoolean(VideoPlayActivity.TRANSITION,true);
-            intent.putExtra("video",bundle);
+            bundle.putBoolean(VideoPlayActivity.TRANSITION, true);
+            intent.putExtra("video", bundle);
             startActivity(intent);
         } else {
             Toast.show("网络异常，请稍后再试");

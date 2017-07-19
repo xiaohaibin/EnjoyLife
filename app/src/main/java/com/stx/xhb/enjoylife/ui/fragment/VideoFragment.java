@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoEntity;
+import com.stx.xhb.enjoylife.presenter.core.BaseDataView;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecycleAdapter;
 
@@ -32,13 +33,13 @@ import in.srain.cube.views.ptr.PtrHandler;
 /**
  * 视频推荐
  */
-public class VideoFragment extends BaseFragment {
+public class VideoFragment extends BaseFragment implements BaseDataView<VideoEntity>{
 
     @Bind(R.id.lv_video)
     ListView lvVideo;
     @Bind(R.id.ptr)
     PtrClassicFrameLayout ptr;
-    private List<VideoEntity.IssueListEntity.ItemListEntity> list = new ArrayList<>();
+    private List<VideoEntity.IssueListEntity.ItemListEntity> list;
     private String nextUrl;
     private VideoRecycleAdapter mAdapter;
     private boolean isRefresh;
@@ -55,6 +56,7 @@ public class VideoFragment extends BaseFragment {
 
     @Override
     protected void onInitView() {
+        list = new ArrayList<>();
         mQueue = Volley.newRequestQueue(getActivity());
         setListener();
         setLvAdapter();
@@ -68,15 +70,12 @@ public class VideoFragment extends BaseFragment {
                 return absListView.getChildCount() > 0 &&
                         (absListView.getFirstVisiblePosition() > 0 ||
                                 absListView.getChildAt(0).getTop() < absListView.getPaddingTop());
-
             } else {
                 return ViewCompat.canScrollVertically(lvVideo, -1) || lvVideo.getScrollY() > 0;
             }
 
         } else {
-
             return ViewCompat.canScrollVertically(lvVideo, -1);
-
         }
 
     }
@@ -172,7 +171,7 @@ public class VideoFragment extends BaseFragment {
 
                         //刷新需要清除数据
                         if (isRefresh) {
-                            list.removeAll(list);
+                            list.clear();
                             ptr.refreshComplete();
                             isRefresh = false;
                         }
@@ -201,7 +200,6 @@ public class VideoFragment extends BaseFragment {
     public void myNotify() {
         if (mAdapter != null)
             mAdapter.notifyDataSetChanged();
-
     }
 
     private void setLvAdapter() {
@@ -210,4 +208,13 @@ public class VideoFragment extends BaseFragment {
         lvVideo.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onLoadComplete(boolean isMore) {
+
+    }
+
+    @Override
+    public void onResponseLData(VideoEntity response, boolean isMore) {
+
+    }
 }
