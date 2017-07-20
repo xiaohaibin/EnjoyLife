@@ -24,7 +24,6 @@ public class VideoRecycleAdapter extends BaseAdapter {
     public static final int TEXT = 2;
     private Context mContext;
     List<VideoEntity.IssueListEntity.ItemListEntity> mItemList;
-    private View rlText;
 
 
     public VideoRecycleAdapter(Context mContext, List<VideoEntity.IssueListEntity.ItemListEntity> itemList) {
@@ -57,7 +56,6 @@ public class VideoRecycleAdapter extends BaseAdapter {
     }
 
     private ViewHolder mHolder;
-    private ViewHolder2 mHolder2;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -73,7 +71,6 @@ public class VideoRecycleAdapter extends BaseAdapter {
         String text = "1";
 
         mHolder = new ViewHolder();
-        mHolder2 = new ViewHolder2();
 
 
         switch (type) {
@@ -160,7 +157,4 @@ public class VideoRecycleAdapter extends BaseAdapter {
 
     }
 
-    static class ViewHolder2 {
-        TextView tvTime;
-    }
 }

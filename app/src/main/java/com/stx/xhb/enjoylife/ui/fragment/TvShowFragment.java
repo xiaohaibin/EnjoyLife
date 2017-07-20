@@ -7,10 +7,12 @@ import com.android.core.ui.BaseFragment;
 import com.android.core.utils.GsonUtil;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TvModel;
+import com.stx.xhb.enjoylife.ui.adapter.TvShowRecyclerAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -23,7 +25,6 @@ import butterknife.Bind;
  * @github: https://github.com/xiaohaibin
  * @description： 电视直播
  */
-
 public class TvShowFragment extends BaseFragment {
 
     @Bind(R.id.rv_tv_show)
@@ -61,7 +62,10 @@ public class TvShowFragment extends BaseFragment {
     }
 
     private void setAdapter() {
-
+        if (mDataBeanList == null)
+            mDataBeanList = new ArrayList<>();
+        TvShowRecyclerAdapter tvShowRecyclerAdapter = new TvShowRecyclerAdapter(getActivity(), R.layout.list_item_selet_tv_primary, mDataBeanList);
+        mRvTvShow.setAdapter(tvShowRecyclerAdapter);
     }
 
 }

@@ -82,7 +82,7 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
         if (NetConnectedUtils.isNetConnected(this)) {
             Intent intent = new Intent(this, VideoPlayActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString(VideoPlayActivity.VIDEO_URL, "http://r.gslb.lecloud.com/live/hls/201706223000000cf99/desc.m3u8");
+            bundle.putString(VideoPlayActivity.VIDEO_URL, video);
             bundle.putString(VideoPlayActivity.VIDEO_TITLE, title);
             bundle.putString(VideoPlayActivity.VIDEO_IMAGE, mFeed);
             bundle.putBoolean(VideoPlayActivity.TRANSITION, true);

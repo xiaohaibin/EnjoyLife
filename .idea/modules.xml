@@ -3,12 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EnjoyLife.iml" filepath="$PROJECT_DIR$/EnjoyLife.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EnjoyLife.iml" filepath="$PROJECT_DIR$/EnjoyLife.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androidcore/androidcore.iml" filepath="$PROJECT_DIR$/androidcore/androidcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidcore/androidcore.iml" filepath="$PROJECT_DIR$/androidcore/androidcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
     </modules>
   </component>

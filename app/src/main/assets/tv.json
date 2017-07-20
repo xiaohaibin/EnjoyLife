@@ -20,10 +20,6 @@
           "url": "http://r.gslb.lecloud.com/live/hls/2017062230000006q99/desc.m3u8"
         },
         {
-          "name": "东方卫视,",
-          "url": "http://r.gslb.lecloud.com/live/hls/201706223000000d099/desc.m3u8"
-        },
-        {
           "name": "广东卫视",
           "url": "http://r.gslb.lecloud.com/live/hls/201706223000000d499/desc.m3u8"
         },
@@ -60,7 +56,7 @@
           "url": "http://r.gslb.lecloud.com/live/hls/201706223000000du99/desc.m3u8"
         },
         {
-          "name": "东方卫视,",
+          "name": "东方卫视",
           "url": "http://220.167.81.55/PLTV/88888888/224/3221226289/00000100000000060000000000035240_0.smil"
         },
         {
@@ -114,10 +110,6 @@
         {
           "name": "澳门卫视",
           "url": "http://live.mastvnet.com/iVx460D/live.m3u8"
-        },
-        {
-          "name": "香港卫视",
-          "url": "http://fms.cntv.lxdns.com/live/flv/channel84.flv"
         },
         {
           "name": "凤凰卫视",
@@ -242,12 +234,8 @@
           "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_kangz_720p&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
         },
         {
-          "name": "乡村故事剧场",
+          "name": "乡村剧",
           "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_loop_xcgsjc_1080p3m&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
-        },
-        {
-          "name": "自制剧",
-          "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_make_720p&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
         },
         {
           "name": "电视剧1",
@@ -276,6 +264,26 @@
         {
           "name": "喜剧电影",
           "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_comedy_720p&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
+        },
+        {
+          "name": "综艺",
+          "url": "http://live.gslb.letv.com/gslb?stream_id=lb_ent_1300&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
+        },
+        {
+          "name": "欢乐喜剧人",
+          "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_hlxjr_1800&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
+        },
+        {
+          "name": "开眼视频",
+          "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_ky_3000&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
+        },
+        {
+          "name": "罐头小厨",
+          "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_gtsp_3000&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
+        },
+        {
+          "name": "汽车",
+          "url": "http://live.g3proxy.lecloud.com/gslb?stream_id=lb_qiche_1800&tag=live&ext=m3u8&sign=live_tv&platid=10&splatid=1009&format=letv&expect=1"
         }
       ]
     }

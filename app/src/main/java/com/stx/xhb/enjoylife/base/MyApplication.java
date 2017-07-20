@@ -6,6 +6,7 @@ import com.android.core.control.crash.AndroidCrash;
 import com.android.core.control.logcat.Logcat;
 import com.android.core.model.mvp.LogicProxy;
 import com.stx.xhb.enjoylife.presenter.getImagePresenter;
+import com.tencent.bugly.Bugly;
 
 /**
  *
@@ -24,5 +25,7 @@ public class MyApplication extends MainApp {
         //log日志
         Logcat.init("com.android.logcat").hideThreadInfo().methodCount(3);
         HttpRequest.getInstance().deBug(true);
+        //腾讯bugly初始化  参数1：上下文对象  参数2：注册时申请的APPID  参数3：是否开启debug模式，true表示打开debug模式，false表示关闭调试模式
+        Bugly.init(getApplicationContext(), "784b642b7a", true);
     }
 }
