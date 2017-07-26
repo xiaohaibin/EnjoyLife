@@ -33,5 +33,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.5'
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'com.jcodecraeer:xrecyclerview:1.2.7'
+
+    //状态栏工具类
+    compile 'com.jaeger.statusbaruitl:library:1.3.6'
 }
 

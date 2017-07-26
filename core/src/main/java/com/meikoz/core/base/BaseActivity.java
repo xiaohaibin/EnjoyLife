@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Window;
 
+import com.jaeger.library.StatusBarUtil;
 import com.meikoz.core.manage.log.Logger;
 import com.meikoz.core.model.LogicProxy;
-import com.meikoz.core.util.StatusBarUtil;
 
 import butterknife.ButterKnife;
 

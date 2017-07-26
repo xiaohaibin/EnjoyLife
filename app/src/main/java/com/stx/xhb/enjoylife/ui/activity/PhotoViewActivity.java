@@ -3,6 +3,7 @@ package com.stx.xhb.enjoylife.ui.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import com.jaeger.library.StatusBarUtil;
 import com.meikoz.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
@@ -27,6 +28,7 @@ public class PhotoViewActivity extends BaseActivity {
 
     @Override
     protected void onInitialization(Bundle bundle) {
+        StatusBarUtil.setTranslucent(this);
         photoViewpager.setPageMargin((int) (getResources().getDisplayMetrics().density * 15));
         initData();
         setAdapter();
