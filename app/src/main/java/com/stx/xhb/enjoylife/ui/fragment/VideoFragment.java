@@ -9,16 +9,15 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.android.core.ui.BaseFragment;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.meikoz.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoEntity;
-import com.stx.xhb.enjoylife.presenter.core.BaseDataView;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecycleAdapter;
 
@@ -33,7 +32,7 @@ import in.srain.cube.views.ptr.PtrHandler;
 /**
  * 视频推荐
  */
-public class VideoFragment extends BaseFragment implements BaseDataView<VideoEntity>{
+public class VideoFragment extends BaseFragment {
 
     @Bind(R.id.lv_video)
     ListView lvVideo;
@@ -55,7 +54,7 @@ public class VideoFragment extends BaseFragment implements BaseDataView<VideoEnt
     }
 
     @Override
-    protected void onInitView() {
+    protected void onInitView(Bundle savedInstanceState) {
         list = new ArrayList<>();
         mQueue = Volley.newRequestQueue(getActivity());
         setListener();
@@ -206,15 +205,5 @@ public class VideoFragment extends BaseFragment implements BaseDataView<VideoEnt
 
         mAdapter = new VideoRecycleAdapter(getActivity(), list);
         lvVideo.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onLoadComplete(boolean isMore) {
-
-    }
-
-    @Override
-    public void onResponseLData(VideoEntity response, boolean isMore) {
-
     }
 }

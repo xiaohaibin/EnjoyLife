@@ -1,8 +1,9 @@
 package com.stx.xhb.enjoylife.ui.activity;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
-import com.android.core.ui.BaseActivity;
+import com.meikoz.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
 
@@ -23,8 +24,9 @@ public class PhotoViewActivity extends BaseActivity {
         return R.layout.activity_photo_view;
     }
 
+
     @Override
-    protected void onInitView() {
+    protected void onInitialization(Bundle bundle) {
         photoViewpager.setPageMargin((int) (getResources().getDisplayMetrics().density * 15));
         initData();
         setAdapter();

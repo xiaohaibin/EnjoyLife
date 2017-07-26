@@ -1,11 +1,8 @@
 package com.stx.xhb.enjoylife.base;
 
-import com.android.core.MainApp;
-import com.android.core.api.HttpRequest;
-import com.android.core.control.crash.AndroidCrash;
-import com.android.core.control.logcat.Logcat;
-import com.android.core.model.mvp.LogicProxy;
-import com.stx.xhb.enjoylife.presenter.getImagePresenter;
+import com.meikoz.core.MainApplication;
+import com.meikoz.core.api.RestApi;
+import com.meikoz.core.manage.crash.AndroidCrash;
 import com.tencent.bugly.Bugly;
 
 /**
@@ -15,16 +12,13 @@ import com.tencent.bugly.Bugly;
  * @github: https://github.com/xiaohaibin
  * @description： 程序入口
  */
-public class MyApplication extends MainApp {
+public class MyApplication extends MainApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        LogicProxy.getInstance().init(getImagePresenter.class);
         //Android Crash异常处理
         AndroidCrash.getInstance().init(this);
-        //log日志
-        Logcat.init("com.android.logcat").hideThreadInfo().methodCount(3);
-        HttpRequest.getInstance().deBug(true);
+        RestApi.getInstance().bug(true);
         //腾讯bugly初始化  参数1：上下文对象  参数2：注册时申请的APPID  参数3：是否开启debug模式，true表示打开debug模式，false表示关闭调试模式
         Bugly.init(getApplicationContext(), "784b642b7a", true);
     }

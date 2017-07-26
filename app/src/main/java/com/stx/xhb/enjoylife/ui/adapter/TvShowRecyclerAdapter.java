@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
-import com.android.core.adapter.RecyclerAdapter;
-import com.android.core.adapter.RecyclerViewHolder;
-import com.android.core.control.Toast;
+import com.meikoz.core.adapter.RecyclerAdapter;
+import com.meikoz.core.adapter.RecyclerViewHolder;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.SwitchVideoModel;
 import com.stx.xhb.enjoylife.model.entity.TvModel;
@@ -54,7 +54,7 @@ public class TvShowRecyclerAdapter extends RecyclerAdapter<TvModel.DataBean> {
                                  intent.putExtra("video", bundle);
                                  mContext.startActivity(intent);
                              } else {
-                                 Toast.show("网络异常，请稍后再试");
+                                 Toast.makeText(mContext, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
                              }
                          }
                      });

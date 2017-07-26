@@ -1,10 +1,11 @@
 package com.stx.xhb.enjoylife.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.android.core.ui.BaseFragment;
-import com.android.core.utils.GsonUtil;
+import com.meikoz.core.base.BaseFragment;
+import com.meikoz.core.util.GsonUtil;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TvModel;
 import com.stx.xhb.enjoylife.ui.adapter.TvShowRecyclerAdapter;
@@ -37,7 +38,7 @@ public class TvShowFragment extends BaseFragment {
     }
 
     @Override
-    protected void onInitView() {
+    protected void onInitView(Bundle savedInstanceState) {
         mRvTvShow.setLayoutManager(new LinearLayoutManager(getActivity()));
         initJsonData();
         setAdapter();

@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.core.adapter.RecyclerAdapter;
-import com.android.core.adapter.RecyclerViewHolder;
 import com.bumptech.glide.Glide;
+import com.meikoz.core.adapter.RecyclerAdapter;
+import com.meikoz.core.adapter.RecyclerViewHolder;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ImageEntity;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;

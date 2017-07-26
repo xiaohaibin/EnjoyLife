@@ -1,4 +1,4 @@
-package com.android.core.utils;
+package com.meikoz.core.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

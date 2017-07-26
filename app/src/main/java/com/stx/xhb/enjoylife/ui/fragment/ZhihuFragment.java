@@ -1,7 +1,9 @@
 package com.stx.xhb.enjoylife.ui.fragment;
 
 
-import com.android.core.ui.BaseFragment;
+import android.os.Bundle;
+
+import com.meikoz.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 
 /**
@@ -10,15 +12,13 @@ import com.stx.xhb.enjoylife.R;
 public class ZhihuFragment extends BaseFragment {
 
 
-
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_zhihu;
+       return R.layout.fragment_zhihu;
     }
 
     @Override
-    protected void onInitView() {
+    protected void onInitView(Bundle savedInstanceState) {
 
     }
-
 }

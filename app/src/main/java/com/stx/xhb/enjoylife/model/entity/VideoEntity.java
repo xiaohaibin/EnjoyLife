@@ -1,7 +1,5 @@
 package com.stx.xhb.enjoylife.model.entity;
 
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,7 +7,7 @@ import java.util.List;
  * Created by Mr.xiao on 16/7/13.
  * 视频实体类
  */
-public class VideoEntity extends MultiItemEntity {
+public class VideoEntity {
 
     /**
      * date : 1456675200000

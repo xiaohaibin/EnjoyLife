@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.core.ui.BaseSwipeBackActivity;
-import com.android.core.widget.SwipeBackLayout;
+import com.meikoz.core.base.BaseSwipeBackActivity;
+import com.meikoz.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.BuildConfig;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.utils.ShareUtils;

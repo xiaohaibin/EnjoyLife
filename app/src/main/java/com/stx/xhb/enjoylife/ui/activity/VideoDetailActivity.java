@@ -7,11 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.core.control.Toast;
-import com.android.core.ui.BaseSwipeBackActivity;
-import com.android.core.widget.SwipeBackLayout;
 import com.bumptech.glide.Glide;
+import com.meikoz.core.base.BaseSwipeBackActivity;
+import com.meikoz.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.utils.NetConnectedUtils;
 
@@ -89,7 +89,7 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
             intent.putExtra("video", bundle);
             startActivity(intent);
         } else {
-            Toast.show("网络异常，请稍后再试");
+            Toast.makeText(this, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
         }
     }
 }

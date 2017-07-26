@@ -2,6 +2,7 @@ package com.stx.xhb.enjoylife.ui.activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +16,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.core.ui.BaseActivity;
+import com.meikoz.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.Config;
 import com.stx.xhb.enjoylife.ui.fragment.ImageFragment;
@@ -45,13 +46,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private android.app.Fragment mCurrentFragment;
     private ArrayList<Integer> mTitles;
 
+
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_main;
     }
 
     @Override
-    protected void onInitView() {
+    protected void onInitialization(Bundle bundle) {
+        initView();
+    }
+
+    private void initView() {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         setSupportActionBar(toolbar);
         //判断SDK版本是否是API 19
@@ -62,9 +69,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
-//            View headerLayout = navView.getHeaderView(0);
-//            LinearLayout llImage = (LinearLayout) headerLayout.findViewById(R.id.side_image);
-//            TextView imageDescription = (TextView) headerLayout.findViewById(R.id.image_description);
             assert navView != null;
             navView.setNavigationItemSelectedListener(this);
         }

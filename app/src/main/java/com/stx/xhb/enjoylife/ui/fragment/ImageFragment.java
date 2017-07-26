@@ -2,21 +2,21 @@ package com.stx.xhb.enjoylife.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.core.adapter.RecyclerAdapter;
-import com.android.core.adapter.RecyclerViewHolder;
-import com.android.core.ui.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.meikoz.core.adapter.RecyclerAdapter;
+import com.meikoz.core.adapter.RecyclerViewHolder;
+import com.meikoz.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ImageEntity;
-import com.stx.xhb.enjoylife.presenter.core.BaseDataView;
-import com.stx.xhb.enjoylife.presenter.getImagePresenter;
-import com.stx.xhb.enjoylife.presenter.impl.getImagePresenterImpl;
+import com.stx.xhb.enjoylife.presenter.image.getImageContact;
+import com.stx.xhb.enjoylife.presenter.image.getImagePresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.stx.xhb.enjoylife.ui.adapter.HomeRecyclerAdapter;
 
@@ -29,7 +29,7 @@ import butterknife.Bind;
 /**
  * 干货福利Fragment
  */
-public class ImageFragment extends BaseFragment implements BaseDataView<ImageEntity>, XRecyclerView.LoadingListener {
+public class ImageFragment extends BaseFragment implements getImageContact.getImageView, XRecyclerView.LoadingListener {
 
     @Bind(R.id.recly_view)
     XRecyclerView mRecyclerView;
@@ -45,49 +45,59 @@ public class ImageFragment extends BaseFragment implements BaseDataView<ImageEnt
     }
 
     @Override
-    protected void onInitView() {
+    protected void onInitView(Bundle savedInstanceState) {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-        mPresenter = getLogicImpl(getImagePresenter.class, this);
         recyclerAdapter = new HomeRecyclerAdapter(getActivity(), R.layout.item_list_picture, list);
         adapter = new ImageAdapter(getActivity(), R.layout.item_list_picture, list);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLoadingListener(this);
+    }
+
+    @Override
+    public void onResponse(List<ImageEntity.ResultsBean> response) {
+        onLoadComplete(page);
+        list.addAll(response);
+        recyclerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFailure(String msg) {
+        onLoadComplete(page);
+    }
+
+    @Override
+    protected Class getLogicClazz() {
+        return getImageContact.class;
+    }
+
+    private void onLoadComplete(int page) {
+        if (page == 1) {
+            list.clear();
+            mRecyclerView.refreshComplete();
+        } else
+            mRecyclerView.loadMoreComplete();
+    }
+
+    @Override
+    protected void onInitData2Remote() {
+        super.onInitData2Remote();
         onRefresh();
     }
 
     @Override
-    public void onLoadComplete(boolean isMore) {
-        if (isMore)
-            mRecyclerView.loadMoreComplete();
-        else
-            mRecyclerView.refreshComplete();
-    }
-
-    @Override
-    public void onResponseLData(ImageEntity response, boolean isMore) {
-        if (!response.isError()) {
-            if (!isMore)
-            list.clear();
-            list.addAll(response.getResults());
-            recyclerAdapter.notifyDataSetChanged();
-        }
-    }
-
-
-    @Override
     public void onRefresh() {
-        ((getImagePresenterImpl) mPresenter).getImageInfo(false, 1);
+        ((getImagePresenterImpl) mPresenter).getImageInfo(10, 1);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        ((getImagePresenterImpl) mPresenter).getImageInfo(true, page);
+        ((getImagePresenterImpl) mPresenter).getImageInfo(10, page);
     }
 
     class ImageAdapter extends RecyclerAdapter<ImageEntity.ResultsBean> {
