@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by Mr.xiao on 16/8/26.
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 public class PhotoViewPagerAdapter extends PagerAdapter{
     private Context context;
     private ArrayList<String> imageList;
+    private onImageLayoutOnClickListener mOnClickListener;
 
     public PhotoViewPagerAdapter(Context context, ArrayList<String> imageList) {
         this.context = context;
@@ -37,9 +40,16 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(context);
-        photoView.enable();
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Glide.with(context).load(imageList.get(position)).into(photoView);
+        photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+            @Override
+            public void onViewTap(View view, float x, float y) {
+                if (mOnClickListener!=null){
+                    mOnClickListener.OnImageOnClik();
+                }
+            }
+        });
         container.addView(photoView);
         return photoView;
     }
@@ -47,5 +57,13 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
+    }
+
+    public void setOnClickListener(onImageLayoutOnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
+    }
+
+    public interface onImageLayoutOnClickListener {
+        void OnImageOnClik();
     }
 }

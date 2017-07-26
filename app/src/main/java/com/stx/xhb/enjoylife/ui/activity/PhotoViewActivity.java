@@ -41,5 +41,11 @@ public class PhotoViewActivity extends BaseActivity {
         adapter = new PhotoViewPagerAdapter(this, imageList);
         photoViewpager.setAdapter(adapter);
         photoViewpager.setCurrentItem(mPos);
+        adapter.setOnClickListener(new PhotoViewPagerAdapter.onImageLayoutOnClickListener() {
+            @Override
+            public void OnImageOnClik() {
+                finish();
+            }
+        });
     }
 }
