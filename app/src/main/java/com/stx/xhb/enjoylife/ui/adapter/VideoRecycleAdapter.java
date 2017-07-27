@@ -19,7 +19,7 @@ import java.util.List;
  * Created by ASUS on 2016/2/29.
  */
 public class VideoRecycleAdapter extends BaseAdapter {
-    private static final String TAG = "VideoRecycleAdapter";
+    public static final int BANNER = 0;
     public static final int VIDEO = 1;
     public static final int TEXT = 2;
     private Context mContext;
@@ -36,6 +36,8 @@ public class VideoRecycleAdapter extends BaseAdapter {
         VideoEntity.IssueListEntity.ItemListEntity itemListEntity = mItemList.get(position);
         if ("video".equals(itemListEntity.getType())) {
             return VIDEO;
+        } else if (itemListEntity.getType().startsWith("banner") && TextUtils.isEmpty(itemListEntity.getData().getActionUrl())) {
+            return BANNER;
         }
         return TEXT;
     }
@@ -64,17 +66,42 @@ public class VideoRecycleAdapter extends BaseAdapter {
 
         int type = getItemViewType(position);
 
-        String feed = "1";
-        String title = "1";
-        String category = "1";
+        String feed = "";
+        String title = "";
+        String category = "";
         int duration = 0;
-        String text = "1";
+        String text = "";
 
         mHolder = new ViewHolder();
 
 
         switch (type) {
-            case VIDEO:
+            case BANNER:
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_home_banner_item, parent, false);
+                ImageView ivBanner = (ImageView) convertView.findViewById(R.id.iv_banner);
+                Glide.with(mContext).load(itemListEntity.getData().getImage()).into(ivBanner);
+                return convertView;
+
+            case TEXT:
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_home_text_item, parent, false);
+                TextView textView = (TextView) convertView.findViewById(R.id.tv_home_text);
+                //set data
+                if (itemListEntity.getType().startsWith("banner")) {
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                }
+                String image = itemListEntity.getData().getImage();
+                if (!TextUtils.isEmpty(image)) {
+                    textView.setTextSize(20);
+                    textView.setText("-Weekend  special-");
+                } else {
+                    text = itemListEntity.getData().getText();
+                    textView.setText(text);
+                }
+                return convertView;
+
+            default:
                 //得到不同类型所需要的数据
                 feed = itemListEntity.getData().getCover().getFeed();
                 title = itemListEntity.getData().getTitle();
@@ -103,20 +130,17 @@ public class VideoRecycleAdapter extends BaseAdapter {
                 String stringTime = durationString + "' " + stringLast + '"';
 
                 //设置布局
-                View view = LayoutInflater.from(mContext).inflate(R.layout.list_home_vedio_item, parent, false);
-                convertView = view;
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_home_vedio_item, parent, false);
                 if (convertView == null) {
                     mHolder.imageView = (ImageView) convertView.findViewById(R.id.iv);
                     mHolder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
                     mHolder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
-
                     convertView.setTag(mHolder);
 
                 } else {
                     if (convertView.getTag() instanceof ViewHolder) {
                         mHolder = (ViewHolder) convertView.getTag();
                     } else {
-                        convertView = view;
                         mHolder.imageView = (ImageView) convertView.findViewById(R.id.iv);
                         mHolder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
                         mHolder.tvTime = (TextView) convertView.findViewById(R.id.tv_time);
@@ -130,22 +154,6 @@ public class VideoRecycleAdapter extends BaseAdapter {
                 mHolder.tvTime.setText(category + stringTime);
 
                 return convertView;
-
-            case TEXT:
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_home_text_item, parent, false);
-                TextView textView = (TextView) convertView.findViewById(R.id.tv_home_text);
-                //set data
-                String image = mItemList.get(position).getData().getImage();
-                if (!TextUtils.isEmpty(image)) {
-                    textView.setTextSize(20);
-                    textView.setText("-Weekend  special-");
-                }else {
-                    text = itemListEntity.getData().getText();
-                    textView.setText(text);
-                }
-                return convertView;
-            default:
-                return null;
         }
 
     }

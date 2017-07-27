@@ -26,8 +26,7 @@ public class MainApplication extends Application {
         ourInstance = this;
         mContext = getApplicationContext();
 
-        Logger
-                .init(getPackageName())
+        Logger.init(getPackageName())
                 .methodCount(3)
                 .hideThreadInfo()
                 .logLevel(RestApi.isDebug ? LogLevel.FULL : LogLevel.NONE);

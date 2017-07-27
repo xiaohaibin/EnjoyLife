@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -68,6 +69,7 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
     @Override
     public void onFailure(String msg) {
         onLoadComplete(page);
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -91,7 +93,8 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
 
     @Override
     public void onRefresh() {
-        ((getImagePresenterImpl) mPresenter).getImageInfo(10, 1);
+        page=1;
+        ((getImagePresenterImpl) mPresenter).getImageInfo(10, page);
     }
 
     @Override
@@ -115,7 +118,7 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PhotoViewActivity.class);
                     intent.putStringArrayListExtra("image", imageList);
-                    intent.putExtra("pos",holder.getmPosition());
+                    intent.putExtra("pos", holder.getmPosition());
                     startActivity(intent);
                 }
             });

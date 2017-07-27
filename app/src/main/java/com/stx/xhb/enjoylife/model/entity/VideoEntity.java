@@ -163,6 +163,11 @@ public class VideoEntity {
                 private int duration;
                 private String playUrl;
                 private String text;
+                private String actionUrl;
+
+                public String getActionUrl() {
+                    return actionUrl;
+                }
 
                 public String getText() {
                     return text;
