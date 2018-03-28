@@ -25,7 +25,6 @@ public class VideoRecycleAdapter extends BaseAdapter {
     private Context mContext;
     List<VideoEntity.IssueListEntity.ItemListEntity> mItemList;
 
-
     public VideoRecycleAdapter(Context mContext, List<VideoEntity.IssueListEntity.ItemListEntity> itemList) {
         this.mContext = mContext;
         this.mItemList = itemList;
@@ -77,7 +76,7 @@ public class VideoRecycleAdapter extends BaseAdapter {
 
         switch (type) {
             case BANNER:
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_home_banner_item, parent, false);
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.list_home_item_banner, parent, false);
                 ImageView ivBanner = (ImageView) convertView.findViewById(R.id.iv_banner);
                 Glide.with(mContext).load(itemListEntity.getData().getImage()).into(ivBanner);
                 return convertView;
@@ -151,7 +150,7 @@ public class VideoRecycleAdapter extends BaseAdapter {
                 //set data
                 Glide.with(mContext).load(feed).into(mHolder.imageView);
                 mHolder.tvTitle.setText(title);
-                mHolder.tvTime.setText(category + stringTime);
+                mHolder.tvTime.setText(String.valueOf(category + stringTime));
 
                 return convertView;
         }

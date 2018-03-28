@@ -23,7 +23,7 @@ import java.util.List;
  * Time：2017/7/20
  * Emil：xhb_199409@163.com
  * Github：https://github.com/xiaohaibin/
- * Describe：
+ * Describe：电视直播列表适配器
  */
 public class TvShowRecyclerAdapter extends RecyclerAdapter<TvModel.DataBean> {
     private Context mContext;

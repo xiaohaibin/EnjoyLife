@@ -20,6 +20,7 @@ import com.stx.xhb.enjoylife.presenter.image.getImageContact;
 import com.stx.xhb.enjoylife.presenter.image.getImagePresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.stx.xhb.enjoylife.ui.adapter.HomeRecyclerAdapter;
+import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,8 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+//        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        RecyclerViewNoBugStaggeredGridLayoutManger layoutManager = new RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
@@ -81,8 +83,9 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
         if (page == 1) {
             list.clear();
             mRecyclerView.refreshComplete();
-        } else
+        } else{
             mRecyclerView.loadMoreComplete();
+        }
     }
 
     @Override
@@ -104,7 +107,8 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
     }
 
     class ImageAdapter extends RecyclerAdapter<ImageEntity.ResultsBean> {
-        public ImageAdapter(Context context, int layoutId, List<ImageEntity.ResultsBean> datas) {
+
+        ImageAdapter(Context context, int layoutId, List<ImageEntity.ResultsBean> datas) {
             super(context, layoutId, datas);
         }
 
