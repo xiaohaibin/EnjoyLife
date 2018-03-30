@@ -18,8 +18,10 @@ public class getImagePresenterImpl extends BasePresenter<getImageContact.getImag
         ApiManager.ApiFactory.createApi().getImageEntity(size,page).enqueue(new Callback<ImageEntity>() {
             @Override
             public void onResponse(Call<ImageEntity> call, Response<ImageEntity> response) {
-                if (response.isSuccessful()) {
-                    getView().onResponse(response.body().getResults());
+                if (response.isSuccessful()&&response.body()!=null) {
+                    if (null != response.body().getResults()) {
+                        getView().onResponse(response.body().getResults());
+                    }
                 }
             }
 

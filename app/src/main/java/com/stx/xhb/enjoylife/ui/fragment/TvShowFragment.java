@@ -63,8 +63,9 @@ public class TvShowFragment extends BaseFragment {
     }
 
     private void setAdapter() {
-        if (mDataBeanList == null)
+        if (mDataBeanList == null) {
             mDataBeanList = new ArrayList<>();
+        }
         TvShowRecyclerAdapter tvShowRecyclerAdapter = new TvShowRecyclerAdapter(getActivity(), R.layout.list_item_selet_tv_primary, mDataBeanList);
         mRvTvShow.setAdapter(tvShowRecyclerAdapter);
     }

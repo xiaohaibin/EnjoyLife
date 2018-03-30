@@ -59,6 +59,10 @@ public class VideoFragment extends BaseFragment {
         mQueue = Volley.newRequestQueue(getActivity());
         setListener();
         setLvAdapter();
+    }
+
+    @Override
+    protected void onInitData2Remote() {
         downLoad("http://baobab.wandoujia.com/api/v2/feed?num=2");
     }
 
@@ -80,7 +84,6 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void setListener() {
-
         ptr.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
@@ -202,7 +205,6 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void setLvAdapter() {
-
         mAdapter = new VideoRecycleAdapter(getActivity(), list);
         lvVideo.setAdapter(mAdapter);
     }
