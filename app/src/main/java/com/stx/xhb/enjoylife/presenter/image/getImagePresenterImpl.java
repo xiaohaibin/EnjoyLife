@@ -19,9 +19,7 @@ public class getImagePresenterImpl extends BasePresenter<getImageContact.getImag
             @Override
             public void onResponse(Call<ImageEntity> call, Response<ImageEntity> response) {
                 if (response.isSuccessful()&&response.body()!=null) {
-                    if (null != response.body().getResults()) {
-                        getView().onResponse(response.body().getResults());
-                    }
+                    getView().onResponse(response.body().getResults());
                 }
             }
 

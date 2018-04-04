@@ -1,5 +1,6 @@
 package com.stx.xhb.enjoylife.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,9 @@ public class ImageEntity {
     }
 
     public List<ResultsBean> getResults() {
+        if (results==null){
+            results=new ArrayList<>();
+        }
         return results;
     }
 
