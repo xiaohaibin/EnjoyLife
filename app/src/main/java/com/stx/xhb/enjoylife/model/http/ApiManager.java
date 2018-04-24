@@ -3,7 +3,6 @@ package com.stx.xhb.enjoylife.model.http;
 import com.meikoz.core.api.RestApi;
 import com.stx.xhb.enjoylife.config.Constants;
 import com.stx.xhb.enjoylife.model.entity.ImageEntity;
-import com.stx.xhb.enjoylife.model.entity.SplashEntity;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 import com.stx.xhb.enjoylife.model.entity.VideoEntity;
 
@@ -31,16 +30,16 @@ public interface ApiManager {
 
     class ApiFactory {
 
-        public static ApiManager createApi() {
-            return RestApi.getInstance().create(Constants.BASE_URL, ApiManager.class);
+        public static ApiManager createGankApi() {
+            return RestApi.getInstance().create(Constants.GANK_API, ApiManager.class);
         }
 
         public static ApiManager createVideoApi() {
-            return RestApi.getInstance().create(Constants.VIDEO_URL, ApiManager.class);
+            return RestApi.getInstance().create(Constants.VIDEO_API, ApiManager.class);
         }
 
-        public static ApiManager createTuChongApi(){
-            return RestApi.getInstance().create(Constants.TUCHONG_API,ApiManager.class);
+        public static ApiManager createTuChongApi() {
+            return RestApi.getInstance().create(Constants.TUCHONG_API, ApiManager.class);
         }
     }
 

@@ -1,7 +1,6 @@
 package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.meikoz.core.base.BasePresenter;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
@@ -30,7 +29,7 @@ public class getFeedAppPresenterImpl extends BasePresenter<getFeedAppContact.Vie
         if (!TextUtils.isEmpty(posId)) {
             map.put("post_id", posId);
         }
-        ApiManager.ApiFactory.createApi().getFeedApp(map).enqueue(new Callback<TuchongImagEntity>() {
+        ApiManager.ApiFactory.createTuChongApi().getFeedApp(map).enqueue(new Callback<TuchongImagEntity>() {
             @Override
             public void onResponse(Call<TuchongImagEntity> call, Response<TuchongImagEntity> response) {
                 if (response.isSuccessful() && response.body() != null&&response.body().getFeedList()!=null&&!response.body().getFeedList().isEmpty()) {

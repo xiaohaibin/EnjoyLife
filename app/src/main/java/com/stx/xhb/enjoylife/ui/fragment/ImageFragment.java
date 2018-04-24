@@ -1,25 +1,17 @@
 package com.stx.xhb.enjoylife.ui.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.meikoz.core.adapter.RecyclerAdapter;
-import com.meikoz.core.adapter.RecyclerViewHolder;
 import com.meikoz.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ImageEntity;
 import com.stx.xhb.enjoylife.presenter.image.getImageContact;
 import com.stx.xhb.enjoylife.presenter.image.getImagePresenterImpl;
-import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
-import com.stx.xhb.enjoylife.ui.adapter.HomeRecyclerAdapter;
+import com.stx.xhb.enjoylife.ui.adapter.ImageRecyclerAdapter;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
 
 import java.util.ArrayList;
@@ -35,8 +27,8 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
 
     @Bind(R.id.recly_view)
     XRecyclerView mRecyclerView;
-    private List<ImageEntity.ResultsBean> list = new ArrayList<>();
-    private HomeRecyclerAdapter recyclerAdapter;
+    private ArrayList<String> list;
+    private ImageRecyclerAdapter recyclerAdapter;
     private int page = 1;
 
     @Override
@@ -52,16 +44,18 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-        recyclerAdapter = new HomeRecyclerAdapter(getActivity(), R.layout.item_list_picture, list);
-        mRecyclerView.setAdapter(recyclerAdapter);
         mRecyclerView.setLoadingListener(this);
+        list = new ArrayList<>();
+        recyclerAdapter = new ImageRecyclerAdapter(getActivity(), R.layout.item_list_picture, list);
+        mRecyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override
     public void onResponse(List<ImageEntity.ResultsBean> response) {
         onLoadComplete(page);
-        list.addAll(response);
-        recyclerAdapter.notifyDataChanged();
+        for (int i = 0; i < response.size(); i++) {
+            list.add(response.get(i).getUrl());
+        }
     }
 
     @Override
@@ -79,19 +73,20 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
         if (page == 1) {
             list.clear();
             mRecyclerView.refreshComplete();
-        } else{
+        } else {
             mRecyclerView.loadMoreComplete();
         }
     }
 
     @Override
     protected void onInitData2Remote() {
+        super.onInitData2Remote();
         onRefresh();
     }
 
     @Override
     public void onRefresh() {
-        page=1;
+        page = 1;
         ((getImagePresenterImpl) mPresenter).getImageInfo(10, page);
     }
 

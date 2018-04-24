@@ -7,10 +7,10 @@ package com.stx.xhb.enjoylife.config;
 public interface Constants {
 
     //干货福利接口
-    String BASE_URL = "http://gank.io/api/";
+    String GANK_API = "http://gank.io/api/";
 
     //开眼视频推荐接口
-    String VIDEO_URL = "http://baobab.wandoujia.com/api/";
+    String VIDEO_API = "http://baobab.wandoujia.com/api/";
 
     /**
      * 图虫推荐API

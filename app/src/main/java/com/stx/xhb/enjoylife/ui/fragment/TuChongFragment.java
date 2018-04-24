@@ -2,26 +2,19 @@ package com.stx.xhb.enjoylife.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.meikoz.core.base.BaseFragment;
-import com.meikoz.core.util.GsonUtil;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
-import com.stx.xhb.enjoylife.model.entity.TvModel;
-import com.stx.xhb.enjoylife.presenter.image.getImagePresenterImpl;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppContact;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppPresenterImpl;
-import com.stx.xhb.enjoylife.ui.adapter.TvShowRecyclerAdapter;
+import com.stx.xhb.enjoylife.ui.adapter.ImageRecyclerAdapter;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +34,8 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     XRecyclerView mRvTuChong;
     private int page = 1;
     private String posId = "";
-    private List<String> imgList;
+    private ArrayList<String> imgList;
+    private ImageRecyclerAdapter recyclerAdapter;
 
     @Override
     protected int getLayoutResource() {
@@ -59,13 +53,22 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
         mRvTuChong.setArrowImageView(R.drawable.iconfont_downgrey);
         mRvTuChong.setLoadingListener(this);
         imgList = new ArrayList<>();
+        recyclerAdapter = new ImageRecyclerAdapter(getActivity(), R.layout.item_list_picture, imgList);
+        mRvTuChong.setAdapter(recyclerAdapter);
     }
 
     @Override
     public void onResponse(List<TuchongImagEntity.FeedListBean> feedList, boolean isMore) {
+        onLoadComplete(page);
         posId = String.valueOf(feedList.get(feedList.size() - 1).getPost_id());
         for (int i = 0; i < feedList.size(); i++) {
+            if (!feedList.get(i).getImages().isEmpty()) {
+                TuchongImagEntity.FeedListBean.ImagesBean imagesBean = feedList.get(i).getImages().get(0);
+                String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
+                imgList.add(url);
+            }
         }
+        mRvTuChong.setLoadingMoreEnabled(isMore);
     }
 
     @Override
@@ -75,6 +78,7 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
 
     @Override
     protected void onInitData2Remote() {
+        super.onInitData2Remote();
         onRefresh();
     }
 
@@ -93,5 +97,14 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     public void onLoadMore() {
         page++;
         ((getFeedAppPresenterImpl) mPresenter).getFeedAppImage(page, "loadmore", posId);
+    }
+
+    private void onLoadComplete(int page) {
+        if (page == 1) {
+            imgList.clear();
+            mRvTuChong.refreshComplete();
+        } else {
+            mRvTuChong.loadMoreComplete();
+        }
     }
 }

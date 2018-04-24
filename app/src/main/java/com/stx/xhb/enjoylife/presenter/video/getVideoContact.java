@@ -13,6 +13,7 @@ import com.stx.xhb.enjoylife.model.entity.VideoEntity;
  */
 @Implement(getVideoPresenterImpl.class)
 public interface getVideoContact {
+
     void getVideoInfo(int size, int num);
 
     interface getVideoView extends BaseView{
