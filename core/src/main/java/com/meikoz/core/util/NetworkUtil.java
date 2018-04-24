@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-public class ConnectionUtil {
+public class NetworkUtil {
 
     //监测网络是否连接
     public static boolean isInternetConnection(Context context) {

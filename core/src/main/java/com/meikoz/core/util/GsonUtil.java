@@ -28,6 +28,7 @@ public class GsonUtil {
      * <a href='http://www.jianshu.com/p/c6dd9a6b10ee'>http://www.jianshu.com/p/c6dd9a6b10ee</a>
      */
     public static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
+        @Override
         @SuppressWarnings("unchecked")
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
             Class<T> rawType = (Class<T>) type.getRawType();

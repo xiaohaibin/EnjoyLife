@@ -84,10 +84,12 @@ public class SweetAlertDialog {
             mLeftTxt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mDialog != null)
+                    if (mDialog != null) {
                         mDialog.dismiss();
-                    if (!hasCancle)
+                    }
+                    if (!hasCancle) {
                         mNegativeButtonListener.onClick(mDialog, 0);
+                    }
                 }
             });
         }
@@ -104,8 +106,9 @@ public class SweetAlertDialog {
             mRightTxt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mDialog != null)
+                    if (mDialog != null) {
                         mDialog.dismiss();
+                    }
                     mPositiveButtonListener.onClick(mDialog, 1);
                 }
             });

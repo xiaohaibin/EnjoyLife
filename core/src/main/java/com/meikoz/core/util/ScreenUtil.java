@@ -57,5 +57,4 @@ public class ScreenUtil {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
 
-
 }

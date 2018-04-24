@@ -36,10 +36,8 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
     @Bind(R.id.recly_view)
     XRecyclerView mRecyclerView;
     private List<ImageEntity.ResultsBean> list = new ArrayList<>();
-    private RecyclerAdapter recyclerAdapter;
+    private HomeRecyclerAdapter recyclerAdapter;
     private int page = 1;
-    private ArrayList<String> imageList;
-    private ImageAdapter adapter;
 
     @Override
     protected int getLayoutResource() {
@@ -55,8 +53,7 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         recyclerAdapter = new HomeRecyclerAdapter(getActivity(), R.layout.item_list_picture, list);
-        adapter = new ImageAdapter(getActivity(), R.layout.item_list_picture, list);
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(recyclerAdapter);
         mRecyclerView.setLoadingListener(this);
     }
 
@@ -64,7 +61,7 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
     public void onResponse(List<ImageEntity.ResultsBean> response) {
         onLoadComplete(page);
         list.addAll(response);
-        recyclerAdapter.notifyDataSetChanged();
+        recyclerAdapter.notifyDataChanged();
     }
 
     @Override
@@ -89,7 +86,6 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
 
     @Override
     protected void onInitData2Remote() {
-        super.onInitData2Remote();
         onRefresh();
     }
 
@@ -104,36 +100,5 @@ public class ImageFragment extends BaseFragment implements getImageContact.getIm
         page++;
         ((getImagePresenterImpl) mPresenter).getImageInfo(10, page);
     }
-
-    class ImageAdapter extends RecyclerAdapter<ImageEntity.ResultsBean> {
-
-        ImageAdapter(Context context, int layoutId, List<ImageEntity.ResultsBean> datas) {
-            super(context, layoutId, datas);
-        }
-
-
-        @Override
-        public void convert(final RecyclerViewHolder holder, final ImageEntity.ResultsBean item) {
-            Glide.with(mContext).load(item.getUrl()).into((ImageView) holder.getView(R.id.iv));
-            initData(list);
-            holder.setOnClickListener(R.id.iv, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, PhotoViewActivity.class);
-                    intent.putStringArrayListExtra("image", imageList);
-                    intent.putExtra("pos", holder.getmPosition());
-                    startActivity(intent);
-                }
-            });
-        }
-    }
-
-    private void initData(List<ImageEntity.ResultsBean> datas) {
-        imageList = new ArrayList<>();
-        for (int i = 0; i < datas.size(); i++) {
-            imageList.add(datas.get(i).getUrl());
-        }
-    }
-
 
 }

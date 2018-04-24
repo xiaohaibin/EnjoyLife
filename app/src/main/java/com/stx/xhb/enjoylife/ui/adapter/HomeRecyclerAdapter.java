@@ -25,14 +25,14 @@ public class HomeRecyclerAdapter extends RecyclerAdapter<ImageEntity.ResultsBean
 
     public HomeRecyclerAdapter(Context context, int layoutId, List<ImageEntity.ResultsBean> datas) {
         super(context, layoutId, datas);
-        this.mContext=context;
+        this.mContext = context;
         initData(datas);
     }
 
     private void initData(List<ImageEntity.ResultsBean> datas) {
-        imageList=new ArrayList<>();
-        for (int i = 0; i <datas.size(); i++) {
-             imageList.add(datas.get(i).getUrl());
+        imageList = new ArrayList<>();
+        for (int i = 0; i < datas.size(); i++) {
+            imageList.add(datas.get(i).getUrl());
         }
     }
 
@@ -44,9 +44,17 @@ public class HomeRecyclerAdapter extends RecyclerAdapter<ImageEntity.ResultsBean
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);
-                intent.putStringArrayListExtra("image",imageList);
+                intent.putStringArrayListExtra("image", imageList);
+                intent.putExtra("pos", holder.getmPosition());
                 mContext.startActivity(intent);
             }
         });
+    }
+
+    public void notifyDataChanged() {
+        imageList.clear();
+        for (int i = 0; i < mDatas.size(); i++) {
+            imageList.add(mDatas.get(i).getUrl());
+        }
     }
 }

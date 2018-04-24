@@ -11,13 +11,13 @@ public class Config {
     public static final String GUOKR = "image";
     public static final String ZHIHU = "zhihu";
     public static final String VIDEO = "video";
-    public static final String TV = "tv";
+    public static final String TUCHONG = "tuchong";
 
     public enum Channel {
         IMAGE(R.string.fragment_image_title, R.drawable.icon_picture_black_24px),
         VIDEO(R.string.fragment_video_title, R.drawable.ic_video_black_24px),
         ZHIHU(R.string.fragment_zhihu_title, R.drawable.icon_zhihu_black_24px),
-        TV(R.string.fragment_tv_title, R.drawable.icon_tv_black_24px);
+        TUCHONG(R.string.fragment_tuchong_title, R.drawable.icon_tu_black_24px);
 
         private int title;
         private int icon;

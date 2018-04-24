@@ -9,13 +9,7 @@ import com.meikoz.core.manage.log.Logger;
 
 public class MainApplication extends Application {
 
-    private static MainApplication ourInstance = new MainApplication();
     private static Context mContext;
-
-    public static MainApplication getInstance() {
-        return ourInstance;
-    }
-
     public static Context getContext() {
         return mContext;
     }
@@ -23,9 +17,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ourInstance = this;
         mContext = getApplicationContext();
-
         Logger.init(getPackageName())
                 .methodCount(3)
                 .hideThreadInfo()

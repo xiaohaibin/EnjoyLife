@@ -20,7 +20,7 @@ import com.meikoz.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.Config;
 import com.stx.xhb.enjoylife.ui.fragment.ImageFragment;
-import com.stx.xhb.enjoylife.ui.fragment.TvShowFragment;
+import com.stx.xhb.enjoylife.ui.fragment.TuChongFragment;
 import com.stx.xhb.enjoylife.ui.fragment.VideoFragment;
 import com.stx.xhb.enjoylife.ui.fragment.ZhihuFragment;
 import com.stx.xhb.enjoylife.utils.AppUtil;
@@ -45,7 +45,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private List<android.app.Fragment> mFragments;
     private android.app.Fragment mCurrentFragment;
     private ArrayList<Integer> mTitles;
-
 
 
     @Override
@@ -134,6 +133,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_about:
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
+            default:
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         assert drawer != null;
@@ -157,8 +158,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case "IMAGE":
                 mFragments.add(new ImageFragment());
                 break;
-            case "TV":
-                mFragments.add(new TvShowFragment());
+            case "TUCHONG":
+                mFragments.add(new TuChongFragment());
+                break;
+            default:
                 break;
         }
     }
