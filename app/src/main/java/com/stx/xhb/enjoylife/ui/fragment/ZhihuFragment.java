@@ -11,7 +11,9 @@ import com.stx.xhb.enjoylife.R;
  */
 public class ZhihuFragment extends BaseFragment {
 
-
+    public static ZhihuFragment newInstance() {
+        return new ZhihuFragment();
+    }
     @Override
     protected int getLayoutResource() {
        return R.layout.fragment_zhihu;

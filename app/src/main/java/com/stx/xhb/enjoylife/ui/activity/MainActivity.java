@@ -149,13 +149,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void addFragment(String name) {
         switch (name) {
             case "ZHIHU":
-                mFragments.add(new ZhihuFragment());
+                mFragments.add(ZhihuFragment.newInstance());
                 break;
             case "VIDEO":
-                mFragments.add(new VideoFragment());
+                mFragments.add(VideoFragment.newInstance());
                 break;
             case "IMAGE":
-                mFragments.add(new TuChongFragment());
+                mFragments.add(TuChongFragment.newInstance());
                 break;
             default:
                 break;

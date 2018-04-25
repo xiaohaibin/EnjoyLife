@@ -15,6 +15,7 @@ import com.xhb.core.adapter.RecyclerViewHolder;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
+import com.xhb.core.imageloader.ImageLoaderProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +25,8 @@ import java.util.List;
  */
 public class ImageRecyclerAdapter extends RecyclerAdapter<TuchongImagEntity.FeedListBean> {
 
-    private Context mContext;
-
     public ImageRecyclerAdapter(Context context, int layoutId,List<TuchongImagEntity.FeedListBean> dataList) {
         super(context, layoutId, dataList);
-        this.mContext = context;
     }
 
     @Override
@@ -41,7 +39,8 @@ public class ImageRecyclerAdapter extends RecyclerAdapter<TuchongImagEntity.Feed
         TuchongImagEntity.FeedListBean.ImagesBean imagesBean = images.get(0);
         if (imagesBean!=null) {
             String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
-            Glide.with(mContext).load(url).into(imageView);
+            Glide.with(imageView.getContext()).load(url).into(imageView);
+            ImageLoaderProxy.getInstance().loadIntoUseFitWidth(imageView,url);
             ViewCompat.setTransitionName(imageView,url);
         }
         final ArrayList<String> imageList=new ArrayList<>();

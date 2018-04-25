@@ -42,6 +42,10 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     private String posId = "";
     private List<TuchongImagEntity.FeedListBean> imgList;
 
+    public static TuChongFragment newInstance() {
+        return new TuChongFragment();
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_common;
@@ -63,10 +67,10 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
         mRvTuChong.setAdapter(recyclerAdapter);
         recyclerAdapter.setOnImageItemClickListener(new ImageRecyclerAdapter.setOnImageItemClickListener() {
             @Override
-            public void setOnImageClick(View view,ArrayList<String> imageList) {
+            public void setOnImageClick(View view, ArrayList<String> imageList) {
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);
                 intent.putStringArrayListExtra("image", imageList);
-                intent.putExtra("pos",0);
+                intent.putExtra("pos", 0);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(), view, PhotoViewActivity.TRANSIT_PIC);
                 try {
@@ -96,6 +100,10 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     @Override
     protected void onInitData2Remote() {
         super.onInitData2Remote();
+    }
+
+    @Override
+    protected void lazyLoad() {
         onRefresh();
     }
 

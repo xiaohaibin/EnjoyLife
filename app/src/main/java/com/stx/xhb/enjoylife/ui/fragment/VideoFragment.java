@@ -41,9 +41,9 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
     private boolean isRefresh;
     private boolean isRun;
 
-    public VideoFragment() {
+    public static VideoFragment newInstance() {
+        return new VideoFragment();
     }
-
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_video;
@@ -100,35 +100,12 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public boolean canChildScrollUp() {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (lvVideo instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) lvVideo;
-                return absListView.getChildCount() > 0 &&
-                        (absListView.getFirstVisiblePosition() > 0 ||
-                                absListView.getChildAt(0).getTop() < absListView.getPaddingTop());
-            } else {
-                return ViewCompat.canScrollVertically(lvVideo, -1) || lvVideo.getScrollY() > 0;
-            }
-
-        } else {
-            return ViewCompat.canScrollVertically(lvVideo, -1);
-        }
-
+    @Override
+    protected void lazyLoad() {
+        onRefresh();
     }
 
     private void setListener() {
-        ptr.setPtrHandler(new PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return !canChildScrollUp();
-            }
-
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                onRefresh();
-            }
-        });
         //单个的点击事件
         lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
