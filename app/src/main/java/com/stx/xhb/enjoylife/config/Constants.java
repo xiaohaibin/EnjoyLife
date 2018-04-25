@@ -10,7 +10,7 @@ public interface Constants {
     String GANK_API = "http://gank.io/api/";
 
     //开眼视频推荐接口
-    String VIDEO_API = "http://baobab.wandoujia.com/api/";
+    String VIDEO_API = "http://baobab.kaiyanapp.com/api/";
 
     /**
      * 图虫推荐API

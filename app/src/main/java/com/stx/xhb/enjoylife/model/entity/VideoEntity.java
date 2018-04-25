@@ -18,20 +18,22 @@ public class VideoEntity {
      */
 
     private String nextPageUrl;
+    private long nextPublishTime;
+    private String newestIssueType;
+
+    public long getNextPublishTime() {
+        return nextPublishTime;
+    }
+
+    public String getNewestIssueType() {
+        return newestIssueType;
+    }
 
     public String getNextPageUrl() {
         return nextPageUrl;
     }
 
-    public void setNextPageUrl(String nextPageUrl) {
-        this.nextPageUrl = nextPageUrl;
-    }
-
     private List<IssueListEntity> issueList;
-
-    public void setIssueList(List<IssueListEntity> issueList) {
-        this.issueList = issueList;
-    }
 
     public List<IssueListEntity> getIssueList() {
         return issueList;

@@ -7,17 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.chrisbanes.photoview.OnViewTapListener;
+import com.github.chrisbanes.photoview.PhotoView;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 
 import java.util.ArrayList;
 
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by Mr.xiao on 16/8/26.
  * 图片预览Viewpager适配器
  */
 public class PhotoViewPagerAdapter extends PagerAdapter{
+
     private Context context;
     private ArrayList<String> imageList;
     private onImageLayoutOnClickListener mOnClickListener;
@@ -41,12 +44,15 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(context);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        Glide.with(context).load(imageList.get(position)).into(photoView);
-        photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+        Glide.with(context)
+                .load(imageList.get(position))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(photoView);
+        photoView.setOnViewTapListener(new OnViewTapListener() {
             @Override
-            public void onViewTap(View view, float x, float y) {
+            public void onViewTap(View view, float v, float v1) {
                 if (mOnClickListener!=null){
-                    mOnClickListener.OnImageOnClik();
+                    mOnClickListener.setOnImageOnClik();
                 }
             }
         });
@@ -64,6 +70,6 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
     }
 
     public interface onImageLayoutOnClickListener {
-        void OnImageOnClik();
+        void setOnImageOnClik();
     }
 }

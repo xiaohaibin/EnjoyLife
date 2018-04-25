@@ -2,12 +2,15 @@ package com.stx.xhb.enjoylife.ui.fragment;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -15,6 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.stx.xhb.enjoylife.presenter.video.getVideoContact;
+import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
 import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoEntity;
@@ -32,14 +37,14 @@ import in.srain.cube.views.ptr.PtrHandler;
 /**
  * 视频推荐
  */
-public class VideoFragment extends BaseFragment {
+public class VideoFragment extends BaseFragment implements getVideoContact.getVideoView{
 
     @Bind(R.id.lv_video)
     ListView lvVideo;
     @Bind(R.id.ptr)
     PtrClassicFrameLayout ptr;
     private List<VideoEntity.IssueListEntity.ItemListEntity> list;
-    private String nextUrl;
+    private String nextPublishTime;
     private VideoRecycleAdapter mAdapter;
     private boolean isRefresh;
     private boolean isRun;
@@ -62,8 +67,47 @@ public class VideoFragment extends BaseFragment {
     }
 
     @Override
+    protected Class getLogicClazz() {
+        return getVideoContact.class;
+    }
+
+    @Override
     protected void onInitData2Remote() {
-        downLoad("http://baobab.wandoujia.com/api/v2/feed?num=2");
+        super.onInitData2Remote();
+    }
+
+    @Override
+    public void onResponse(VideoEntity response) {
+        List<VideoEntity.IssueListEntity> issueList = response.getIssueList();
+        if (issueList==null||issueList.isEmpty()){
+            return;
+        }
+        VideoEntity.IssueListEntity issueListEntity = issueList.get(0);
+        List<VideoEntity.IssueListEntity.ItemListEntity> itemList = issueListEntity.getItemList();
+        VideoEntity.IssueListEntity issueListEntity2 = issueList.get(1);
+        List<VideoEntity.IssueListEntity.ItemListEntity> itemList1 = issueListEntity2.getItemList();
+        isRun = false;
+
+        //刷新需要清除数据
+        if (isRefresh) {
+            list.clear();
+            ptr.refreshComplete();
+            isRefresh = false;
+        }
+        list.addAll(itemList);
+        list.addAll(itemList1);
+        String nextUrl = response.getNextPageUrl();
+        nextPublishTime= Uri.parse(nextUrl).getQueryParameter("date");
+        NotifyData();
+    }
+
+    @Override
+    public void onFailure(String msg) {
+        isRun = false;
+        if (isRefresh) {
+            ptr.refreshComplete();
+        }
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     public boolean canChildScrollUp() {
@@ -93,7 +137,7 @@ public class VideoFragment extends BaseFragment {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 isRefresh = true;
-                downLoad("http://baobab.wandoujia.com/api/v2/feed?num=2");
+                ((getVideoPresenterImpl) mPresenter).getVideoInfo("",2);
             }
         });
         //单个的点击事件
@@ -147,7 +191,7 @@ public class VideoFragment extends BaseFragment {
                 if (firstVisibleItem + visibleItemCount == totalItemCount) {
                     if (!isRun) {
                         isRun = true;
-                        downLoad(nextUrl);
+                        ((getVideoPresenterImpl) mPresenter).getVideoInfo(nextPublishTime,2);
                     }
                 }
             }
@@ -156,50 +200,7 @@ public class VideoFragment extends BaseFragment {
 
     }
 
-    private void downLoad(String url) {
-        final StringRequest request = new StringRequest(
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson mGson = new Gson();
-                        VideoEntity homePicEntity = mGson.fromJson(response, VideoEntity.class);
-                        List<VideoEntity.IssueListEntity> issueList = homePicEntity.getIssueList();
-                        VideoEntity.IssueListEntity issueListEntity = issueList.get(0);
-                        List<VideoEntity.IssueListEntity.ItemListEntity> itemList = issueListEntity.getItemList();
-                        VideoEntity.IssueListEntity issueListEntity2 = issueList.get(1);
-                        List<VideoEntity.IssueListEntity.ItemListEntity> itemList1 = issueListEntity2.getItemList();
-                        isRun = false;
-
-                        //刷新需要清除数据
-                        if (isRefresh) {
-                            list.clear();
-                            ptr.refreshComplete();
-                            isRefresh = false;
-                        }
-                        list.addAll(itemList);
-                        list.addAll(itemList1);
-                        nextUrl = homePicEntity.getNextPageUrl();
-
-                        myNotify();
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        isRun = false;
-                        if (isRefresh) {
-                            ptr.refreshComplete();
-                        }
-                    }
-                }
-        );
-        mQueue.add(request);
-        mQueue.start();
-    }
-
-    public void myNotify() {
+    public void NotifyData() {
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }

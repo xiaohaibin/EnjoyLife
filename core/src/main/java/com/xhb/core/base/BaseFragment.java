@@ -24,8 +24,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     }
 
     protected void onInitData2Remote() {
-        if (getLogicClazz() != null)
+        if (getLogicClazz() != null) {
             mPresenter = getLogicImpl();
+        }
     }
 
     @Nullable
@@ -36,6 +37,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         } else {
             rootView = super.onCreateView(inflater, container, savedInstanceState);
         }
+        onInitData2Remote();
         ButterKnife.bind(this, rootView);
         this.onInitView(savedInstanceState);
         return rootView;
@@ -71,8 +73,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        if (mPresenter != null)
+        if (mPresenter != null) {
             mPresenter.detachView();
+        }
     }
 
     protected BasePresenter mPresenter;

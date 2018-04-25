@@ -14,9 +14,10 @@ import com.stx.xhb.enjoylife.model.entity.VideoEntity;
 @Implement(getVideoPresenterImpl.class)
 public interface getVideoContact {
 
-    void getVideoInfo(int size, int num);
+    void getVideoInfo(String date, int num);
 
     interface getVideoView extends BaseView{
+
         void onResponse(VideoEntity response);
 
         void onFailure(String msg);

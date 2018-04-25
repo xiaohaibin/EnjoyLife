@@ -18,7 +18,7 @@ import retrofit2.http.QueryMap;
 public interface ApiManager {
 
     @GET("v2/feed")
-    Call<VideoEntity> getVideoEntity(@Query("num") int num);
+    Call<VideoEntity> getVideoEntity(@QueryMap Map<String, String> param);
 
     @GET("feed-app")
     Call<TuchongImagEntity> getFeedApp(@QueryMap Map<String, String> param);
