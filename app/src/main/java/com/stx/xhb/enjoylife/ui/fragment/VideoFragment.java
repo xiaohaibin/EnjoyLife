@@ -200,8 +200,9 @@ public class VideoFragment extends BaseFragment {
     }
 
     public void myNotify() {
-        if (mAdapter != null)
+        if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setLvAdapter() {

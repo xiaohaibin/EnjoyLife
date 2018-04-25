@@ -1,5 +1,6 @@
 package com.stx.xhb.enjoylife.base;
 
+import com.meikoz.core.BuildConfig;
 import com.meikoz.core.MainApplication;
 import com.meikoz.core.api.RestApi;
 import com.meikoz.core.manage.crash.AndroidCrash;
@@ -18,8 +19,8 @@ public class MyApplication extends MainApplication {
         super.onCreate();
         //Android Crash异常处理
         AndroidCrash.getInstance().init(this);
-        RestApi.getInstance().bug(true);
+        RestApi.getInstance().bug(BuildConfig.DEBUG);
         //腾讯bugly初始化  参数1：上下文对象  参数2：注册时申请的APPID  参数3：是否开启debug模式，true表示打开debug模式，false表示关闭调试模式
-        Bugly.init(getApplicationContext(), "784b642b7a", true);
+        Bugly.init(getApplicationContext(), "784b642b7a", BuildConfig.DEBUG);
     }
 }

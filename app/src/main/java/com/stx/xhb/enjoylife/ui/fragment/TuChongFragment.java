@@ -34,7 +34,7 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     XRecyclerView mRvTuChong;
     private int page = 1;
     private String posId = "";
-    private ArrayList<String> imgList;
+    private List<TuchongImagEntity.FeedListBean> imgList;
     private ImageRecyclerAdapter recyclerAdapter;
 
     @Override
@@ -61,18 +61,13 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     public void onResponse(List<TuchongImagEntity.FeedListBean> feedList, boolean isMore) {
         onLoadComplete(page);
         posId = String.valueOf(feedList.get(feedList.size() - 1).getPost_id());
-        for (int i = 0; i < feedList.size(); i++) {
-            if (!feedList.get(i).getImages().isEmpty()) {
-                TuchongImagEntity.FeedListBean.ImagesBean imagesBean = feedList.get(i).getImages().get(0);
-                String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
-                imgList.add(url);
-            }
-        }
+        imgList.addAll(feedList);
         mRvTuChong.setLoadingMoreEnabled(isMore);
     }
 
     @Override
     public void onFailure(String msg) {
+        onLoadComplete(page);
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 

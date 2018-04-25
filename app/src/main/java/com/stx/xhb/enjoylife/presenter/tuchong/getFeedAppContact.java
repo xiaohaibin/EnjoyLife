@@ -2,7 +2,6 @@ package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import com.meikoz.core.base.BaseView;
 import com.meikoz.core.model.annotation.Implement;
-import com.stx.xhb.enjoylife.model.entity.ImageEntity;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 
 import java.util.List;

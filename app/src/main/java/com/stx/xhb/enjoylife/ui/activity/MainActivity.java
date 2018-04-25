@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import com.meikoz.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.Config;
-import com.stx.xhb.enjoylife.ui.fragment.ImageFragment;
 import com.stx.xhb.enjoylife.ui.fragment.TuChongFragment;
 import com.stx.xhb.enjoylife.ui.fragment.VideoFragment;
 import com.stx.xhb.enjoylife.ui.fragment.ZhihuFragment;
@@ -156,9 +155,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 mFragments.add(new VideoFragment());
                 break;
             case "IMAGE":
-                mFragments.add(new ImageFragment());
-                break;
-            case "TUCHONG":
                 mFragments.add(new TuChongFragment());
                 break;
             default:
