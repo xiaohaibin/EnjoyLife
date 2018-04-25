@@ -6,9 +6,6 @@ package com.stx.xhb.enjoylife.config;
  */
 public interface Constants {
 
-    //干货福利接口
-    String GANK_API = "http://gank.io/api/";
-
     //开眼视频推荐接口
     String VIDEO_API = "http://baobab.kaiyanapp.com/api/";
 
