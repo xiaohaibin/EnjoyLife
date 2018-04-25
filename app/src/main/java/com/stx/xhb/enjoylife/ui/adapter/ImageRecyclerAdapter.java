@@ -42,6 +42,7 @@ public class ImageRecyclerAdapter extends RecyclerAdapter<TuchongImagEntity.Feed
         if (imagesBean!=null) {
             String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
             Glide.with(mContext).load(url).into(imageView);
+            ViewCompat.setTransitionName(imageView,url);
         }
         final ArrayList<String> imageList=new ArrayList<>();
         for (int i = 0; i <images.size(); i++) {
