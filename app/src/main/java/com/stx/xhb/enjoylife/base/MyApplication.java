@@ -1,7 +1,7 @@
 package com.stx.xhb.enjoylife.base;
 
 import com.xhb.core.BuildConfig;
-import com.xhb.core.MainApplication;
+import com.xhb.core.BaseApplication;
 import com.xhb.core.api.RestApi;
 import com.xhb.core.manage.crash.AndroidCrash;
 import com.tencent.bugly.Bugly;
@@ -13,7 +13,7 @@ import com.tencent.bugly.Bugly;
  * @github: https://github.com/xiaohaibin
  * @description： 程序入口
  */
-public class MyApplication extends MainApplication {
+public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();

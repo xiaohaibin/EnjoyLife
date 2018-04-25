@@ -15,6 +15,10 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment implements BaseView {
 
+    protected BasePresenter mPresenter;
+    protected View rootView;
+    protected Context mContext = null;//context
+
     protected abstract int getLayoutResource();
 
     protected abstract void onInitView(Bundle savedInstanceState);
@@ -77,8 +81,4 @@ public abstract class BaseFragment extends Fragment implements BaseView {
             mPresenter.detachView();
         }
     }
-
-    protected BasePresenter mPresenter;
-    protected View rootView;
-    protected Context mContext = null;//context
 }

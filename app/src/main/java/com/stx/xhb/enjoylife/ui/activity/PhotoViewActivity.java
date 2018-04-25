@@ -1,6 +1,7 @@
 package com.stx.xhb.enjoylife.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class PhotoViewActivity extends BaseActivity {
     TextView mTvIndicator;
     private ArrayList<String> imageList;
     private int mPos;
+    public static final String TRANSIT_PIC="transit_img";
 
     @Override
     protected int getLayoutResource() {
@@ -39,6 +41,7 @@ public class PhotoViewActivity extends BaseActivity {
                 mTvIndicator.setText(String.valueOf((photoViewpager.getCurrentItem() + 1) + "/" + imageList.size()));
             }
         });
+        ViewCompat.setTransitionName(photoViewpager, PhotoViewActivity.TRANSIT_PIC);
         initData();
         setAdapter();
     }
@@ -56,9 +59,13 @@ public class PhotoViewActivity extends BaseActivity {
         adapter.setOnClickListener(new PhotoViewPagerAdapter.onImageLayoutOnClickListener() {
             @Override
             public void setOnImageOnClik() {
-                finish();
+               onBackPressed();
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

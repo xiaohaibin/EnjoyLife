@@ -1,6 +1,6 @@
 package com.xhb.core.api;
 
-import com.xhb.core.MainApplication;
+import com.xhb.core.BaseApplication;
 import com.xhb.core.util.NetworkUtil;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class HttpCacheInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (!NetworkUtil.isInternetConnection(MainApplication.getContext())) {
+        if (!NetworkUtil.isInternetConnection(BaseApplication.getContext())) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
@@ -23,7 +23,7 @@ public class HttpCacheInterceptor implements Interceptor {
 
         Response response = chain.proceed(request);
 
-        if (NetworkUtil.isInternetConnection(MainApplication.getContext())) {
+        if (NetworkUtil.isInternetConnection(BaseApplication.getContext())) {
             int maxAge = 60 * 60; // read from cache for 1 minute
             response.newBuilder()
                     .removeHeader("Pragma")

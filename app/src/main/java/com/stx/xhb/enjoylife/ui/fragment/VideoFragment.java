@@ -5,19 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.stx.xhb.enjoylife.presenter.video.getVideoContact;
 import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
 import com.xhb.core.base.BaseFragment;
@@ -44,11 +36,10 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
     @Bind(R.id.ptr)
     PtrClassicFrameLayout ptr;
     private List<VideoEntity.IssueListEntity.ItemListEntity> list;
-    private String nextPublishTime;
+    private String nextPublishTime="";
     private VideoRecycleAdapter mAdapter;
     private boolean isRefresh;
     private boolean isRun;
-    private RequestQueue mQueue;
 
     public VideoFragment() {
     }
@@ -61,7 +52,6 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         list = new ArrayList<>();
-        mQueue = Volley.newRequestQueue(getActivity());
         setListener();
         setLvAdapter();
     }
@@ -98,7 +88,7 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
         list.addAll(itemList1);
         String nextUrl = response.getNextPageUrl();
         nextPublishTime= Uri.parse(nextUrl).getQueryParameter("date");
-        NotifyData();
+        notifydata();
     }
 
     @Override
@@ -136,8 +126,7 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                isRefresh = true;
-                ((getVideoPresenterImpl) mPresenter).getVideoInfo("",2);
+                onRefresh();
             }
         });
         //单个的点击事件
@@ -200,7 +189,12 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
 
     }
 
-    public void NotifyData() {
+    private void onRefresh() {
+        isRefresh = true;
+        ((getVideoPresenterImpl) mPresenter).getVideoInfo("",2);
+    }
+
+    public void notifydata() {
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }

@@ -1,12 +1,18 @@
 package com.stx.xhb.enjoylife.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.stx.xhb.enjoylife.ui.activity.MainActivity;
+import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
@@ -35,7 +41,6 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     private int page = 1;
     private String posId = "";
     private List<TuchongImagEntity.FeedListBean> imgList;
-    private ImageRecyclerAdapter recyclerAdapter;
 
     @Override
     protected int getLayoutResource() {
@@ -53,8 +58,25 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
         mRvTuChong.setArrowImageView(R.drawable.iconfont_downgrey);
         mRvTuChong.setLoadingListener(this);
         imgList = new ArrayList<>();
-        recyclerAdapter = new ImageRecyclerAdapter(getActivity(), R.layout.item_list_picture, imgList);
+
+        ImageRecyclerAdapter recyclerAdapter = new ImageRecyclerAdapter(getActivity(), R.layout.item_list_picture, imgList);
         mRvTuChong.setAdapter(recyclerAdapter);
+        recyclerAdapter.setOnImageItemClickListener(new ImageRecyclerAdapter.setOnImageItemClickListener() {
+            @Override
+            public void setOnImageClick(View view,ArrayList<String> imageList) {
+                Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                intent.putStringArrayListExtra("image", imageList);
+                intent.putExtra("pos",0);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(), view, PhotoViewActivity.TRANSIT_PIC);
+                try {
+                    ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
