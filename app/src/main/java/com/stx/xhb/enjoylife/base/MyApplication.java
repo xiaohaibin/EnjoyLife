@@ -1,9 +1,9 @@
 package com.stx.xhb.enjoylife.base;
 
-import com.meikoz.core.BuildConfig;
-import com.meikoz.core.MainApplication;
-import com.meikoz.core.api.RestApi;
-import com.meikoz.core.manage.crash.AndroidCrash;
+import com.xhb.core.BuildConfig;
+import com.xhb.core.MainApplication;
+import com.xhb.core.api.RestApi;
+import com.xhb.core.manage.crash.AndroidCrash;
 import com.tencent.bugly.Bugly;
 
 /**

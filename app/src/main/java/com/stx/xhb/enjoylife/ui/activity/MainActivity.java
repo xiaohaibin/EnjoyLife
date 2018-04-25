@@ -16,7 +16,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.meikoz.core.base.BaseActivity;
+import com.xhb.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.Config;
 import com.stx.xhb.enjoylife.ui.fragment.TuChongFragment;

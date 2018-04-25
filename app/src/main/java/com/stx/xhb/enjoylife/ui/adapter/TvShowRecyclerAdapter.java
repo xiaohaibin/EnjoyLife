@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.meikoz.core.adapter.RecyclerAdapter;
-import com.meikoz.core.adapter.RecyclerViewHolder;
+import com.xhb.core.adapter.RecyclerAdapter;
+import com.xhb.core.adapter.RecyclerViewHolder;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.SwitchVideoModel;
 import com.stx.xhb.enjoylife.model.entity.TvModel;

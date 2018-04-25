@@ -3,7 +3,7 @@ package com.stx.xhb.enjoylife.ui.fragment;
 
 import android.os.Bundle;
 
-import com.meikoz.core.base.BaseFragment;
+import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 
 /**

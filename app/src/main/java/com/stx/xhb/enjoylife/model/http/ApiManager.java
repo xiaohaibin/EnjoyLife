@@ -1,6 +1,6 @@
 package com.stx.xhb.enjoylife.model.http;
 
-import com.meikoz.core.api.RestApi;
+import com.xhb.core.api.RestApi;
 import com.stx.xhb.enjoylife.config.Constants;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 import com.stx.xhb.enjoylife.model.entity.VideoEntity;

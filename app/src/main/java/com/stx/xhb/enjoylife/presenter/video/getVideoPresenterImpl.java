@@ -1,6 +1,6 @@
 package com.stx.xhb.enjoylife.presenter.video;
 
-import com.meikoz.core.base.BasePresenter;
+import com.xhb.core.base.BasePresenter;
 import com.stx.xhb.enjoylife.model.entity.VideoEntity;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
 

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.meikoz.core.base.BaseSwipeBackActivity;
-import com.meikoz.core.ui.SwipeBackLayout;
+import com.xhb.core.base.BaseSwipeBackActivity;
+import com.xhb.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.R;
 
 import butterknife.Bind;

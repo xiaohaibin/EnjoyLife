@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
-import com.meikoz.core.base.BaseActivity;
+import com.xhb.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
 

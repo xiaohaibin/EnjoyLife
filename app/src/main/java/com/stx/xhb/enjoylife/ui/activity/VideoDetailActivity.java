@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.meikoz.core.base.BaseSwipeBackActivity;
-import com.meikoz.core.ui.SwipeBackLayout;
+import com.xhb.core.base.BaseSwipeBackActivity;
+import com.xhb.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.utils.NetConnectedUtils;
 

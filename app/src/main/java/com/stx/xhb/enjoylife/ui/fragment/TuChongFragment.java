@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.meikoz.core.base.BaseFragment;
+import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppContact;

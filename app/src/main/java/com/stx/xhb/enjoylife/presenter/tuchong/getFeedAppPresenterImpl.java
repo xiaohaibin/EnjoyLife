@@ -2,7 +2,7 @@ package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import android.text.TextUtils;
 
-import com.meikoz.core.base.BasePresenter;
+import com.xhb.core.base.BasePresenter;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
 

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
-import com.meikoz.core.base.BaseActivity;
+import com.xhb.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 
 import butterknife.Bind;
