@@ -11,14 +11,13 @@ import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.stx.xhb.enjoylife.ui.activity.MainActivity;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
+import com.stx.xhb.enjoylife.ui.adapter.TuChongListAdapter;
 import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppContact;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppPresenterImpl;
-import com.stx.xhb.enjoylife.ui.adapter.ImageRecyclerAdapter;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
 
 import java.util.ArrayList;
@@ -27,12 +26,11 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * Created by jxnk25 on 2016/12/2.
  *
  * @link https://xiaohaibin.github.io/
  * @email： xhb_199409@163.com
  * @github: https://github.com/xiaohaibin
- * @description： 电视直播
+ * @description： 图虫摄影
  */
 public class TuChongFragment extends BaseFragment implements XRecyclerView.LoadingListener, getFeedAppContact.View {
 
@@ -63,9 +61,9 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
         mRvTuChong.setLoadingListener(this);
         imgList = new ArrayList<>();
 
-        ImageRecyclerAdapter recyclerAdapter = new ImageRecyclerAdapter(getActivity(), R.layout.item_list_picture, imgList);
-        mRvTuChong.setAdapter(recyclerAdapter);
-        recyclerAdapter.setOnImageItemClickListener(new ImageRecyclerAdapter.setOnImageItemClickListener() {
+        TuChongListAdapter tuChongListAdapter = new TuChongListAdapter(getActivity(), R.layout.list_item_list_tuchong,imgList);
+        mRvTuChong.setAdapter(tuChongListAdapter);
+        tuChongListAdapter.setOnImageItemClickListener(new TuChongListAdapter.setOnImageItemClickListener() {
             @Override
             public void setOnImageClick(View view, ArrayList<String> imageList) {
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);

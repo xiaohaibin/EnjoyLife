@@ -44,9 +44,9 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             case TEXT:
                 return new TextViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_text_item, parent, false));
             case VIDEO:
-                return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_vedio_item, parent, false));
+                return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_video_item, parent, false));
             default:
-                return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_vedio_item, parent, false));
+                return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_video_item, parent, false));
         }
     }
 

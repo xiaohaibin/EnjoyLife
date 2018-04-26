@@ -39,7 +39,6 @@ public class ImageRecyclerAdapter extends RecyclerAdapter<TuchongImagEntity.Feed
         TuchongImagEntity.FeedListBean.ImagesBean imagesBean = images.get(0);
         if (imagesBean!=null) {
             String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
-            Glide.with(imageView.getContext()).load(url).into(imageView);
             ImageLoaderProxy.getInstance().loadIntoUseFitWidth(imageView,url);
             ViewCompat.setTransitionName(imageView,url);
         }
@@ -57,6 +56,7 @@ public class ImageRecyclerAdapter extends RecyclerAdapter<TuchongImagEntity.Feed
                 }
             }
         });
+        holder.itemView.setTag(item.getTitle());
     }
 
     private setOnImageItemClickListener mOnImageItemClickListener;
