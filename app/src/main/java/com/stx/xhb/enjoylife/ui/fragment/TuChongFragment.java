@@ -100,10 +100,6 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     @Override
     protected void onInitData2Remote() {
         super.onInitData2Remote();
-    }
-
-    @Override
-    protected void lazyLoad() {
         onRefresh();
     }
 

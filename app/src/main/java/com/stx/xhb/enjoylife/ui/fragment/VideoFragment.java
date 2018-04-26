@@ -4,56 +4,59 @@ package com.stx.xhb.enjoylife.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
-import com.stx.xhb.enjoylife.presenter.video.getVideoContact;
-import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
-import com.xhb.core.base.BaseFragment;
+
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoEntity;
+import com.stx.xhb.enjoylife.presenter.video.getVideoContact;
+import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
+import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
-import com.stx.xhb.enjoylife.ui.adapter.VideoRecycleAdapter;
+import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
+import com.xhb.core.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * 视频推荐
  */
-public class VideoFragment extends BaseFragment implements getVideoContact.getVideoView{
+public class VideoFragment extends BaseFragment implements getVideoContact.getVideoView, XRecyclerView.LoadingListener {
 
-    @Bind(R.id.lv_video)
-    ListView lvVideo;
-    @Bind(R.id.ptr)
-    PtrClassicFrameLayout ptr;
+    @Bind(R.id.recly_view)
+    XRecyclerView mReclyView;
     private List<VideoEntity.IssueListEntity.ItemListEntity> list;
-    private String nextPublishTime="";
-    private VideoRecycleAdapter mAdapter;
+    private String nextPublishTime = "";
+    private VideoRecyclerAdapter mRecyclerAdapter;
     private boolean isRefresh;
-    private boolean isRun;
 
     public static VideoFragment newInstance() {
         return new VideoFragment();
     }
+
     @Override
     protected int getLayoutResource() {
-        return R.layout.fragment_video;
+        return R.layout.fragment_common;
     }
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
         list = new ArrayList<>();
-        setListener();
+        mReclyView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mReclyView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        mReclyView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
+        mReclyView.setArrowImageView(R.drawable.iconfont_downgrey);
+        mReclyView.setLoadingListener(this);
         setLvAdapter();
+        setListener();
     }
 
     @Override
@@ -67,49 +70,44 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
     }
 
     @Override
+    protected void onVisible() {
+        super.onVisible();
+        onRefresh();
+    }
+
+    @Override
     public void onResponse(VideoEntity response) {
         List<VideoEntity.IssueListEntity> issueList = response.getIssueList();
-        if (issueList==null||issueList.isEmpty()){
+        if (issueList == null || issueList.isEmpty()) {
             return;
         }
-        VideoEntity.IssueListEntity issueListEntity = issueList.get(0);
-        List<VideoEntity.IssueListEntity.ItemListEntity> itemList = issueListEntity.getItemList();
-        VideoEntity.IssueListEntity issueListEntity2 = issueList.get(1);
-        List<VideoEntity.IssueListEntity.ItemListEntity> itemList1 = issueListEntity2.getItemList();
-        isRun = false;
-
         //刷新需要清除数据
         if (isRefresh) {
             list.clear();
-            ptr.refreshComplete();
-            isRefresh = false;
+            mReclyView.refreshComplete();
         }
-        list.addAll(itemList);
-        list.addAll(itemList1);
+        mReclyView.loadMoreComplete();
+        for (int i = 0; i < issueList.size(); i++) {
+            list.addAll(issueList.get(i).getItemList());
+        }
         String nextUrl = response.getNextPageUrl();
-        nextPublishTime= Uri.parse(nextUrl).getQueryParameter("date");
+        nextPublishTime = Uri.parse(nextUrl).getQueryParameter("date");
         notifydata();
     }
 
     @Override
     public void onFailure(String msg) {
-        isRun = false;
         if (isRefresh) {
-            ptr.refreshComplete();
+            mReclyView.refreshComplete();
         }
+        mReclyView.loadMoreComplete();
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void lazyLoad() {
-        onRefresh();
-    }
-
     private void setListener() {
-        //单个的点击事件
-        lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mRecyclerAdapter.setItemClickListener(new VideoRecyclerAdapter.setOnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(View view,int position) {
                 Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
                 Bundle bundle = new Bundle();
                 VideoEntity.IssueListEntity.ItemListEntity.DataEntity data = list.get(position).getData();
@@ -142,43 +140,39 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
                 bundle.putInt("share", data.getConsumption().getShareCount());//分享量
                 bundle.putInt("reply", data.getConsumption().getReplyCount());//回复数量
                 intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
 
-        lvVideo.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                    if (!isRun) {
-                        isRun = true;
-                        ((getVideoPresenterImpl) mPresenter).getVideoInfo(nextPublishTime,2);
-                    }
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(), view, VideoDetailActivity.TRANSIT_PIC);
+                try {
+                    ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                    startActivity(intent);
                 }
             }
         });
-
-
     }
 
-    private void onRefresh() {
+    @Override
+    public void onRefresh() {
         isRefresh = true;
-        ((getVideoPresenterImpl) mPresenter).getVideoInfo("",2);
+        ((getVideoPresenterImpl) mPresenter).getVideoInfo("", 2);
+    }
+
+    @Override
+    public void onLoadMore() {
+        isRefresh = false;
+        ((getVideoPresenterImpl) mPresenter).getVideoInfo(nextPublishTime, 2);
     }
 
     public void notifydata() {
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
+        if (mRecyclerAdapter != null) {
+            mRecyclerAdapter.notifyDataSetChanged();
         }
     }
 
     private void setLvAdapter() {
-        mAdapter = new VideoRecycleAdapter(getActivity(), list);
-        lvVideo.setAdapter(mAdapter);
+        mRecyclerAdapter = new VideoRecyclerAdapter(getActivity(), list);
+        mReclyView.setAdapter(mRecyclerAdapter);
     }
 }

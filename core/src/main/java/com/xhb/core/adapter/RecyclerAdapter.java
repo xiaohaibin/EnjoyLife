@@ -42,7 +42,6 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         return true;
     }
 
-
     protected void setListener(final ViewGroup parent, final RecyclerViewHolder viewHolder, int viewType) {
         if (!isEnabled(viewType)) return;
         viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
@@ -54,7 +53,6 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
                 }
             }
         });
-
 
         viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -78,7 +76,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public int getItemCount() {
-        return mDatas.size() != 0 ? mDatas.size() : 0;
+        return mDatas!= null ? mDatas.size() : 0;
     }
 
 

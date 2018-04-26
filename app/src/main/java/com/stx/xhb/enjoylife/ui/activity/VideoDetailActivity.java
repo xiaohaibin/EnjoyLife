@@ -3,6 +3,7 @@ package com.stx.xhb.enjoylife.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xhb.core.base.BaseSwipeBackActivity;
 import com.xhb.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.R;
@@ -36,6 +38,7 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
     private String video;
     private String title;
     private String mFeed;
+    public static final String TRANSIT_PIC="transit_picture";
 
     public static void start(Context context) {
         Intent intent = new Intent(context, VideoDetailActivity.class);
@@ -57,6 +60,7 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
                 finish();
             }
         });
+        ViewCompat.setTransitionName(videoDetailIv, VideoDetailActivity.TRANSIT_PIC);
         initData();
     }
 
@@ -70,11 +74,11 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
         String blurred = getIntent().getStringExtra("blurred");//模糊图片
         video = getIntent().getStringExtra("video");//视频播放地址
         //给控件设置数据
-        Glide.with(this).load(mFeed).into(videoDetailIv);
+        Glide.with(this).load(mFeed).diskCacheStrategy(DiskCacheStrategy.ALL).into(videoDetailIv);
         videoDetailTitle.setText(title);
         videoDetailTime.setText(time);
         videoDetailDesc.setText(desc);
-        Glide.with(this).load(blurred).into(videoDetailIvmo);
+        Glide.with(this).load(blurred).diskCacheStrategy(DiskCacheStrategy.ALL).into(videoDetailIvmo);
     }
 
     @OnClick(R.id.video_paly)
