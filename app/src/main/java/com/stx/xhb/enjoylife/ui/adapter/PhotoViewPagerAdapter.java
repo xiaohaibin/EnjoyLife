@@ -46,8 +46,9 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(context);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        final String imgUrl = imageList.get(position);
         Glide.with(context)
-                .load(imageList.get(position))
+                .load(imgUrl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(photoView);
         photoView.setOnViewTapListener(new OnViewTapListener() {
@@ -56,6 +57,16 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
                 if (mOnClickListener!=null){
                     mOnClickListener.setOnImageOnClik();
                 }
+            }
+        });
+
+        photoView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnClickListener!=null){
+                    mOnClickListener.setLongClick(imgUrl);
+                }
+                return true;
             }
         });
         container.addView(photoView);
@@ -73,5 +84,7 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
 
     public interface onImageLayoutOnClickListener {
         void setOnImageOnClik();
+
+        void setLongClick(String url);
     }
 }

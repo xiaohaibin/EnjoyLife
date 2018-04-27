@@ -13,10 +13,9 @@ import android.widget.Toast;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.model.entity.VideoEntity;
+import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.presenter.video.getVideoContact;
 import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
-import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
 import com.xhb.core.base.BaseFragment;
@@ -33,7 +32,7 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
 
     @Bind(R.id.recly_view)
     XRecyclerView mReclyView;
-    private List<VideoEntity.IssueListEntity.ItemListEntity> list;
+    private List<VideoResponse.IssueListEntity.ItemListEntity> list;
     private String nextPublishTime = "";
     private VideoRecyclerAdapter mRecyclerAdapter;
     private boolean isRefresh;
@@ -57,6 +56,7 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
         mReclyView.setLoadingListener(this);
         setLvAdapter();
         setListener();
+        onRefresh();
     }
 
     @Override
@@ -65,19 +65,8 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
     }
 
     @Override
-    protected void onInitData2Remote() {
-        super.onInitData2Remote();
-    }
-
-    @Override
-    protected void onVisible() {
-        super.onVisible();
-        onRefresh();
-    }
-
-    @Override
-    public void onResponse(VideoEntity response) {
-        List<VideoEntity.IssueListEntity> issueList = response.getIssueList();
+    public void onResponse(VideoResponse response) {
+        List<VideoResponse.IssueListEntity> issueList = response.getIssueList();
         if (issueList == null || issueList.isEmpty()) {
             return;
         }
@@ -110,7 +99,7 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
             public void onItemClick(View view,int position) {
                 Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
                 Bundle bundle = new Bundle();
-                VideoEntity.IssueListEntity.ItemListEntity.DataEntity data = list.get(position).getData();
+                VideoResponse.IssueListEntity.ItemListEntity.DataEntity data = list.get(position).getData();
                 if (!"video".equals(list.get(position).getType())) {
                     return;
                 }

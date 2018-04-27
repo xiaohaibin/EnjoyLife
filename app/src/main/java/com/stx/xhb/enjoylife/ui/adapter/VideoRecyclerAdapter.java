@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.model.entity.VideoEntity;
+import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 
 import java.util.List;
 
@@ -29,9 +29,9 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private static final int VIDEO = 1;
     private static final int TEXT = 2;
     private Context mContext;
-    private List<VideoEntity.IssueListEntity.ItemListEntity> mItemList;
+    private List<VideoResponse.IssueListEntity.ItemListEntity> mItemList;
 
-    public VideoRecyclerAdapter(Context context, List<VideoEntity.IssueListEntity.ItemListEntity> itemList) {
+    public VideoRecyclerAdapter(Context context, List<VideoResponse.IssueListEntity.ItemListEntity> itemList) {
         mContext = context;
         mItemList = itemList;
     }
@@ -52,7 +52,7 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        VideoEntity.IssueListEntity.ItemListEntity itemListEntity = mItemList.get(position);
+        VideoResponse.IssueListEntity.ItemListEntity itemListEntity = mItemList.get(position);
         if (holder instanceof BannerViewHodler) {
             Glide.with(mContext)
                     .load(itemListEntity.getData().getImage())
@@ -119,7 +119,7 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        VideoEntity.IssueListEntity.ItemListEntity itemListEntity = mItemList.get(position);
+        VideoResponse.IssueListEntity.ItemListEntity itemListEntity = mItemList.get(position);
         if ("video".equals(itemListEntity.getType())) {
             return VIDEO;
         } else if (itemListEntity.getType().startsWith("banner") && TextUtils.isEmpty(itemListEntity.getData().getActionUrl())) {

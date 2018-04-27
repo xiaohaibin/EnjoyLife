@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.stx.xhb.enjoylife.ui.adapter.TuChongListAdapter;
 import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppContact;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppPresenterImpl;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
@@ -38,7 +38,7 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     XRecyclerView mRvTuChong;
     private int page = 1;
     private String posId = "";
-    private List<TuchongImagEntity.FeedListBean> imgList;
+    private List<TuchongImagResponse.FeedListBean> imgList;
 
     public static TuChongFragment newInstance() {
         return new TuChongFragment();
@@ -82,7 +82,7 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     }
 
     @Override
-    public void onResponse(List<TuchongImagEntity.FeedListBean> feedList, boolean isMore) {
+    public void onResponse(List<TuchongImagResponse.FeedListBean> feedList, boolean isMore) {
         onLoadComplete(page);
         posId = String.valueOf(feedList.get(feedList.size() - 1).getPost_id());
         imgList.addAll(feedList);

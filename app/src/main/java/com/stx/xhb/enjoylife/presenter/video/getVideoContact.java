@@ -2,7 +2,7 @@ package com.stx.xhb.enjoylife.presenter.video;
 
 import com.xhb.core.base.BaseView;
 import com.xhb.core.model.annotation.Implement;
-import com.stx.xhb.enjoylife.model.entity.VideoEntity;
+import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 
 /**
  * Author：xiaohaibin
@@ -18,7 +18,7 @@ public interface getVideoContact {
 
     interface getVideoView extends BaseView{
 
-        void onResponse(VideoEntity response);
+        void onResponse(VideoResponse response);
 
         void onFailure(String msg);
     }

@@ -14,7 +14,12 @@
     <string name="about_coder">作者简介</string>
     <string name="introduce_about_coder">一个热衷于移动开发、喜欢摄影、旅游和美食的程序猿...</string>
     <string name="share">分享给朋友</string>
+    <string name="menu_save">保存</string>
+    <string name="menu_setting_picture">设为壁纸</string>
     <string name="action_share">分享</string>
+    <string name="picture_has_save_to">图片已保存至 %s 文件夹</string>
+    <string name="string_img_save_failed">图片保存失败，请重试</string>
+    <string name="ask_saving_picture">保存到手机?</string>
     <string name="share_text">发现了一款非常棒的App「乐享」，每天一张精选妹纸图、一个精选短视频，知乎美文，完全开源不收费，太赞了!</string>
     <string name="introduce">每天一张精选妹纸图、一个精选小视频，一篇知乎美文。\n\n图片数据内容来源于图虫摄影网 \n\n视频数据来源于开眼视频 \n\n我的 GitHub: https://github.com/xiaohaibin\n\n完全开源，如果你觉得不错，可以帮忙分享给你更多的朋友，这是我最大的动力和支持，非常感谢！\n\n</string>
 </resources>

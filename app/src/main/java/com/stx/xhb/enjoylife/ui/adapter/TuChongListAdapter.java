@@ -21,42 +21,34 @@ package com.stx.xhb.enjoylife.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
+import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.ui.widget.RatioImageView;
 import com.xhb.core.adapter.RecyclerAdapter;
 import com.xhb.core.adapter.RecyclerViewHolder;
-import com.xhb.core.imageloader.ImageLoaderProxy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
-public class TuChongListAdapter extends RecyclerAdapter<TuchongImagEntity.FeedListBean> {
+public class TuChongListAdapter extends RecyclerAdapter<TuchongImagResponse.FeedListBean> {
 
     public static final String TAG = "TuChongListAdapter";
 
     private Context mContext;
     private setOnImageItemClickListener mOnImageItemClickListener;
 
-    public TuChongListAdapter(Context context, int layoutId, List<TuchongImagEntity.FeedListBean> datas) {
+    public TuChongListAdapter(Context context, int layoutId, List<TuchongImagResponse.FeedListBean> datas) {
         super(context, layoutId, datas);
         mContext = context;
     }
 
     @Override
-    public void convert(final RecyclerViewHolder holder, TuchongImagEntity.FeedListBean feedListBean) {
+    public void convert(final RecyclerViewHolder holder, TuchongImagResponse.FeedListBean feedListBean) {
         final RatioImageView imageView = (RatioImageView) holder.getView(R.id.iv_img);
         imageView.setOriginalSize(50, 50);
         int limit = 48;
@@ -64,11 +56,11 @@ public class TuChongListAdapter extends RecyclerAdapter<TuchongImagEntity.FeedLi
                 "..." : feedListBean.getTitle();
         ((TextView) holder.getView(R.id.tv_title)).setText(text);
 
-        List<TuchongImagEntity.FeedListBean.ImagesBean> images = feedListBean.getImages();
+        List<TuchongImagResponse.FeedListBean.ImagesBean> images = feedListBean.getImages();
         if (images == null || images.isEmpty()) {
             return;
         }
-        TuchongImagEntity.FeedListBean.ImagesBean imagesBean = images.get(0);
+        TuchongImagResponse.FeedListBean.ImagesBean imagesBean = images.get(0);
         if (imagesBean != null) {
             String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
             Glide.with(mContext)
@@ -89,7 +81,7 @@ public class TuChongListAdapter extends RecyclerAdapter<TuchongImagEntity.FeedLi
 
         final ArrayList<String> imageList = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
-            TuchongImagEntity.FeedListBean.ImagesBean imageData = images.get(i);
+            TuchongImagResponse.FeedListBean.ImagesBean imageData = images.get(i);
             String url = "https://photo.tuchong.com/" + imageData.getUser_id() + "/f/" + imageData.getImg_id() + ".jpg";
             imageList.add(url);
         }

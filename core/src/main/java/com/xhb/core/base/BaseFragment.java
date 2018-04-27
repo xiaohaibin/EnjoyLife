@@ -51,7 +51,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
         onInitData2Remote();
         ButterKnife.bind(this, rootView);
-        this.onInitView(savedInstanceState);
+        onInitView(savedInstanceState);
         return rootView;
     }
 

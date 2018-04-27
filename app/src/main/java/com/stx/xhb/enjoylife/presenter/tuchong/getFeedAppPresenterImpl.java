@@ -3,7 +3,7 @@ package com.stx.xhb.enjoylife.presenter.tuchong;
 import android.text.TextUtils;
 
 import com.xhb.core.base.BasePresenter;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
+import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
 
 import java.util.HashMap;
@@ -29,16 +29,16 @@ public class getFeedAppPresenterImpl extends BasePresenter<getFeedAppContact.Vie
         if (!TextUtils.isEmpty(posId)) {
             map.put("post_id", posId);
         }
-        ApiManager.ApiFactory.createTuChongApi().getFeedApp(map).enqueue(new Callback<TuchongImagEntity>() {
+        ApiManager.ApiFactory.createTuChongApi().getFeedApp(map).enqueue(new Callback<TuchongImagResponse>() {
             @Override
-            public void onResponse(Call<TuchongImagEntity> call, Response<TuchongImagEntity> response) {
+            public void onResponse(Call<TuchongImagResponse> call, Response<TuchongImagResponse> response) {
                 if (response.isSuccessful() && response.body() != null&&response.body().getFeedList()!=null&&!response.body().getFeedList().isEmpty()) {
                     getView().onResponse(response.body().getFeedList(), response.body().isMore());
                 }
             }
 
             @Override
-            public void onFailure(Call<TuchongImagEntity> call, Throwable t) {
+            public void onFailure(Call<TuchongImagResponse> call, Throwable t) {
                 getView().onFailure(t.getMessage());
             }
         });

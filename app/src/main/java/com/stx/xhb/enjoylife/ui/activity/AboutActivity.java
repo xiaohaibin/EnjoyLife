@@ -75,7 +75,8 @@ public class AboutActivity extends BaseSwipeBackActivity {
             case R.id.menu_share:
                 ShareUtils.share(this, R.string.share_text);
                 return true;
-
+                default:
+                    break;
         }
         return super.onOptionsItemSelected(item);
     }

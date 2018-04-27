@@ -18,7 +18,6 @@ public class BasePresenter<T extends BaseView> implements Presenter<T> {
         return mView != null;
     }
 
-
     public T getView() {
         return mView;
     }

@@ -2,7 +2,7 @@ package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import com.xhb.core.base.BaseView;
 import com.xhb.core.model.annotation.Implement;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagEntity;
+import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public interface getFeedAppContact {
 
     interface View extends BaseView{
 
-        void onResponse(List<TuchongImagEntity.FeedListBean> feedList,boolean isMore);
+        void onResponse(List<TuchongImagResponse.FeedListBean> feedList, boolean isMore);
 
         void onFailure(String msg);
     }
