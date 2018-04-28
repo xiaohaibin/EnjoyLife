@@ -1,7 +1,10 @@
 package com.stx.xhb.enjoylife.ui.activity;
 
 import android.Manifest;
+import android.app.WallpaperManager;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,9 +15,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jaeger.library.StatusBarUtil;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.xhb.core.base.BaseActivity;
@@ -22,7 +30,10 @@ import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
 import com.xhb.core.util.RxImage;
 
+import junit.framework.Test;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -43,7 +54,7 @@ public class PhotoViewActivity extends BaseActivity {
     private ArrayList<String> imageList;
     private int mPos;
     public static final String TRANSIT_PIC = "transit_img";
-    private String saveImgUrl="";
+    private String saveImgUrl = "";
 
     @Override
     protected int getLayoutResource() {
@@ -57,6 +68,7 @@ public class PhotoViewActivity extends BaseActivity {
         photoViewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                saveImgUrl = imageList.get(photoViewpager.getCurrentItem());
                 mTvIndicator.setText(String.valueOf((photoViewpager.getCurrentItem() + 1) + "/" + imageList.size()));
             }
         });
@@ -93,8 +105,7 @@ public class PhotoViewActivity extends BaseActivity {
             }
 
             @Override
-            public void setLongClick(final String url) {
-                saveImgUrl=url;
+            public void setLongClick(String url) {
                 new AlertDialog.Builder(PhotoViewActivity.this)
                         .setMessage(getString(R.string.ask_saving_picture))
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -107,8 +118,8 @@ public class PhotoViewActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (checkPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})) {
-                                    saveImage(saveImgUrl);
-                                }else {
+                                    saveImage();
+                                } else {
                                     requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISS_REQUEST_CODE);
                                 }
                                 dialog.dismiss();
@@ -122,10 +133,10 @@ public class PhotoViewActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (PERMISS_REQUEST_CODE==requestCode){
-            if (checkPermissions(permissions)){
-                saveImage(saveImgUrl);
-            }else {
+        if (PERMISS_REQUEST_CODE == requestCode) {
+            if (checkPermissions(permissions)) {
+                saveImage();
+            } else {
                 showTipsDialog();
             }
         }
@@ -142,8 +153,25 @@ public class PhotoViewActivity extends BaseActivity {
         return true;
     }
 
-    private void saveImage(String url) {
-        Subscription subscribe = RxImage.saveImageAndGetPathObservable(this, url)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                saveImage();
+                return true;
+            case R.id.menu_setting_picture:
+                setWallpaper();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * 保存图片
+     */
+    private void saveImage() {
+        Subscription subscribe = RxImage.saveImageAndGetPathObservable(this, saveImgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Uri>() {
                     @Override
@@ -160,5 +188,21 @@ public class PhotoViewActivity extends BaseActivity {
                     }
                 });
         addSubscription(subscribe);
+    }
+
+    private void setWallpaper() {
+        Glide.with(this).load(saveImgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                WallpaperManager manager = WallpaperManager.getInstance(PhotoViewActivity.this);
+                try {
+                    manager.setBitmap(resource);
+                    ToastUtil.show("设置壁纸成功");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ToastUtil.show("设置壁纸失败");
+                }
+            }
+        });
     }
 }

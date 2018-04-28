@@ -23,9 +23,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="ToolbarTheme" parent="AppTheme">
+    <style name="ToolbarTheme" parent="AppTheme.AppBarOverlay">
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@color/color_888888</item>
         <item name="colorControlActivated">@android:color/white</item>
     </style>
 

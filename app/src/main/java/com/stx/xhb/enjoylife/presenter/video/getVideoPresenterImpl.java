@@ -15,7 +15,7 @@ import retrofit2.Response;
 /**
  * Created by Mr.xiao on 16/7/14.
  */
-public class getVideoPresenterImpl extends BasePresenter<getVideoContact.getVideoView> implements getVideoContact {
+public class getVideoPresenterImpl extends BasePresenter<getVideoContract.getVideoView> implements getVideoContract {
 
     @Override
     public void getVideoInfo(String date, int num) {

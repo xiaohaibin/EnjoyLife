@@ -7,7 +7,7 @@ package com.stx.xhb.enjoylife.config;
 public interface Constants {
 
     //开眼视频推荐接口
-    String VIDEO_API = "http://baobab.kaiyanapp.com/api/";
+     String VIDEO_API = "http://baobab.kaiyanapp.com/api/";
 
     /**
      * 图虫推荐API
@@ -18,4 +18,7 @@ public interface Constants {
      * 图片地址：https://photo.tuchong.com/ + user_id +/f/ + img_id 即图片地址 例如：https://photo.tuchong.com/1673709/f/25389444.jpg
      */
     String TUCHONG_API = "https://api.tuchong.com/";
+
+
+
 }

@@ -8,13 +8,15 @@ import com.stx.xhb.enjoylife.R;
 public class Config {
 
 
-    public static final String GUOKR = "image";
+    public static final String FEED = "image";
+    public static final String WALLPAPER = "wallpaper";
     public static final String ZHIHU = "zhihu";
     public static final String VIDEO = "video";
 
     public enum Channel {
         IMAGE(R.string.fragment_image_title, R.drawable.icon_picture_black_24px),
         VIDEO(R.string.fragment_video_title, R.drawable.ic_video_black_24px),
+        WALLPAPER(R.string.fragment_wallpaper_title,R.drawable.icon_picture_black_24px),
         ZHIHU(R.string.fragment_zhihu_title, R.drawable.icon_zhihu_black_24px);
 
         private int title;

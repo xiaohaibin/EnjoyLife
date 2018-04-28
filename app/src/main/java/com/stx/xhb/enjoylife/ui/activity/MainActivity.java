@@ -16,10 +16,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.stx.xhb.enjoylife.ui.fragment.TuChongFeedFragment;
+import com.stx.xhb.enjoylife.ui.fragment.TuChongWallPaperFragment;
 import com.xhb.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.Config;
-import com.stx.xhb.enjoylife.ui.fragment.TuChongFragment;
 import com.stx.xhb.enjoylife.ui.fragment.VideoFragment;
 import com.stx.xhb.enjoylife.ui.fragment.ZhihuFragment;
 import com.stx.xhb.enjoylife.utils.AppUtil;
@@ -148,14 +149,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void addFragment(String name) {
         switch (name) {
-            case "ZHIHU":
+            case Config.ZHIHU:
                 mFragments.add(ZhihuFragment.newInstance());
                 break;
-            case "VIDEO":
+            case Config.VIDEO:
                 mFragments.add(VideoFragment.newInstance());
                 break;
-            case "IMAGE":
-                mFragments.add(TuChongFragment.newInstance());
+            case Config.FEED:
+                mFragments.add(TuChongFeedFragment.newInstance());
+                break;
+            case Config.WALLPAPER:
+                mFragments.add(TuChongWallPaperFragment.newInstance());
                 break;
             default:
                 break;

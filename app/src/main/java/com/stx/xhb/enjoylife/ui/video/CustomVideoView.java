@@ -28,7 +28,6 @@ public class CustomVideoView extends StandardGSYVideoPlayer {
     //记住切换数据源类型
     private int mType = 0;
 
-
     /**
      * 1.5.0开始加入，如果需要不同布局区分功能，需要重载
      */

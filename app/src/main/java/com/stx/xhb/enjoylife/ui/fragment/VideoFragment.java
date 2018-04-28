@@ -14,7 +14,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
-import com.stx.xhb.enjoylife.presenter.video.getVideoContact;
+import com.stx.xhb.enjoylife.presenter.video.getVideoContract;
 import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
@@ -28,7 +28,7 @@ import butterknife.Bind;
 /**
  * 视频推荐
  */
-public class VideoFragment extends BaseFragment implements getVideoContact.getVideoView, XRecyclerView.LoadingListener {
+public class VideoFragment extends BaseFragment implements getVideoContract.getVideoView, XRecyclerView.LoadingListener {
 
     @Bind(R.id.recly_view)
     XRecyclerView mReclyView;
@@ -61,7 +61,7 @@ public class VideoFragment extends BaseFragment implements getVideoContact.getVi
 
     @Override
     protected Class getLogicClazz() {
-        return getVideoContact.class;
+        return getVideoContract.class;
     }
 
     @Override

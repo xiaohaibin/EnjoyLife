@@ -11,14 +11,14 @@ import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
-import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
-import com.stx.xhb.enjoylife.ui.adapter.TuChongListAdapter;
-import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppContact;
-import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppPresenterImpl;
+import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
+import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperContract;
+import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperPresenterImpl;
+import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
+import com.stx.xhb.enjoylife.ui.adapter.TuChongWallPaperAdapter;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
+import com.xhb.core.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +32,15 @@ import butterknife.Bind;
  * @github: https://github.com/xiaohaibin
  * @description： 图虫摄影
  */
-public class TuChongFragment extends BaseFragment implements XRecyclerView.LoadingListener, getFeedAppContact.View {
+public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerView.LoadingListener,getWallPaperContract.View {
 
     @Bind(R.id.recly_view)
     XRecyclerView mRvTuChong;
     private int page = 1;
-    private String posId = "";
-    private List<TuchongImagResponse.FeedListBean> imgList;
+    private List<TuChongWallPaperResponse.FeedListBean> imgList;
 
-    public static TuChongFragment newInstance() {
-        return new TuChongFragment();
+    public static TuChongWallPaperFragment newInstance() {
+        return new TuChongWallPaperFragment();
     }
 
     @Override
@@ -61,9 +60,9 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
         mRvTuChong.setLoadingListener(this);
         imgList = new ArrayList<>();
 
-        TuChongListAdapter tuChongListAdapter = new TuChongListAdapter(getActivity(), R.layout.list_item_list_tuchong,imgList);
+        TuChongWallPaperAdapter tuChongListAdapter = new TuChongWallPaperAdapter(getActivity(), R.layout.list_item_list_tuchong,imgList);
         mRvTuChong.setAdapter(tuChongListAdapter);
-        tuChongListAdapter.setOnImageItemClickListener(new TuChongListAdapter.setOnImageItemClickListener() {
+        tuChongListAdapter.setOnImageItemClickListener(new TuChongWallPaperAdapter.setOnImageItemClickListener() {
             @Override
             public void setOnImageClick(View view, ArrayList<String> imageList) {
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);
@@ -82,11 +81,15 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
     }
 
     @Override
-    public void onResponse(List<TuchongImagResponse.FeedListBean> feedList, boolean isMore) {
+    public void onResponse(List<TuChongWallPaperResponse.FeedListBean> feedList, boolean isMore) {
         onLoadComplete(page);
-        posId = String.valueOf(feedList.get(feedList.size() - 1).getPost_id());
-        imgList.addAll(feedList);
         mRvTuChong.setLoadingMoreEnabled(isMore);
+        for (int i = 0; i < feedList.size(); i++) {
+            TuChongWallPaperResponse.FeedListBean feedListBean = feedList.get(i);
+            if ("post".equals(feedListBean.getType())) {
+                imgList.add(feedListBean);
+            }
+        }
     }
 
     @Override
@@ -103,19 +106,19 @@ public class TuChongFragment extends BaseFragment implements XRecyclerView.Loadi
 
     @Override
     protected Class getLogicClazz() {
-        return getFeedAppContact.class;
+        return getWallPaperContract.class;
     }
 
     @Override
     public void onRefresh() {
         page = 1;
-        ((getFeedAppPresenterImpl) mPresenter).getFeedAppImage(page, "refresh", posId);
+        ((getWallPaperPresenterImpl) mPresenter).getWallPaper(page);
     }
 
     @Override
     public void onLoadMore() {
         page++;
-        ((getFeedAppPresenterImpl) mPresenter).getFeedAppImage(page, "loadmore", posId);
+        ((getWallPaperPresenterImpl) mPresenter).getWallPaper(page);
     }
 
     private void onLoadComplete(int page) {
