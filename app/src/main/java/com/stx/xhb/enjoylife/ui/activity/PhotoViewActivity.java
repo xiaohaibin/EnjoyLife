@@ -157,7 +157,11 @@ public class PhotoViewActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
-                saveImage();
+                if (checkPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})) {
+                    saveImage();
+                } else {
+                    requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISS_REQUEST_CODE);
+                }
                 return true;
             case R.id.menu_setting_picture:
                 setWallpaper();
