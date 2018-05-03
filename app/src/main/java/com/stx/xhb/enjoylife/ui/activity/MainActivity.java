@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //判断SDK版本是否是API 19
         if (AppUtil.getSDKVersionNumber() == Build.VERSION_CODES.KITKAT) {
             ctlMain.setFitsSystemWindows(false);
-            setToolBar(toolbar, true, false, drawerLayout);
+            int vibrantColor = setToolBar(toolbar, true, false, drawerLayout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);

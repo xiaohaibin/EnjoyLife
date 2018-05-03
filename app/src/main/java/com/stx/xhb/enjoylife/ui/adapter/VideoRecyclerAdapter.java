@@ -21,7 +21,7 @@ import java.util.List;
  * @time: 2018/4/26
  * @mail:xhb_199409@163.com
  * @github:https://github.com/xiaohaibin
- * @describe:
+ * @describe: 开眼视频列表适配器
  */
 public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -46,7 +46,7 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             case VIDEO:
                 return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_video_item, parent, false));
             default:
-                return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_video_item, parent, false));
+                return null;
         }
     }
 
@@ -59,19 +59,14 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(((BannerViewHodler) holder).ivBanner);
         } else if (holder instanceof TextViewHolder) {
-            if (itemListEntity.getType().startsWith("banner")) {
-                ((TextViewHolder) holder).tvTitle.setVisibility(View.GONE);
-            } else {
+            if (itemListEntity.getType().startsWith("text")) {
                 ((TextViewHolder) holder).tvTitle.setVisibility(View.VISIBLE);
-            }
-            String image = itemListEntity.getData().getImage();
-            if (!TextUtils.isEmpty(image)) {
-                ((TextViewHolder) holder).tvTitle.setTextSize(20);
-                ((TextViewHolder) holder).tvTitle.setText("-Weekend  special-");
             } else {
-                ((TextViewHolder) holder).tvTitle.setText(itemListEntity.getData().getText());
+                ((TextViewHolder) holder).tvTitle.setVisibility(View.GONE);
             }
-        }else if (holder instanceof VideoViewHolder){
+            ((TextViewHolder) holder).tvTitle.setText(itemListEntity.getData().getText());
+
+        } else if (holder instanceof VideoViewHolder) {
             //得到不同类型所需要的数据
             String feed = itemListEntity.getData().getCover().getFeed();
             String title = itemListEntity.getData().getTitle();
@@ -104,8 +99,8 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mItemClickListener!=null){
-                        mItemClickListener.onItemClick(((VideoViewHolder) holder).imageView,position);
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onItemClick(((VideoViewHolder) holder).imageView, position);
                     }
                 }
             });
@@ -124,8 +119,9 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             return VIDEO;
         } else if (itemListEntity.getType().startsWith("banner") && TextUtils.isEmpty(itemListEntity.getData().getActionUrl())) {
             return BANNER;
+        } else {
+            return TEXT;
         }
-        return TEXT;
     }
 
     class BannerViewHodler extends RecyclerView.ViewHolder {
@@ -165,7 +161,7 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         mItemClickListener = itemClickListener;
     }
 
-    public interface setOnItemClickListener{
-        void onItemClick(View view,int pos);
+    public interface setOnItemClickListener {
+        void onItemClick(View view, int pos);
     }
 }

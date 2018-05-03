@@ -17,7 +17,7 @@ public class ViewHolder {
     private ViewHolder(Context context, ViewGroup parent, int layoutId,
                        int position) {
         this.mPosition = position;
-        this.mViews = new SparseArray<View>();
+        this.mViews = new SparseArray<>();
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
                 false);
         // setTag
@@ -57,8 +57,9 @@ public class ViewHolder {
      */
     public ViewHolder setText(int viewId, CharSequence text) {
         TextView view = getView(viewId);
-        if (view != null)
+        if (view != null) {
             view.setText(text);
+        }
         return this;
     }
 

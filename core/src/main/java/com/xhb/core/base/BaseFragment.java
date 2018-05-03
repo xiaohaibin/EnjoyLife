@@ -17,7 +17,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     protected BasePresenter mPresenter;
     protected View rootView;
-    protected Context mContext = null;//context
+    protected Context mContext = null;
     //是否可见
     protected boolean isViable = false;
 
