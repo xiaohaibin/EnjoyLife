@@ -86,10 +86,8 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             int minit = duration / 60;
             if (minit < 10) {
                 durationString = "0" + minit;
-
             } else {
                 durationString = "" + minit;
-
             }
             String stringTime = durationString + "' " + stringLast + '"';
 

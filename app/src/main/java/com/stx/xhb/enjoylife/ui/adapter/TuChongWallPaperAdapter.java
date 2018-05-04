@@ -41,7 +41,7 @@ public class TuChongWallPaperAdapter extends RecyclerAdapter<TuChongWallPaperRes
     public static final String TAG = "TuChongListAdapter";
 
     private Context mContext;
-    private setOnImageItemClickListener mOnImageItemClickListener;
+    private OnImageItemClickListener mOnImageItemClickListener;
 
     public TuChongWallPaperAdapter(Context context, int layoutId, List<TuChongWallPaperResponse.FeedListBean> datas) {
         super(context, layoutId, datas);
@@ -100,11 +100,11 @@ public class TuChongWallPaperAdapter extends RecyclerAdapter<TuChongWallPaperRes
         });
     }
 
-    public void setOnImageItemClickListener(setOnImageItemClickListener onImageItemClickListener) {
+    public void setOnImageItemClickListener(OnImageItemClickListener onImageItemClickListener) {
         mOnImageItemClickListener = onImageItemClickListener;
     }
 
-    public interface setOnImageItemClickListener {
+    public interface OnImageItemClickListener {
         void setOnImageClick(View view, ArrayList<String> imageList);
     }
 }

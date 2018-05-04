@@ -40,7 +40,7 @@ public class TuChongListAdapter extends RecyclerAdapter<TuchongImagResponse.Feed
     public static final String TAG = "TuChongListAdapter";
 
     private Context mContext;
-    private setOnImageItemClickListener mOnImageItemClickListener;
+    private OnImageItemClickListener mOnImageItemClickListener;
 
     public TuChongListAdapter(Context context, int layoutId, List<TuchongImagResponse.FeedListBean> datas) {
         super(context, layoutId, datas);
@@ -95,11 +95,11 @@ public class TuChongListAdapter extends RecyclerAdapter<TuchongImagResponse.Feed
         });
     }
 
-    public void setOnImageItemClickListener(setOnImageItemClickListener onImageItemClickListener) {
+    public void setOnImageItemClickListener(OnImageItemClickListener onImageItemClickListener) {
         mOnImageItemClickListener = onImageItemClickListener;
     }
 
-    public interface setOnImageItemClickListener {
+    public interface OnImageItemClickListener {
         void setOnImageClick(View view, ArrayList<String> imageList);
     }
 }

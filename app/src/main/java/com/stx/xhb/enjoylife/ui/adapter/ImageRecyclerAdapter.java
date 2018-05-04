@@ -25,7 +25,7 @@ public class ImageRecyclerAdapter extends RecyclerAdapter<TuchongImagResponse.Fe
 
     @Override
     public void convert(final RecyclerViewHolder holder, final TuchongImagResponse.FeedListBean item) {
-        final ImageView imageView = (ImageView) holder.getView(R.id.iv);
+        final ImageView imageView = holder.getView(R.id.iv);
         List<TuchongImagResponse.FeedListBean.ImagesBean> images = item.getImages();
         if (images==null||images.isEmpty()){
             return;
@@ -53,13 +53,13 @@ public class ImageRecyclerAdapter extends RecyclerAdapter<TuchongImagResponse.Fe
         holder.itemView.setTag(item.getTitle());
     }
 
-    private setOnImageItemClickListener mOnImageItemClickListener;
+    private OnImageItemClickListener mOnImageItemClickListener;
 
-    public void setOnImageItemClickListener(setOnImageItemClickListener onImageItemClickListener) {
+    public void setOnImageItemClickListener(OnImageItemClickListener onImageItemClickListener) {
         mOnImageItemClickListener = onImageItemClickListener;
     }
 
-    public interface setOnImageItemClickListener{
+    public interface OnImageItemClickListener{
         void setOnImageClick(View view,ArrayList<String> imageList);
     }
 
