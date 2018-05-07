@@ -4,7 +4,6 @@
           package="com.stx.xhb.enjoylife">
 
     <uses-sdk tools:overrideLibrary="com.android.core,com.shuyu.gsyvideoplayer"/>
-
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -21,9 +20,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ui.activity.SplashActivity"
             android:label="@string/app_name"
@@ -35,6 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"/>
+
         <!-- 设置 -->
         <activity
             android:name=".ui.activity.SetttingActivity"
@@ -47,11 +49,23 @@
             android:screenOrientation="portrait"
             android:theme="@style/ThemeSwipeBack"/>
 
+        <!--查看大图-->
+        <activity
+            android:name=".ui.activity.PhotoViewActivity"
+            android:screenOrientation="portrait"/>
+
         <!-- 视频播放界面 -->
         <activity
             android:name=".ui.activity.VideoDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeSwipeBack"/>
+
+         <!--视频详情-->
+        <activity
+            android:name=".ui.activity.VideoPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"/>
+
         <!-- 注册广播 -->
         <receiver android:name=".receiver.NetStateReceiver">
             <intent-filter>
@@ -60,11 +74,6 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
-
-        <!--查看大图-->
-        <activity
-            android:name=".ui.activity.PhotoViewActivity"
-            android:screenOrientation="portrait"/>
 
         <!-- 友盟appid设置 -->
         <meta-data
@@ -75,11 +84,6 @@
             android:name="UMENG_CHANNEL"
             android:value="wandoujia"/>
 
-         <!--视频详情-->
-        <activity
-            android:name=".ui.activity.VideoPlayActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="landscape"/>
 
     </application>
 

@@ -269,7 +269,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
      */
     public void permissionSuccess(int requestCode) {
         Log.d(TAG, "获取权限成功=" + requestCode);
-
     }
 
 
