@@ -62,7 +62,7 @@ public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerV
 
         TuChongWallPaperAdapter tuChongListAdapter = new TuChongWallPaperAdapter(getActivity(), R.layout.list_item_list_tuchong,imgList);
         mRvTuChong.setAdapter(tuChongListAdapter);
-        tuChongListAdapter.setOnImageItemClickListener(new TuChongWallPaperAdapter.setOnImageItemClickListener() {
+        tuChongListAdapter.setOnImageItemClickListener(new TuChongWallPaperAdapter.OnImageItemClickListener() {
             @Override
             public void setOnImageClick(View view, ArrayList<String> imageList) {
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);

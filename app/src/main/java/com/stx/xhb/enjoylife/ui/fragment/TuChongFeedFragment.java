@@ -63,7 +63,7 @@ public class TuChongFeedFragment extends BaseFragment implements XRecyclerView.L
 
         TuChongListAdapter tuChongListAdapter = new TuChongListAdapter(getActivity(), R.layout.list_item_list_tuchong,imgList);
         mRvTuChong.setAdapter(tuChongListAdapter);
-        tuChongListAdapter.setOnImageItemClickListener(new TuChongListAdapter.setOnImageItemClickListener() {
+        tuChongListAdapter.setOnImageItemClickListener(new TuChongListAdapter.OnImageItemClickListener() {
             @Override
             public void setOnImageClick(View view, ArrayList<String> imageList) {
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);

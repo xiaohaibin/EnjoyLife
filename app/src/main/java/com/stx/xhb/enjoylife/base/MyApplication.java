@@ -28,7 +28,6 @@ public class MyApplication extends BaseApplication {
         //Android Crash异常处理
         AndroidCrash.getInstance().init(this);
         RestApi.getInstance().bug(BuildConfig.DEBUG);
-        //腾讯bugly初始化  参数1：上下文对象  参数2：注册时申请的APPID  参数3：是否开启debug模式，true表示打开debug模式，false表示关闭调试模式
         Bugly.init(getApplicationContext(), "784b642b7a", BuildConfig.DEBUG);
         //初始化Toast
         ToastManager.instance.init(this);
@@ -36,9 +35,7 @@ public class MyApplication extends BaseApplication {
 
 
     public enum ToastManager {
-
         instance;
-
         private TextView contentTextView;
         private Toast toast;
 

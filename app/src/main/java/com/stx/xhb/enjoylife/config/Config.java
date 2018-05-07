@@ -7,7 +7,6 @@ import com.stx.xhb.enjoylife.R;
  */
 public class Config {
 
-
     public static final String FEED = "IMAGE";
     public static final String WALLPAPER = "WALLPAPER";
     public static final String ZHIHU = "ZHIHU";
