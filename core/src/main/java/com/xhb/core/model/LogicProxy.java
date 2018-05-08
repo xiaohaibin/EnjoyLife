@@ -61,8 +61,9 @@ public class LogicProxy {
         if (m_objects.containsKey(clzz)) {
             BasePresenter presenter = ((BasePresenter) m_objects.get(clzz));
             if (var1 != presenter.getView()) {
-                if (presenter.getView() != null)
+                if (presenter.getView() != null) {
                     presenter.detachView();
+                }
                 m_objects.remove(clzz);
             }
 

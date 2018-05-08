@@ -38,10 +38,10 @@ public class RestApi {
 
     // create api service singleton
     public <T> T create(String baseUrl, Class<T> clz) {
-        String service_url = "";
+        String serviceUrl = "";
         try {
             Field field1 = clz.getField("BASE_URL");
-            service_url = (String) field1.get(clz);
+            serviceUrl = (String) field1.get(clz);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -49,22 +49,22 @@ public class RestApi {
             e.printStackTrace();
         }
         return createApiClient(
-                TextUtils.isEmpty(service_url) ? baseUrl : service_url).create(clz);
+                TextUtils.isEmpty(serviceUrl) ? baseUrl : serviceUrl).create(clz);
     }
 
     // create api service baseUrl singleton
     public <T> T create(Class<T> clz) {
-        String service_url = "";
+        String serviceUrl = "";
         try {
             Field field1 = clz.getField("BASE_URL");
-            service_url = (String) field1.get(clz);
-            if (TextUtils.isEmpty(service_url)) {
+            serviceUrl = (String) field1.get(clz);
+            if (TextUtils.isEmpty(serviceUrl)) {
                 throw new NullPointerException("base_url is null");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return createApiClient(service_url).create(clz);
+        return createApiClient(serviceUrl).create(clz);
     }
 
     // create okHttpClient singleton
@@ -73,7 +73,6 @@ public class RestApi {
                 .addNetworkInterceptor(new HttpCacheInterceptor())
                 .addInterceptor(
                         new HttpLoggingInterceptor().setLevel(
-                                debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
-                .build();
+                                debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE)).build();
     }
 }
