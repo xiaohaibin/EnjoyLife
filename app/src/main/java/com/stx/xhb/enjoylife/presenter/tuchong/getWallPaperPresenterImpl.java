@@ -17,9 +17,13 @@ import retrofit2.Response;
  * @describe:
  */
 public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContract.View> implements getWallPaperContract{
+
+    private Call<TuChongWallPaperResponse> mResponseCall;
+
     @Override
     public void getWallPaper(int page) {
-        ApiManager.ApiFactory.createTuChongApi().getWallPaper(page).enqueue(new Callback<TuChongWallPaperResponse>() {
+        mResponseCall = ApiManager.ApiFactory.createTuChongApi().getWallPaper(page);
+        mResponseCall.enqueue(new Callback<TuChongWallPaperResponse>() {
             @Override
             public void onResponse(Call<TuChongWallPaperResponse> call, Response<TuChongWallPaperResponse> response) {
                 if (response.isSuccessful() && response.body() != null&&response.body().getFeedList()!=null&&!response.body().getFeedList().isEmpty()) {
@@ -32,5 +36,11 @@ public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContrac
                 getView().onFailure(t.getMessage());
             }
         });
+    }
+
+    public void cancleNetWork(){
+        if (mResponseCall!=null){
+            mResponseCall.cancel();
+        }
     }
 }

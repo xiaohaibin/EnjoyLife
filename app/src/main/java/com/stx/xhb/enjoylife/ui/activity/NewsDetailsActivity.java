@@ -1,6 +1,7 @@
 package com.stx.xhb.enjoylife.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -8,23 +9,20 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsContentResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
+import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppPresenterImpl;
+import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentContract;
+import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentPresenterImpl;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.stx.xhb.enjoylife.utils.WebHtmlUtil;
 import com.xhb.core.base.BaseActivity;
-import com.xhb.core.base.BaseSwipeBackActivity;
-import com.xhb.core.ui.SwipeBackLayout;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +33,7 @@ import retrofit2.Response;
  *
  * @author Mr.xiao
  */
-public class NewsDetailsActivity extends BaseActivity {
+public class NewsDetailsActivity extends BaseActivity implements getNewsContentPresenterImpl.View {
 
     @Bind(R.id.web_webview)
     WebView webView;
@@ -43,11 +41,16 @@ public class NewsDetailsActivity extends BaseActivity {
     Toolbar toolbar;
     private static final String SHARE_FROM_ZHIHU = " 分享自知乎网";
     private ZhiHuNewsContentResponse mZhiHuNewsContentResponse;
-    private Call<ZhiHuNewsContentResponse> mZhiHuNewsContent;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_web_details;
+    }
+
+    @Override
+    protected Class getLogicClazz() {
+        return getNewsContentContract.class;
     }
 
     @Override
@@ -57,11 +60,26 @@ public class NewsDetailsActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                 finish();
             }
         });
         initWeb();
         init();
+    }
+
+    @Override
+    public void onResponse(ZhiHuNewsContentResponse response) {
+        mZhiHuNewsContentResponse = response;
+        if (response.getCss() != null && !response.getCss().isEmpty()) {
+            showWebdata(response.getBody(), response.getCss().get(0));
+        } else {
+            showWebdata(response.getBody(), "");
+        }
+    }
+
+    @Override
+    public void onFailed(String msg) {
+        ToastUtil.show(msg);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -92,7 +110,7 @@ public class NewsDetailsActivity extends BaseActivity {
         if (bundle != null) {
             if (bundle.containsKey("data")) {
                 String data = bundle.getString("data");
-                getNewsDetails(data);
+                ((getNewsContentPresenterImpl) mPresenter).getNewsContent(data);
             }
             if (bundle.containsKey("title")) {
                 String title = bundle.getString("title");
@@ -124,30 +142,6 @@ public class NewsDetailsActivity extends BaseActivity {
         bundle.putString("title", title);
         intent.putExtras(bundle);
         context.startActivity(intent);
-    }
-
-    public void getNewsDetails(String data) {
-        mZhiHuNewsContent = ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNewsContent(data);
-        mZhiHuNewsContent.enqueue(new Callback<ZhiHuNewsContentResponse>() {
-            @Override
-            public void onResponse(Call<ZhiHuNewsContentResponse> call, Response<ZhiHuNewsContentResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    mZhiHuNewsContentResponse = response.body();
-                    if (response.body().getCss() != null && !response.body().getCss().isEmpty()) {
-                        showWebdata(response.body().getBody(), response.body().getCss().get(0));
-                    } else {
-                        showWebdata(response.body().getBody(), "");
-                    }
-                } else {
-                    ToastUtil.show(response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ZhiHuNewsContentResponse> call, Throwable t) {
-                ToastUtil.show(t.getMessage());
-            }
-        });
     }
 
     private void shareQuestion(Context context, String questionTitle, String questionUrl) {
@@ -184,8 +178,23 @@ public class NewsDetailsActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mZhiHuNewsContent != null) {
-            mZhiHuNewsContent.cancel();
+        ((getNewsContentPresenterImpl) mPresenter).cancleNetWork();
+    }
+
+    @Override
+    public void showLoading() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("正在加载...");
+        }
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
         }
     }
 }

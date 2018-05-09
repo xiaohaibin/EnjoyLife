@@ -129,4 +129,10 @@ public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerV
             mRvTuChong.loadMoreComplete();
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((getWallPaperPresenterImpl) mPresenter).cancleNetWork();
+    }
 }
