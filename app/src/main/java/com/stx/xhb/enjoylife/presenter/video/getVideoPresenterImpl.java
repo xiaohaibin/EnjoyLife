@@ -24,7 +24,7 @@ public class getVideoPresenterImpl extends BasePresenter<getVideoContract.getVid
         if (!TextUtils.isEmpty(date)) {
             map.put("date", String.valueOf(date));
         }
-        ApiManager.ApiFactory.createVideoApi().getVideoEntity(map).enqueue(new Callback<VideoResponse>() {
+        ApiManager.ApiFactory.createVideoApi().getVideoList(map).enqueue(new Callback<VideoResponse>() {
             @Override
             public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
                 if (response.isSuccessful()) {

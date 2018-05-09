@@ -22,7 +22,7 @@ import butterknife.Bind;
 public class SplashActivity extends BaseActivity {
     @Bind(R.id.splash_view)
     ImageView splashView;
-    int milliseconds = 1500;
+    int milliseconds = 1300;
 
     @Override
     protected int getLayoutResource() {

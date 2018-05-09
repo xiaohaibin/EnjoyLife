@@ -2,7 +2,7 @@
     <string name="app_name">乐享</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-    <string name="default_description">生活的美好，需要你用心去发现，用眼去摄录。</string>
+    <string name="default_description">生活的美好，需要你用心去发现，用眼去摄录</string>
     <string name="fragment_zhihu_title">知乎日报</string>
     <string name="fragment_video_title">视频推荐</string>
     <string name="fragment_image_title">图虫摄影</string>
@@ -23,4 +23,7 @@
     <string name="ask_saving_picture">保存到手机?</string>
     <string name="share_text">发现了一款非常棒的App「乐享」，每天一张精选妹纸图、一个精选短视频，知乎美文，完全开源不收费，太赞了!</string>
     <string name="introduce">每天一张精选妹纸图、一个精选小视频，一篇知乎美文。\n\n图片数据内容来源于图虫摄影网 \n\n视频数据来源于开眼视频 \n\n我的 GitHub: https://github.com/xiaohaibin\n\n完全开源，如果你觉得不错，可以帮忙分享给你更多的朋友，这是我最大的动力和支持，非常感谢！\n\n</string>
+    <string name="news_preview_image">图片预览</string>
+    <string name="share_to">分享至…</string>
+    <string name="share_this_news">分享这个新闻</string>
 </resources>
