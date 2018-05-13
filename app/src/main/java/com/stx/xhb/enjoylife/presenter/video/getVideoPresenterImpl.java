@@ -27,14 +27,16 @@ public class getVideoPresenterImpl extends BasePresenter<getVideoContract.getVid
         ApiManager.ApiFactory.createVideoApi().getVideoList(map).enqueue(new Callback<VideoResponse>() {
             @Override
             public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
-                if (response.isSuccessful()) {
+                if (getView()!=null&&response.isSuccessful()) {
                     getView().onResponse(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<VideoResponse> call, Throwable t) {
-                getView().onFailure(t.getMessage());
+                if (getView()!=null) {
+                    getView().onFailure(t.getMessage());
+                }
             }
         });
     }

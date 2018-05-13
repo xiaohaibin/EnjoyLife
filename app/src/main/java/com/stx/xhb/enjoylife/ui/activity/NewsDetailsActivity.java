@@ -14,19 +14,15 @@ import android.webkit.WebView;
 
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsContentResponse;
-import com.stx.xhb.enjoylife.model.http.ApiManager;
-import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppPresenterImpl;
 import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentContract;
 import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentPresenterImpl;
+import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.stx.xhb.enjoylife.utils.WebHtmlUtil;
 import com.xhb.core.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 页面详情
@@ -144,20 +140,11 @@ public class NewsDetailsActivity extends BaseActivity implements getNewsContentP
         context.startActivity(intent);
     }
 
-    private void shareQuestion(Context context, String questionTitle, String questionUrl) {
-        Intent share = new Intent(android.content.Intent.ACTION_SEND);
-        share.setType("text/plain");
-        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        share.putExtra(Intent.EXTRA_TEXT,
-                questionTitle + " " + questionUrl + SHARE_FROM_ZHIHU);
-        context.startActivity(Intent.createChooser(share, context.getString(R.string.share_to)));
-    }
-
     //点击分享
     @OnClick(R.id.article_share)
     public void onClick() {
         if (mZhiHuNewsContentResponse != null) {
-            shareQuestion(this, mZhiHuNewsContentResponse.getTitle(), mZhiHuNewsContentResponse.getShare_url());
+            ShareUtils.share(this,mZhiHuNewsContentResponse.getTitle() + " " + mZhiHuNewsContentResponse.getShare_url() + SHARE_FROM_ZHIHU);
         }
     }
 

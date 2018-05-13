@@ -1,6 +1,5 @@
 package com.stx.xhb.enjoylife.presenter.zhihu;
 
-import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
 import com.xhb.core.base.BasePresenter;
@@ -23,14 +22,16 @@ public class getZhiHuNewsPresenterImpl extends BasePresenter<getZhiHuNewsContrac
         ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNews(url).enqueue(new Callback<ZhiHuNewsResponse>() {
             @Override
             public void onResponse(Call<ZhiHuNewsResponse> call, Response<ZhiHuNewsResponse> response) {
-                if (response.isSuccessful()) {
+                if (getView()!=null&&response.isSuccessful()) {
                     getView().onResponse(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<ZhiHuNewsResponse> call, Throwable t) {
-                getView().onFailure(t.getMessage());
+                if (getView()!=null) {
+                    getView().onFailure(t.getMessage());
+                }
             }
         });
     }
@@ -40,14 +41,16 @@ public class getZhiHuNewsPresenterImpl extends BasePresenter<getZhiHuNewsContrac
         ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNewsBefore(time).enqueue(new Callback<ZhiHuNewsResponse>() {
             @Override
             public void onResponse(Call<ZhiHuNewsResponse> call, Response<ZhiHuNewsResponse> response) {
-                if (response.isSuccessful()) {
+                if (getView()!=null&&response.isSuccessful()) {
                     getView().onResponse(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<ZhiHuNewsResponse> call, Throwable t) {
-                getView().onFailure(t.getMessage());
+                if (getView()!=null) {
+                    getView().onFailure(t.getMessage());
+                }
             }
         });
     }

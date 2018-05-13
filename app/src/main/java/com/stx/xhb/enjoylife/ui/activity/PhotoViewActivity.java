@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,31 +12,26 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.jaeger.library.StatusBarUtil;
-import com.stx.xhb.enjoylife.utils.ToastUtil;
-import com.xhb.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
+import com.stx.xhb.enjoylife.utils.ShareUtils;
+import com.stx.xhb.enjoylife.utils.ToastUtil;
+import com.xhb.core.base.BaseActivity;
 import com.xhb.core.util.RxImage;
-
-import junit.framework.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -165,6 +159,22 @@ public class PhotoViewActivity extends BaseActivity {
                 return true;
             case R.id.menu_setting_picture:
                 setWallpaper();
+                return true;
+            case R.id.menu_share:
+                Subscription subscribe = RxImage.saveImageAndGetPathObservable(this, saveImgUrl)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<Uri>() {
+                            @Override
+                            public void call(Uri uri) {
+                                ShareUtils.shareImage(PhotoViewActivity.this, uri, getString(R.string.share_image_to));
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                ToastUtil.show(throwable.getMessage());
+                            }
+                        });
+                addSubscription(subscribe);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
