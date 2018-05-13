@@ -1,6 +1,11 @@
 # EnjoyLife
 :wink:【乐享】每天一张精选妹纸图、一个精选短视频，知乎美文的精美应用
 
+### Apk下载
+
+![](https://github.com/xiaohaibin/EnjoyLife/blob/master/screenshot/apk_code.png)
+
+
 ### 效果图
 
 ![](https://github.com/xiaohaibin/EnjoyLife/blob/master/screenshot/device-1.png)
