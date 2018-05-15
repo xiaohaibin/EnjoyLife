@@ -70,13 +70,13 @@ public class AboutActivity extends BaseSwipeBackActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                finish();
                 return true;
             case R.id.menu_share:
                 ShareUtils.share(this, R.string.share_text);
                 return true;
-                default:
-                    break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

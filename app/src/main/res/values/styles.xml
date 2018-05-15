@@ -10,18 +10,14 @@
         <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">true</item>
     </style>
 
-    <style name="Theme.BackgroundTranslucent" parent="@android:Theme.Translucent">
-        <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ToolbarTheme" parent="AppTheme.AppBarOverlay">
         <item name="android:textColorPrimary">@android:color/white</item>
@@ -34,8 +30,8 @@
         <item name="colorPrimary">@color/colorGreen</item>
         <item name="colorPrimaryDark">@color/colorGreen</item>
     </style>
-    <style name="CollapsingToolbarTitleStyle"
-        parent="@android:style/TextAppearance">
+
+    <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
@@ -48,7 +44,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
-
 
     <style name="cardStyle">
         <item name="android:layout_width">wrap_content</item>

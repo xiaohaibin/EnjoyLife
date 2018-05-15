@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,11 +13,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 
 import com.jaeger.library.StatusBarUtil;
@@ -59,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onCreate(savedInstanceState);
         Logger.d("name (%s.java:0)", getClass().getSimpleName());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.colorGreen));
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorGreen));
         if (getLayoutResource() != 0) {
             setContentView(getLayoutResource());
         }
@@ -95,7 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
 
-    public int setToolBar(Toolbar toolbar, boolean isChangeToolbar, boolean isChangeStatusBar, DrawerLayout drawerLayout) {
+    public void setToolBar(Toolbar toolbar, boolean isChangeToolbar, boolean isChangeStatusBar, DrawerLayout drawerLayout) {
         int vibrantColor = Color.TRANSPARENT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(Color.BLACK);
@@ -109,7 +106,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         if (drawerLayout != null) {
             StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, vibrantColor);
         }
-        return vibrantColor;
     }
 
     private CompositeSubscription mCompositeSubscription;

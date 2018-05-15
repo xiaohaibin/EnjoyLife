@@ -60,16 +60,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void initView() {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         setSupportActionBar(toolbar);
-        //判断SDK版本是否是API 19
-        if (AppUtil.getSDKVersionNumber() == Build.VERSION_CODES.KITKAT) {
-            ctlMain.setFitsSystemWindows(false);
-            int vibrantColor = setToolBar(toolbar, true, false, drawerLayout);
+        ctlMain.setFitsSystemWindows(false);
+        setToolBar(toolbar, true, false, drawerLayout);
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
-            assert navView != null;
-            navView.setNavigationItemSelectedListener(this);
         }
         initMenu();
     }

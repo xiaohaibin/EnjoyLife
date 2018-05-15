@@ -16,7 +16,7 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContract.View> implements getWallPaperContract{
+public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContract.View> implements getWallPaperContract {
 
     private Call<TuChongWallPaperResponse> mResponseCall;
 
@@ -26,20 +26,22 @@ public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContrac
         mResponseCall.enqueue(new Callback<TuChongWallPaperResponse>() {
             @Override
             public void onResponse(Call<TuChongWallPaperResponse> call, Response<TuChongWallPaperResponse> response) {
-                if (response.isSuccessful() && response.body() != null&&response.body().getFeedList()!=null&&!response.body().getFeedList().isEmpty()) {
+                if (getView() != null && response.isSuccessful() && response.body() != null && response.body().getFeedList() != null && !response.body().getFeedList().isEmpty()) {
                     getView().onResponse(response.body().getFeedList(), response.body().isMore());
                 }
             }
 
             @Override
             public void onFailure(Call<TuChongWallPaperResponse> call, Throwable t) {
-                getView().onFailure(t.getMessage());
+                if (getView() != null) {
+                    getView().onFailure(t.getMessage());
+                }
             }
         });
     }
 
-    public void cancleNetWork(){
-        if (mResponseCall!=null){
+    public void cancleNetWork() {
+        if (mResponseCall != null) {
             mResponseCall.cancel();
         }
     }

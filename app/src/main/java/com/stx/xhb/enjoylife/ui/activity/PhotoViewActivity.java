@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -92,7 +93,7 @@ public class PhotoViewActivity extends BaseActivity {
         PhotoViewPagerAdapter adapter = new PhotoViewPagerAdapter(this, imageList);
         photoViewpager.setAdapter(adapter);
         photoViewpager.setCurrentItem(mPos);
-        adapter.setOnClickListener(new PhotoViewPagerAdapter.onImageLayoutOnClickListener() {
+        adapter.setOnClickListener(new PhotoViewPagerAdapter.onImageLayoutListener() {
             @Override
             public void setOnImageOnClik() {
                 onBackPressed();

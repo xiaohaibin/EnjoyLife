@@ -6,9 +6,13 @@ import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.github.chrisbanes.photoview.OnViewTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.github.chrisbanes.photoview.PhotoViewAttacher;
@@ -21,11 +25,11 @@ import java.util.ArrayList;
  * Created by Mr.xiao on 16/8/26.
  * 图片预览Viewpager适配器
  */
-public class PhotoViewPagerAdapter extends PagerAdapter{
+public class PhotoViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private ArrayList<String> imageList;
-    private onImageLayoutOnClickListener mOnClickListener;
+    private onImageLayoutListener mImageLayoutListener;
 
     public PhotoViewPagerAdapter(Context context, ArrayList<String> imageList) {
         this.context = context;
@@ -39,7 +43,7 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view==object;
+        return view == object;
     }
 
     @Override
@@ -50,12 +54,17 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
         Glide.with(context)
                 .load(imgUrl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(photoView);
+                .into(new GlideDrawableImageViewTarget(photoView) {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                        super.onResourceReady(resource, animation);
+                    }
+                });
         photoView.setOnViewTapListener(new OnViewTapListener() {
             @Override
             public void onViewTap(View view, float v, float v1) {
-                if (mOnClickListener!=null){
-                    mOnClickListener.setOnImageOnClik();
+                if (mImageLayoutListener != null) {
+                    mImageLayoutListener.setOnImageOnClik();
                 }
             }
         });
@@ -63,8 +72,8 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
         photoView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (mOnClickListener!=null){
-                    mOnClickListener.setLongClick(imgUrl);
+                if (mImageLayoutListener != null) {
+                    mImageLayoutListener.setLongClick(imgUrl);
                 }
                 return true;
             }
@@ -78,13 +87,15 @@ public class PhotoViewPagerAdapter extends PagerAdapter{
         container.removeView((View) object);
     }
 
-    public void setOnClickListener(onImageLayoutOnClickListener onClickListener) {
-        mOnClickListener = onClickListener;
+    public void setOnClickListener(onImageLayoutListener onClickListener) {
+        mImageLayoutListener = onClickListener;
     }
 
-    public interface onImageLayoutOnClickListener {
+    public interface onImageLayoutListener {
+
         void setOnImageOnClik();
 
         void setLongClick(String url);
+
     }
 }
