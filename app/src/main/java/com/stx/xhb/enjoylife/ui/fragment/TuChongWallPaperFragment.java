@@ -99,9 +99,9 @@ public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerV
     }
 
     @Override
-    protected void onInitData2Remote() {
-        super.onInitData2Remote();
-        onRefresh();
+    protected void onVisible() {
+        super.onVisible();
+        mRvTuChong.refresh();
     }
 
     @Override

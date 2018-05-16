@@ -35,6 +35,10 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
     XRecyclerView mReclyView;
     private String date = "";
     private List<ZhiHuNewsResponse.StoriesBean> datas;
+    /**
+     * 是否是第一次加载数据
+     */
+    private boolean isFirstLoad = false;
 
     public static ZhihuFragment newInstance() {
         return new ZhihuFragment();
@@ -58,8 +62,13 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
         mReclyView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
         mReclyView.setArrowImageView(R.drawable.iconfont_downgrey);
         mReclyView.setLoadingListener(this);
-        mReclyView.setAdapter(new NewsAdapter(datas,getActivity()));
-        onRefresh();
+        mReclyView.setAdapter(new NewsAdapter(datas, getActivity()));
+    }
+
+    @Override
+    protected void onVisible() {
+        super.onVisible();
+        mReclyView.refresh();
     }
 
     @Override
@@ -67,6 +76,9 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
         onLoadComplete();
         datas.addAll(zhiHuNewsResponse.getStories());
         date = zhiHuNewsResponse.getDate();
+        if (isFirstLoad) {
+            onLoadMore();
+        }
     }
 
     @Override
@@ -78,12 +90,14 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
     @Override
     public void onRefresh() {
         date = "latest";
+        isFirstLoad = true;
         ((getZhiHuNewsPresenterImpl) mPresenter).getNews(date);
     }
 
     @Override
     public void onLoadMore() {
         if (!TextUtils.isEmpty(date)) {
+            isFirstLoad = false;
             ((getZhiHuNewsPresenterImpl) mPresenter).getNewsBefore(date);
         }
     }

@@ -56,7 +56,12 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
         mReclyView.setLoadingListener(this);
         setLvAdapter();
         setListener();
-        onRefresh();
+    }
+
+    @Override
+    protected void onVisible() {
+        super.onVisible();
+        mReclyView.refresh();
     }
 
     @Override

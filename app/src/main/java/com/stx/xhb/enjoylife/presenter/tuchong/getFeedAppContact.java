@@ -16,9 +16,9 @@ import java.util.List;
 @Implement(getFeedAppPresenterImpl.class)
 public interface getFeedAppContact {
 
-    void getFeedAppImage(int page,String type,String posId);
+    void getFeedAppImage(int page, String type, String posId);
 
-    interface View extends BaseView{
+    interface View extends BaseView {
 
         void onResponse(List<TuchongImagResponse.FeedListBean> feedList, boolean isMore);
 

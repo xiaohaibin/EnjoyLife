@@ -32,14 +32,16 @@ public class getFeedAppPresenterImpl extends BasePresenter<getFeedAppContact.Vie
         ApiManager.ApiFactory.createTuChongApi().getFeedApp(map).enqueue(new Callback<TuchongImagResponse>() {
             @Override
             public void onResponse(Call<TuchongImagResponse> call, Response<TuchongImagResponse> response) {
-                if (response.isSuccessful() && response.body() != null&&response.body().getFeedList()!=null&&!response.body().getFeedList().isEmpty()) {
+                if (getView()!=null&&response.isSuccessful() && response.body() != null&&response.body().getFeedList()!=null&&!response.body().getFeedList().isEmpty()) {
                     getView().onResponse(response.body().getFeedList(), response.body().isMore());
                 }
             }
 
             @Override
             public void onFailure(Call<TuchongImagResponse> call, Throwable t) {
-                getView().onFailure(t.getMessage());
+                if (getView()!=null) {
+                    getView().onFailure(t.getMessage());
+                }
             }
         });
     }
