@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stx.xhb.enjoylife.R;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 import com.xhb.core.BuildConfig;
 import com.xhb.core.BaseApplication;
 import com.xhb.core.api.RestApi;
@@ -31,6 +33,7 @@ public class MyApplication extends BaseApplication {
         Bugly.init(getApplicationContext(), "784b642b7a", BuildConfig.DEBUG);
         //初始化Toast
         ToastManager.instance.init(this);
+        UMConfigure.init(this,UMConfigure.DEVICE_TYPE_PHONE,"");
     }
 
 

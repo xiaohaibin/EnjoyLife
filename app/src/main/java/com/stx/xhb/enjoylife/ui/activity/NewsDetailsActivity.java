@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsContentResponse;
 import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentContract;
@@ -20,8 +24,11 @@ import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.stx.xhb.enjoylife.utils.WebHtmlUtil;
 import com.xhb.core.base.BaseActivity;
+import com.xhb.core.imageloader.ImageLoaderProxy;
+import com.xhb.core.util.ScreenUtil;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -31,11 +38,13 @@ import butterknife.OnClick;
  */
 public class NewsDetailsActivity extends BaseActivity implements getNewsContentPresenterImpl.View {
 
+    private static final String SHARE_FROM_ZHIHU = " 分享自知乎网";
     @Bind(R.id.web_webview)
     WebView webView;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    private static final String SHARE_FROM_ZHIHU = " 分享自知乎网";
+    @Bind(R.id.iv_banner)
+    ImageView mIvBanner;
     private ZhiHuNewsContentResponse mZhiHuNewsContentResponse;
     private ProgressDialog mProgressDialog;
 
@@ -56,9 +65,10 @@ public class NewsDetailsActivity extends BaseActivity implements getNewsContentP
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 finish();
+                finish();
             }
         });
+        mIvBanner.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenUtil.getScreenWidth(this) / 2 + 70));
         initWeb();
         init();
     }
@@ -71,6 +81,7 @@ public class NewsDetailsActivity extends BaseActivity implements getNewsContentP
         } else {
             showWebdata(response.getBody(), "");
         }
+        Glide.with(this).load(response.getImage()).into(mIvBanner);
     }
 
     @Override
@@ -144,7 +155,7 @@ public class NewsDetailsActivity extends BaseActivity implements getNewsContentP
     @OnClick(R.id.article_share)
     public void onClick() {
         if (mZhiHuNewsContentResponse != null) {
-            ShareUtils.share(this,mZhiHuNewsContentResponse.getTitle() + " " + mZhiHuNewsContentResponse.getShare_url() + SHARE_FROM_ZHIHU);
+            ShareUtils.share(this, mZhiHuNewsContentResponse.getTitle() + " " + mZhiHuNewsContentResponse.getShare_url() + SHARE_FROM_ZHIHU);
         }
     }
 
