@@ -1,7 +1,6 @@
 package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
 import com.xhb.core.base.BasePresenter;
 
@@ -18,12 +17,11 @@ import retrofit2.Response;
  */
 public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContract.View> implements getWallPaperContract {
 
-    private Call<TuChongWallPaperResponse> mResponseCall;
 
     @Override
     public void getWallPaper(int page) {
-        mResponseCall = ApiManager.ApiFactory.createTuChongApi().getWallPaper(page);
-        mResponseCall.enqueue(new Callback<TuChongWallPaperResponse>() {
+        Call<TuChongWallPaperResponse> wallPaper = ApiManager.ApiFactory.createTuChongApi().getWallPaper(page);
+        wallPaper.enqueue(new Callback<TuChongWallPaperResponse>() {
             @Override
             public void onResponse(Call<TuChongWallPaperResponse> call, Response<TuChongWallPaperResponse> response) {
                 if (getView() != null && response.isSuccessful() && response.body() != null && response.body().getFeedList() != null && !response.body().getFeedList().isEmpty()) {
@@ -38,11 +36,7 @@ public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContrac
                 }
             }
         });
+        addCall(wallPaper);
     }
 
-    public void cancleNetWork() {
-        if (mResponseCall != null) {
-            mResponseCall.cancel();
-        }
-    }
 }

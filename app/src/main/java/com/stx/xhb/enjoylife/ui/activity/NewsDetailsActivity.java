@@ -24,11 +24,9 @@ import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.stx.xhb.enjoylife.utils.WebHtmlUtil;
 import com.xhb.core.base.BaseActivity;
-import com.xhb.core.imageloader.ImageLoaderProxy;
 import com.xhb.core.util.ScreenUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -171,12 +169,6 @@ public class NewsDetailsActivity extends BaseActivity implements getNewsContentP
     protected void onResume() {
         super.onResume();
         webView.resumeTimers();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ((getNewsContentPresenterImpl) mPresenter).cancleNetWork();
     }
 
     @Override

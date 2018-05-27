@@ -12,7 +12,7 @@ android {
 
         ndk {
             //设置支持的SO库架构
-            abiFilters 'armeabi', 'armeabi-v7a'
+            abiFilters 'armeabi', 'armeabi-v7a','x86'
         }
     }
 

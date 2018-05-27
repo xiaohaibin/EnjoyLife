@@ -29,20 +29,22 @@ public class getFeedAppPresenterImpl extends BasePresenter<getFeedAppContact.Vie
         if (!TextUtils.isEmpty(posId)) {
             map.put("post_id", posId);
         }
-        ApiManager.ApiFactory.createTuChongApi().getFeedApp(map).enqueue(new Callback<TuchongImagResponse>() {
+        Call<TuchongImagResponse> feedApp = ApiManager.ApiFactory.createTuChongApi().getFeedApp(map);
+        feedApp.enqueue(new Callback<TuchongImagResponse>() {
             @Override
             public void onResponse(Call<TuchongImagResponse> call, Response<TuchongImagResponse> response) {
-                if (getView()!=null&&response.isSuccessful() && response.body() != null&&response.body().getFeedList()!=null&&!response.body().getFeedList().isEmpty()) {
+                if (getView() != null && response.isSuccessful() && response.body() != null && response.body().getFeedList() != null && !response.body().getFeedList().isEmpty()) {
                     getView().onResponse(response.body().getFeedList(), response.body().isMore());
                 }
             }
 
             @Override
             public void onFailure(Call<TuchongImagResponse> call, Throwable t) {
-                if (getView()!=null) {
+                if (getView() != null) {
                     getView().onFailure(t.getMessage());
                 }
             }
         });
+        addCall(feedApp);
     }
 }

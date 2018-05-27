@@ -1,24 +1,36 @@
 package com.xhb.core.base;
 
-public class BasePresenter<T extends BaseView> implements Presenter<T> {
+import retrofit2.Call;
 
-    private T mView;
+public class BasePresenter<V extends BaseView> implements Presenter<V> {
+
+    private V mView;
+
+    private Call<?> mResponseCall;
 
     @Override
-    public void attachView(T mvpView) {
+    public void attachView(V mvpView) {
         this.mView = mvpView;
     }
+
 
     @Override
     public void detachView() {
         this.mView = null;
+        if (mResponseCall != null) {
+            mResponseCall.cancel();
+        }
+    }
+
+    public void addCall(Call<?> call) {
+        this.mResponseCall = call;
     }
 
     public boolean isViewBind() {
         return mView != null;
     }
 
-    public T getView() {
+    public V getView() {
         return mView;
     }
 
