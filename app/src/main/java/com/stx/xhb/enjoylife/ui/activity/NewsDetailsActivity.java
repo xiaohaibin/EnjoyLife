@@ -160,13 +160,13 @@ public class NewsDetailsActivity extends BaseActivity implements getNewsContentP
     ///////////////////////////////////解决webView耗电的问题///////////////////////////
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         webView.pauseTimers();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         webView.resumeTimers();
     }

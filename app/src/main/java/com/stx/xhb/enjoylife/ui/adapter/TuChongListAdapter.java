@@ -26,6 +26,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.ui.widget.RatioImageView;
@@ -35,20 +37,19 @@ import com.xhb.core.adapter.RecyclerViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TuChongListAdapter extends RecyclerAdapter<TuchongImagResponse.FeedListBean> {
+public class TuChongListAdapter extends BaseQuickAdapter<TuchongImagResponse.FeedListBean,BaseViewHolder> {
 
     public static final String TAG = "TuChongListAdapter";
 
     private Context mContext;
     private OnImageItemClickListener mOnImageItemClickListener;
 
-    public TuChongListAdapter(Context context, int layoutId, List<TuchongImagResponse.FeedListBean> datas) {
-        super(context, layoutId, datas);
-        mContext = context;
+    public TuChongListAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override
-    public void convert(final RecyclerViewHolder holder, TuchongImagResponse.FeedListBean feedListBean) {
+    protected void convert(final BaseViewHolder holder, TuchongImagResponse.FeedListBean feedListBean) {
         final RatioImageView imageView = (RatioImageView) holder.getView(R.id.iv_img);
         imageView.setOriginalSize(50, 50);
         int limit = 48;

@@ -6,18 +6,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.presenter.video.getVideoContract;
 import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
+import com.stx.xhb.enjoylife.ui.adapter.MultipleItemQuickAdapter;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
+import com.stx.xhb.enjoylife.ui.adapter.provider.VideoItemProvider;
 import com.xhb.core.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -28,13 +31,15 @@ import butterknife.Bind;
 /**
  * 视频推荐
  */
-public class VideoFragment extends BaseFragment implements getVideoContract.getVideoView, XRecyclerView.LoadingListener {
+public class VideoFragment extends BaseFragment implements getVideoContract.getVideoView {
 
     @Bind(R.id.recly_view)
-    XRecyclerView mReclyView;
+    RecyclerView mReclyView;
+    @Bind(R.id.refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private List<VideoResponse.IssueListEntity.ItemListEntity> list;
     private String nextPublishTime = "";
-    private VideoRecyclerAdapter mRecyclerAdapter;
+    private MultipleItemQuickAdapter mRecyclerAdapter;
     private boolean isRefresh;
 
     public static VideoFragment newInstance() {
@@ -50,10 +55,7 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
     protected void onInitView(Bundle savedInstanceState) {
         list = new ArrayList<>();
         mReclyView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mReclyView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mReclyView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        mReclyView.setArrowImageView(R.drawable.iconfont_downgrey);
-        mReclyView.setLoadingListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary);
         setLvAdapter();
         setListener();
     }
@@ -61,7 +63,7 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
     @Override
     protected void onVisible() {
         super.onVisible();
-        mReclyView.refresh();
+        onRefreshData();
     }
 
     @Override
@@ -78,34 +80,34 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
         //刷新需要清除数据
         if (isRefresh) {
             list.clear();
-            mReclyView.refreshComplete();
+            mSwipeRefreshLayout.setRefreshing(false);
         }
-        mReclyView.loadMoreComplete();
+        mRecyclerAdapter.loadMoreComplete();
         for (int i = 0; i < issueList.size(); i++) {
             list.addAll(issueList.get(i).getItemList());
         }
         String nextUrl = response.getNextPageUrl();
         nextPublishTime = Uri.parse(nextUrl).getQueryParameter("date");
-        notifydata();
+        mRecyclerAdapter.addData(list);
     }
 
     @Override
     public void onFailure(String msg) {
         if (isRefresh) {
-            mReclyView.refreshComplete();
+            mSwipeRefreshLayout.setRefreshing(false);
         }
-        mReclyView.loadMoreComplete();
+        mRecyclerAdapter.loadMoreFail();
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void setListener() {
-        mRecyclerAdapter.setItemClickListener(new VideoRecyclerAdapter.setOnItemClickListener() {
+        mRecyclerAdapter.setItemClickListener(new VideoItemProvider.setOnItemClickListener() {
             @Override
-            public void onItemClick(View view,int position) {
+            public void onItemClick(View view, VideoResponse.IssueListEntity.ItemListEntity itemListEntity) {
                 Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
                 Bundle bundle = new Bundle();
-                VideoResponse.IssueListEntity.ItemListEntity.DataEntity data = list.get(position).getData();
-                if (!"video".equals(list.get(position).getType())) {
+                VideoResponse.IssueListEntity.ItemListEntity.DataEntity data = itemListEntity.getData();
+                if (!"video".equals(itemListEntity.getType())) {
                     return;
                 }
                 bundle.putString("title", data.getTitle());
@@ -145,28 +147,34 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
                 }
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onRefreshData();
+            }
+        });
     }
 
-    @Override
-    public void onRefresh() {
+    public void onRefreshData() {
         isRefresh = true;
+        mSwipeRefreshLayout.setRefreshing(true);
         ((getVideoPresenterImpl) mPresenter).getVideoInfo("", 2);
     }
 
-    @Override
     public void onLoadMore() {
         isRefresh = false;
         ((getVideoPresenterImpl) mPresenter).getVideoInfo(nextPublishTime, 2);
     }
 
-    public void notifydata() {
-        if (mRecyclerAdapter != null) {
-            mRecyclerAdapter.notifyDataSetChanged();
-        }
-    }
-
     private void setLvAdapter() {
-        mRecyclerAdapter = new VideoRecyclerAdapter(getActivity(), list);
+        mRecyclerAdapter = new MultipleItemQuickAdapter(list);
         mReclyView.setAdapter(mRecyclerAdapter);
+        mRecyclerAdapter.openLoadAnimation();
+        mRecyclerAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                onLoadMore();
+            }
+        }, mReclyView);
     }
 }

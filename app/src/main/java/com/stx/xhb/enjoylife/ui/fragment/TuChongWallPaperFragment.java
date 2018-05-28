@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
 import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperContract;
@@ -26,18 +27,19 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- *
  * @link https://xiaohaibin.github.io/
  * @email： xhb_199409@163.com
  * @github: https://github.com/xiaohaibin
  * @description： 图虫摄影
  */
-public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerView.LoadingListener,getWallPaperContract.View {
+public class TuChongWallPaperFragment extends BaseFragment implements getWallPaperContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recly_view)
-    XRecyclerView mRvTuChong;
+    RecyclerView mRvTuChong;
+    @Bind(R.id.refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private int page = 1;
-    private List<TuChongWallPaperResponse.FeedListBean> imgList;
+    private TuChongWallPaperAdapter mTuChongListAdapter;
 
     public static TuChongWallPaperFragment newInstance() {
         return new TuChongWallPaperFragment();
@@ -53,16 +55,13 @@ public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerV
         mRvTuChong.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerViewNoBugStaggeredGridLayoutManger layoutManager = new RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary);
         mRvTuChong.setLayoutManager(layoutManager);
-        mRvTuChong.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mRvTuChong.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        mRvTuChong.setArrowImageView(R.drawable.iconfont_downgrey);
-        mRvTuChong.setLoadingListener(this);
-        imgList = new ArrayList<>();
 
-        TuChongWallPaperAdapter tuChongListAdapter = new TuChongWallPaperAdapter(getActivity(), R.layout.list_item_list_tuchong,imgList);
-        mRvTuChong.setAdapter(tuChongListAdapter);
-        tuChongListAdapter.setOnImageItemClickListener(new TuChongWallPaperAdapter.OnImageItemClickListener() {
+        mTuChongListAdapter = new TuChongWallPaperAdapter(R.layout.list_item_list_tuchong);
+        mTuChongListAdapter.openLoadAnimation();
+        mRvTuChong.setAdapter(mTuChongListAdapter);
+        mTuChongListAdapter.setOnImageItemClickListener(new TuChongWallPaperAdapter.OnImageItemClickListener() {
             @Override
             public void setOnImageClick(View view, ArrayList<String> imageList) {
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);
@@ -78,16 +77,24 @@ public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerV
                 }
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mTuChongListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                page++;
+                ((getWallPaperPresenterImpl) mPresenter).getWallPaper(page);
+            }
+        }, mRvTuChong);
     }
 
     @Override
     public void onResponse(List<TuChongWallPaperResponse.FeedListBean> feedList, boolean isMore) {
         onLoadComplete(page);
-        mRvTuChong.setLoadingMoreEnabled(isMore);
+        mTuChongListAdapter.loadMoreEnd();
         for (int i = 0; i < feedList.size(); i++) {
             TuChongWallPaperResponse.FeedListBean feedListBean = feedList.get(i);
             if ("post".equals(feedListBean.getType())) {
-                imgList.add(feedListBean);
+                mTuChongListAdapter.addData(feedListBean);
             }
         }
     }
@@ -101,7 +108,8 @@ public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerV
     @Override
     protected void onVisible() {
         super.onVisible();
-        mRvTuChong.refresh();
+        mSwipeRefreshLayout.setRefreshing(true);
+        onRefresh();
     }
 
     @Override
@@ -115,18 +123,12 @@ public class TuChongWallPaperFragment extends BaseFragment implements XRecyclerV
         ((getWallPaperPresenterImpl) mPresenter).getWallPaper(page);
     }
 
-    @Override
-    public void onLoadMore() {
-        page++;
-        ((getWallPaperPresenterImpl) mPresenter).getWallPaper(page);
-    }
-
     private void onLoadComplete(int page) {
         if (page == 1) {
-            imgList.clear();
-            mRvTuChong.refreshComplete();
+            mTuChongListAdapter.setNewData(null);
+            mSwipeRefreshLayout.setRefreshing(false);
         } else {
-            mRvTuChong.loadMoreComplete();
+            mTuChongListAdapter.loadMoreComplete();
         }
     }
 }

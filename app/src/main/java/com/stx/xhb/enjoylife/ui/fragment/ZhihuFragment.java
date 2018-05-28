@@ -2,43 +2,36 @@ package com.stx.xhb.enjoylife.ui.fragment;
 
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsResponse;
-import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
 import com.stx.xhb.enjoylife.presenter.zhihu.getZhiHuNewsContract;
 import com.stx.xhb.enjoylife.presenter.zhihu.getZhiHuNewsPresenterImpl;
 import com.stx.xhb.enjoylife.ui.adapter.NewsAdapter;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.xhb.core.base.BaseFragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * 知乎Fragment
  */
-public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.View, XRecyclerView.LoadingListener {
+public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.View, SwipeRefreshLayout.OnRefreshListener {
 
 
     @Bind(R.id.recly_view)
-    XRecyclerView mReclyView;
+    RecyclerView mReclyView;
+    @Bind(R.id.refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private String date = "";
-    private List<ZhiHuNewsResponse.StoriesBean> datas;
     /**
      * 是否是第一次加载数据
      */
     private boolean isFirstLoad = false;
+    private NewsAdapter mNewsAdapter;
 
     public static ZhihuFragment newInstance() {
         return new ZhihuFragment();
@@ -56,25 +49,32 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        datas = new ArrayList<>();
         mReclyView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mReclyView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mReclyView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
-        mReclyView.setArrowImageView(R.drawable.iconfont_downgrey);
-        mReclyView.setLoadingListener(this);
-        mReclyView.setAdapter(new NewsAdapter(datas, getActivity()));
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary);
+        mNewsAdapter = new NewsAdapter(R.layout.list_item_news,getActivity());
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mReclyView.setAdapter(mNewsAdapter);
+        mNewsAdapter.openLoadAnimation();
+        mNewsAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                onLoadMore();
+            }
+        }, mReclyView);
     }
 
     @Override
     protected void onVisible() {
         super.onVisible();
-        mReclyView.refresh();
+        mSwipeRefreshLayout.setRefreshing(true);
+        onRefresh();
     }
 
     @Override
     public void onResponse(ZhiHuNewsResponse zhiHuNewsResponse) {
         onLoadComplete();
-        datas.addAll(zhiHuNewsResponse.getStories());
+        mNewsAdapter.addData(zhiHuNewsResponse.getStories());
         date = zhiHuNewsResponse.getDate();
         if (isFirstLoad) {
             onLoadMore();
@@ -83,7 +83,6 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
 
     @Override
     public void onFailure(String msg) {
-        onLoadMore();
         ToastUtil.show(msg);
     }
 
@@ -94,7 +93,6 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
         ((getZhiHuNewsPresenterImpl) mPresenter).getNews(date);
     }
 
-    @Override
     public void onLoadMore() {
         if (!TextUtils.isEmpty(date)) {
             isFirstLoad = false;
@@ -104,10 +102,10 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
 
     private void onLoadComplete() {
         if ("latest".equals(date)) {
-            datas.clear();
-            mReclyView.refreshComplete();
+            mNewsAdapter.setNewData(null);
+            mSwipeRefreshLayout.setRefreshing(false);
         } else {
-            mReclyView.loadMoreComplete();
+            mNewsAdapter.loadMoreComplete();
         }
     }
 }

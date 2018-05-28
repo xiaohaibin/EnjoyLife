@@ -2,6 +2,7 @@ package com.stx.xhb.enjoylife.base;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Config;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.TextView;
@@ -33,7 +34,14 @@ public class MyApplication extends BaseApplication {
         Bugly.init(getApplicationContext(), "784b642b7a", BuildConfig.DEBUG);
         //初始化Toast
         ToastManager.instance.init(this);
+        initUM();
+    }
+
+    private void initUM() {
         UMConfigure.init(this,UMConfigure.DEVICE_TYPE_PHONE,"");
+        MobclickAgent.setSessionContinueMillis(2 * 60 * 1000);
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.setDebugMode(BuildConfig.DEBUG);
     }
 
 

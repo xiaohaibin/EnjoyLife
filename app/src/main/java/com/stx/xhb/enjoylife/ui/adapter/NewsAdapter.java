@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsResponse;
 import com.stx.xhb.enjoylife.ui.activity.NewsDetailsActivity;
@@ -25,53 +27,27 @@ import butterknife.ButterKnife;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.CardViewHolder> {
+public class NewsAdapter extends BaseQuickAdapter<ZhiHuNewsResponse.StoriesBean,BaseViewHolder> {
 
-    private List<ZhiHuNewsResponse.StoriesBean> datas;
     private Context mContext;
 
-    public NewsAdapter(List<ZhiHuNewsResponse.StoriesBean> datas, Context context) {
-        this.datas = datas;
+    public NewsAdapter(int layoutResId, Context context) {
+        super(layoutResId);
         mContext = context;
     }
 
     @Override
-    public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CardViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_news, parent,false));
-    }
-
-    @Override
-    public void onBindViewHolder(final CardViewHolder holder, int position) {
-        final ZhiHuNewsResponse.StoriesBean news = datas.get(position);
+    protected void convert(BaseViewHolder holder, final ZhiHuNewsResponse.StoriesBean news) {
         if (news.getImages()!=null&&!news.getImages().isEmpty()) {
-            Glide.with(holder.newsImage.getContext()).load(news.getImages().get(0)).into(holder.newsImage);
+            ImageView imageView = holder.getView(R.id.thumbnail_image);
+            Glide.with(imageView.getContext()).load(news.getImages().get(0)).into(imageView);
         }
-        holder.questionTitle.setText(news.getTitle());
+        holder.setText(R.id.daily_title,news.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NewsDetailsActivity.start(mContext,String.valueOf(news.getId()),news.getTitle());
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return datas == null ? 0 : datas.size();
-    }
-
-    class CardViewHolder extends RecyclerView.ViewHolder {
-
-        @Bind(R.id.thumbnail_image)
-        ImageView newsImage;
-        @Bind(R.id.daily_title)
-        TextView questionTitle;
-        @Bind(R.id.card_share_overflow)
-        ImageView overflow;
-
-        public CardViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
     }
 }

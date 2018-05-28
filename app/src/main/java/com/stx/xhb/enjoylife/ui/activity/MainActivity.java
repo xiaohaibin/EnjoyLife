@@ -124,9 +124,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             switchFragment(mFragments.get(id), getString(mTitles.get(id)));
         }
         switch (id) {
-            case R.id.nav_setting:
-                startActivity(new Intent(this, SetttingActivity.class));
-                break;
+//            case R.id.nav_setting:
+//                startActivity(new Intent(this, SetttingActivity.class));
+//                break;
             case R.id.nav_about:
                 startActivity(new Intent(this, AboutActivity.class));
                 break;

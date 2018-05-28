@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Window;
 
 import com.jaeger.library.StatusBarUtil;
+import com.umeng.analytics.MobclickAgent;
 import com.xhb.core.R;
 import com.xhb.core.manage.log.Logger;
 import com.xhb.core.model.LogicProxy;
@@ -267,6 +268,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
      */
     public void permissionSuccess(int requestCode) {
         Log.d(TAG, "获取权限成功=" + requestCode);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 

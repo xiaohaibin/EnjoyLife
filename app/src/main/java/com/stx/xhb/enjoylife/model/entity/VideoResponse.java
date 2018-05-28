@@ -1,5 +1,7 @@
 package com.stx.xhb.enjoylife.model.entity;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -63,9 +65,11 @@ public class VideoResponse {
             return itemList;
         }
 
-        public static class ItemListEntity implements Serializable {
+        public static class ItemListEntity implements Serializable{
+
             private String type;
             private String image;
+
 
             public String getImage() {
                 return image;

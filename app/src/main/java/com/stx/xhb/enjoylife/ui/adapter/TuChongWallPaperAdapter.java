@@ -20,12 +20,15 @@
 package com.stx.xhb.enjoylife.ui.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
@@ -36,20 +39,16 @@ import com.xhb.core.adapter.RecyclerViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TuChongWallPaperAdapter extends RecyclerAdapter<TuChongWallPaperResponse.FeedListBean> {
+public class TuChongWallPaperAdapter extends BaseQuickAdapter<TuChongWallPaperResponse.FeedListBean, BaseViewHolder> {
 
-    public static final String TAG = "TuChongListAdapter";
-
-    private Context mContext;
     private OnImageItemClickListener mOnImageItemClickListener;
 
-    public TuChongWallPaperAdapter(Context context, int layoutId, List<TuChongWallPaperResponse.FeedListBean> datas) {
-        super(context, layoutId, datas);
-        mContext = context;
+    public TuChongWallPaperAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override
-    public void convert(final RecyclerViewHolder holder, TuChongWallPaperResponse.FeedListBean feedListBean) {
+    protected void convert(final BaseViewHolder holder, TuChongWallPaperResponse.FeedListBean feedListBean) {
         TuChongWallPaperResponse.FeedListBean.EntryBean feedListBeanEntry = feedListBean.getEntry();
         if ("video".equals(feedListBeanEntry.getType())) {
             return;
@@ -100,7 +99,7 @@ public class TuChongWallPaperAdapter extends RecyclerAdapter<TuChongWallPaperRes
         });
     }
 
-    public void setOnImageItemClickListener(OnImageItemClickListener onImageItemClickListener) {
+    public void setOnImageItemClickListener(TuChongWallPaperAdapter.OnImageItemClickListener onImageItemClickListener) {
         mOnImageItemClickListener = onImageItemClickListener;
     }
 
