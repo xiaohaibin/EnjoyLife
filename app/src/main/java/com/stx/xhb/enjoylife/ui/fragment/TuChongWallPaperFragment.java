@@ -90,7 +90,7 @@ public class TuChongWallPaperFragment extends BaseFragment implements getWallPap
     @Override
     public void onResponse(List<TuChongWallPaperResponse.FeedListBean> feedList, boolean isMore) {
         onLoadComplete(page);
-        mTuChongListAdapter.loadMoreEnd();
+        mTuChongListAdapter.setEnableLoadMore(isMore);
         for (int i = 0; i < feedList.size(); i++) {
             TuChongWallPaperResponse.FeedListBean feedListBean = feedList.get(i);
             if ("post".equals(feedListBean.getType())) {

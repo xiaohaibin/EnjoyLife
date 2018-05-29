@@ -94,7 +94,7 @@ public class TuChongFeedFragment extends BaseFragment implements getFeedAppConta
     @Override
     public void onResponse(List<TuchongImagResponse.FeedListBean> feedList, boolean isMore) {
         onLoadComplete(page);
-        mTuChongListAdapter.loadMoreEnd();
+        mTuChongListAdapter.setEnableLoadMore(isMore);
         posId = String.valueOf(feedList.get(feedList.size() - 1).getPost_id());
         mTuChongListAdapter.addData(feedList);
     }
