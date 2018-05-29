@@ -30,7 +30,7 @@ import butterknife.Bind;
  * @link https://xiaohaibin.github.io/
  * @email： xhb_199409@163.com
  * @github: https://github.com/xiaohaibin
- * @description： 图虫摄影
+ * @description： 图虫壁纸
  */
 public class TuChongWallPaperFragment extends BaseFragment implements getWallPaperContract.View, SwipeRefreshLayout.OnRefreshListener {
 
@@ -129,6 +129,14 @@ public class TuChongWallPaperFragment extends BaseFragment implements getWallPap
             mSwipeRefreshLayout.setRefreshing(false);
         } else {
             mTuChongListAdapter.loadMoreComplete();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mSwipeRefreshLayout!=null) {
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 }

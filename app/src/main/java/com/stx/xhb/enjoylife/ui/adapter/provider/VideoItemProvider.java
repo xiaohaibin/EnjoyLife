@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
-import com.stx.xhb.enjoylife.ui.adapter.MultipleItemQuickAdapter;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
 
 /**
@@ -22,7 +21,7 @@ import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
 public class VideoItemProvider extends BaseItemProvider<VideoResponse.IssueListEntity.ItemListEntity, BaseViewHolder> {
     @Override
     public int viewType() {
-        return MultipleItemQuickAdapter.VIDEO;
+        return VideoRecyclerAdapter.VIDEO;
     }
 
     @Override

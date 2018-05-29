@@ -108,4 +108,12 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
             mNewsAdapter.loadMoreComplete();
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mSwipeRefreshLayout!=null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
 }

@@ -18,7 +18,6 @@ import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.presenter.video.getVideoContract;
 import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
-import com.stx.xhb.enjoylife.ui.adapter.MultipleItemQuickAdapter;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
 import com.stx.xhb.enjoylife.ui.adapter.provider.VideoItemProvider;
 import com.xhb.core.base.BaseFragment;
@@ -39,7 +38,7 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
     SwipeRefreshLayout mSwipeRefreshLayout;
     private List<VideoResponse.IssueListEntity.ItemListEntity> list;
     private String nextPublishTime = "";
-    private MultipleItemQuickAdapter mRecyclerAdapter;
+    private VideoRecyclerAdapter mRecyclerAdapter;
     private boolean isRefresh;
 
     public static VideoFragment newInstance() {
@@ -81,14 +80,15 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
         if (isRefresh) {
             list.clear();
             mSwipeRefreshLayout.setRefreshing(false);
+        } else {
+            mRecyclerAdapter.loadMoreComplete();
         }
-        mRecyclerAdapter.loadMoreComplete();
         for (int i = 0; i < issueList.size(); i++) {
             list.addAll(issueList.get(i).getItemList());
         }
         String nextUrl = response.getNextPageUrl();
         nextPublishTime = Uri.parse(nextUrl).getQueryParameter("date");
-        mRecyclerAdapter.addData(list);
+        mRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -167,7 +167,7 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
     }
 
     private void setLvAdapter() {
-        mRecyclerAdapter = new MultipleItemQuickAdapter(list);
+        mRecyclerAdapter = new VideoRecyclerAdapter(list);
         mReclyView.setAdapter(mRecyclerAdapter);
         mRecyclerAdapter.openLoadAnimation();
         mRecyclerAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -176,5 +176,13 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
                 onLoadMore();
             }
         }, mReclyView);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 }

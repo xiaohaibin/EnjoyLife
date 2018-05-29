@@ -122,13 +122,20 @@ public class TuChongFeedFragment extends BaseFragment implements getFeedAppConta
         ((getFeedAppPresenterImpl) mPresenter).getFeedAppImage(page, "refresh", posId);
     }
 
-
     private void onLoadComplete(int page) {
         if (page == 1) {
             mTuChongListAdapter.setNewData(null);
             mSwipeRefreshLayout.setRefreshing(false);
         } else {
             mTuChongListAdapter.loadMoreComplete();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mSwipeRefreshLayout!=null) {
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 }

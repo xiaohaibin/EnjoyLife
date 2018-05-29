@@ -1,118 +1,39 @@
 package com.stx.xhb.enjoylife.ui.adapter;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.stx.xhb.enjoylife.R;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.MultipleItemRvAdapter;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
+import com.stx.xhb.enjoylife.ui.adapter.provider.BannerItemProvider;
+import com.stx.xhb.enjoylife.ui.adapter.provider.TextItemProvider;
+import com.stx.xhb.enjoylife.ui.adapter.provider.VideoItemProvider;
 
 import java.util.List;
 
 /**
  * @author: xiaohaibin.
- * @time: 2018/4/26
+ * @time: 2018/5/28
  * @mail:xhb_199409@163.com
  * @github:https://github.com/xiaohaibin
- * @describe: 开眼视频列表适配器
+ * @describe: 开眼视频推荐适配器
  */
-public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class VideoRecyclerAdapter extends MultipleItemRvAdapter<VideoResponse.IssueListEntity.ItemListEntity, BaseViewHolder> {
 
-    private static final int BANNER = 0;
-    private static final int VIDEO = 1;
-    private static final int TEXT = 2;
-    private Context mContext;
-    private List<VideoResponse.IssueListEntity.ItemListEntity> mItemList;
+    public static final int VIDEO = 1;
+    public static final int TEXT = 2;
+    public static final int BANNER=3;
 
-    public VideoRecyclerAdapter(Context context, List<VideoResponse.IssueListEntity.ItemListEntity> itemList) {
-        mContext = context;
-        mItemList = itemList;
+    private VideoItemProvider.setOnItemClickListener mItemClickListener;
+
+    public VideoRecyclerAdapter(List<VideoResponse.IssueListEntity.ItemListEntity> data) {
+        super(data);
+        finishInitialize();
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case BANNER:
-                return new BannerViewHodler(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_item_banner, parent, false));
-            case TEXT:
-                return new TextViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_text_item, parent, false));
-            case VIDEO:
-                return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_home_video_item, parent, false));
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        VideoResponse.IssueListEntity.ItemListEntity itemListEntity = mItemList.get(position);
-        if (holder instanceof BannerViewHodler) {
-            Glide.with(mContext)
-                    .load(itemListEntity.getData().getImage())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(((BannerViewHodler) holder).ivBanner);
-        } else if (holder instanceof TextViewHolder) {
-            if (itemListEntity.getType().startsWith("text")) {
-                ((TextViewHolder) holder).tvTitle.setVisibility(View.VISIBLE);
-            } else {
-                ((TextViewHolder) holder).tvTitle.setVisibility(View.GONE);
-            }
-            ((TextViewHolder) holder).tvTitle.setText(itemListEntity.getData().getText());
-
-        } else if (holder instanceof VideoViewHolder) {
-            //得到不同类型所需要的数据
-            String feed = itemListEntity.getData().getCover().getFeed();
-            String title = itemListEntity.getData().getTitle();
-            String category = itemListEntity.getData().getCategory();
-            category = "#" + category + "  /  ";
-            int duration = itemListEntity.getData().getDuration();
-
-            int last = duration % 60;
-            String stringLast;
-            if (last <= 9) {
-                stringLast = "0" + last;
-            } else {
-                stringLast = last + "";
-            }
-
-            String durationString;
-            int minit = duration / 60;
-            if (minit < 10) {
-                durationString = "0" + minit;
-            } else {
-                durationString = "" + minit;
-            }
-            String stringTime = durationString + "' " + stringLast + '"';
-
-            Glide.with(mContext).load(feed).diskCacheStrategy(DiskCacheStrategy.ALL).into(((VideoViewHolder) holder).imageView);
-            ((VideoViewHolder) holder).tvTitle.setText(title);
-            ((VideoViewHolder) holder).tvTime.setText(String.valueOf(category + stringTime));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mItemClickListener != null) {
-                        mItemClickListener.onItemClick(((VideoViewHolder) holder).imageView, position);
-                    }
-                }
-            });
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return mItemList == null ? 0 : mItemList.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        VideoResponse.IssueListEntity.ItemListEntity itemListEntity = mItemList.get(position);
+    protected int getViewType(VideoResponse.IssueListEntity.ItemListEntity itemListEntity) {
         if ("video".equals(itemListEntity.getType())) {
             return VIDEO;
         } else if (itemListEntity.getType().startsWith("banner") && TextUtils.isEmpty(itemListEntity.getData().getActionUrl())) {
@@ -122,44 +43,24 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    class BannerViewHodler extends RecyclerView.ViewHolder {
-        ImageView ivBanner;
-
-        BannerViewHodler(View itemView) {
-            super(itemView);
-            ivBanner = (ImageView) itemView.findViewById(R.id.iv_banner);
-        }
+    @Override
+    public void registerItemProvider() {
+        mProviderDelegate.registerProvider(new TextItemProvider());
+        VideoItemProvider videoItemProvider = new VideoItemProvider();
+        mProviderDelegate.registerProvider(videoItemProvider);
+        mProviderDelegate.registerProvider(new BannerItemProvider());
+        videoItemProvider.setItemClickListener(new VideoItemProvider.setOnItemClickListener() {
+            @Override
+            public void onItemClick(View view, VideoResponse.IssueListEntity.ItemListEntity data) {
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick(view, data);
+                }
+            }
+        });
     }
 
-    class TextViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle;
-
-        TextViewHolder(View itemView) {
-            super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_home_text);
-        }
-    }
-
-    class VideoViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView tvTitle;
-        TextView tvTime;
-
-        VideoViewHolder(View itemView) {
-            super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.iv);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-        }
-    }
-
-    private setOnItemClickListener mItemClickListener;
-
-    public void setItemClickListener(setOnItemClickListener itemClickListener) {
+    public void setItemClickListener(VideoItemProvider.setOnItemClickListener itemClickListener) {
         mItemClickListener = itemClickListener;
     }
 
-    public interface setOnItemClickListener {
-        void onItemClick(View view, int pos);
-    }
 }
