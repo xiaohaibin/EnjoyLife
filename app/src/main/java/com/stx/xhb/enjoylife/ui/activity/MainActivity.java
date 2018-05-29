@@ -23,7 +23,6 @@ import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.Config;
 import com.stx.xhb.enjoylife.ui.fragment.VideoFragment;
 import com.stx.xhb.enjoylife.ui.fragment.ZhihuFragment;
-import com.stx.xhb.enjoylife.utils.AppUtil;
 import com.stx.xhb.enjoylife.utils.SnackbarUtil;
 
 import java.util.ArrayList;

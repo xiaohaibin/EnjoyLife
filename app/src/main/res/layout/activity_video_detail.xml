@@ -5,7 +5,24 @@
               android:orientation="vertical"
               android:weightSum="5">
 
-    <include layout="@layout/toolbar_layout"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:theme="@style/ToolbarTheme"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <ImageButton
+            android:id="@+id/article_share"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:src="@drawable/abc_ic_menu_share_mtrl_alpha" />
+
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -3,10 +3,6 @@ import android.widget.Toast;
 import com.stx.xhb.enjoylife.base.MyApplication;
 
 /**
- * Author:Tiger
- * <p>
- * CrateTime:2016-12-16 9:27
- * <p>
  * Description:Toast工具
  */
 public class ToastUtil {

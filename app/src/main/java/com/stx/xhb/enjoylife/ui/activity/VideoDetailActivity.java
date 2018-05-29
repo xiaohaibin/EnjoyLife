@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.xhb.core.base.BaseSwipeBackActivity;
 import com.xhb.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.R;
@@ -38,7 +40,7 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
     private String video;
     private String title;
     private String mFeed;
-    public static final String TRANSIT_PIC="transit_picture";
+    public static final String TRANSIT_PIC = "transit_picture";
 
     public static void start(Context context) {
         Intent intent = new Intent(context, VideoDetailActivity.class);
@@ -81,19 +83,31 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
         Glide.with(this).load(blurred).diskCacheStrategy(DiskCacheStrategy.ALL).into(videoDetailIvmo);
     }
 
-    @OnClick(R.id.video_paly)
-    public void onClick() {
-        if (NetConnectedUtils.isNetConnected(this)) {
-            Intent intent = new Intent(this, VideoPlayActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString(VideoPlayActivity.VIDEO_URL, video);
-            bundle.putString(VideoPlayActivity.VIDEO_TITLE, title);
-            bundle.putString(VideoPlayActivity.VIDEO_IMAGE, mFeed);
-            bundle.putBoolean(VideoPlayActivity.TRANSITION, true);
-            intent.putExtra("video", bundle);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
+    @OnClick({R.id.video_paly, R.id.article_share})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.video_paly:
+                if (NetConnectedUtils.isNetConnected(this)) {
+                    Intent intent = new Intent(this, VideoPlayActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(VideoPlayActivity.VIDEO_URL, video);
+                    bundle.putString(VideoPlayActivity.VIDEO_TITLE, title);
+                    bundle.putString(VideoPlayActivity.VIDEO_IMAGE, mFeed);
+                    bundle.putBoolean(VideoPlayActivity.TRANSITION, true);
+                    intent.putExtra("video", bundle);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "网络异常，请稍后再试", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.article_share:
+                if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(video)) {
+                    ShareUtils.share(this, title + " " + video + "(分享自开眼视频)");
+                }
+                break;
+            default:
+                break;
         }
+
     }
 }
