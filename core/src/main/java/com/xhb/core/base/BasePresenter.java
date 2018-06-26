@@ -22,12 +22,12 @@ public class BasePresenter<V extends BaseView> implements Presenter<V> {
         }
     }
 
-    public void addCall(Call<?> call) {
+    protected void addCall(Call<?> call) {
         this.mResponseCall = call;
     }
 
     public boolean isViewBind() {
-        return mView != null;
+        return mView == null;
     }
 
     public V getView() {

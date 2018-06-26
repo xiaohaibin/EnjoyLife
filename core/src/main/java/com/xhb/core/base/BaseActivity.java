@@ -19,9 +19,9 @@ import android.util.Log;
 import android.view.Window;
 
 import com.jaeger.library.StatusBarUtil;
+import com.orhanobut.logger.Logger;
 import com.umeng.analytics.MobclickAgent;
 import com.xhb.core.R;
-import com.xhb.core.manage.log.Logger;
 import com.xhb.core.model.LogicProxy;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onStart() {
         super.onStart();
-        if (mPresenter != null && !mPresenter.isViewBind()) {
+        if (mPresenter != null && mPresenter.isViewBind()) {
             LogicProxy.getInstance().bind(getLogicClazz(), this);
         }
     }

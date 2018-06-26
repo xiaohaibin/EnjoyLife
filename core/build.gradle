@@ -37,6 +37,7 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
     //状态栏工具类
     compile 'com.jaeger.statusbaruitl:library:1.3.6'
+    compile 'com.orhanobut:logger:2.2.0'
 
 }
 

@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xhb.core.manage.log.Logger;
+import com.orhanobut.logger.Logger;
 import com.xhb.core.model.LogicProxy;
 
 import butterknife.ButterKnife;
@@ -78,7 +78,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void onStart() {
-        if (mPresenter != null && !mPresenter.isViewBind()) {
+        if (mPresenter != null && mPresenter.isViewBind()) {
             LogicProxy.getInstance().bind(getLogicClazz(), this);
         }
         super.onStart();

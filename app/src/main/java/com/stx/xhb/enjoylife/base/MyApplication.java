@@ -1,8 +1,10 @@
 package com.stx.xhb.enjoylife.base;
 
+import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Config;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.xhb.core.BaseApplication;
 import com.xhb.core.api.RestApi;
 import com.xhb.core.manage.crash.AndroidCrash;
 import com.tencent.bugly.Bugly;
+import com.xhb.core.util.LoggerHelper;
 
 /**
  *
@@ -25,13 +28,16 @@ import com.tencent.bugly.Bugly;
  * @description： 程序入口
  */
 public class MyApplication extends BaseApplication {
+    
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化日志工具类
+        LoggerHelper.initLogger(true);
         //Android Crash异常处理
         AndroidCrash.getInstance().init(this);
-        RestApi.getInstance().bug(BuildConfig.DEBUG);
-        Bugly.init(getApplicationContext(), "784b642b7a", BuildConfig.DEBUG);
+        RestApi.getInstance();
+        Bugly.init(getApplicationContext(), "784b642b7a", true);
         //初始化Toast
         ToastManager.instance.init(this);
         initUM();
@@ -41,7 +47,7 @@ public class MyApplication extends BaseApplication {
         UMConfigure.init(this,UMConfigure.DEVICE_TYPE_PHONE,"");
         MobclickAgent.setSessionContinueMillis(2 * 60 * 1000);
         MobclickAgent.openActivityDurationTrack(false);
-        MobclickAgent.setDebugMode(BuildConfig.DEBUG);
+        MobclickAgent.setDebugMode(true);
     }
 
 

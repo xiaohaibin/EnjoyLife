@@ -1,6 +1,9 @@
 package com.xhb.core.api;
 
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.xhb.core.util.LoggerHelper;
 
 import java.lang.reflect.Field;
 
@@ -10,8 +13,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.ContentValues.TAG;
+
 public class RestApi {
 
+    private static final String TAG = "===Enjoy";
     private static RestApi mInstance;
     public static boolean isDebug = false;
 
@@ -32,7 +38,7 @@ public class RestApi {
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(createOkHttpClient(isDebug))
+                .client(createOkHttpClient())
                 .build();
     }
 
@@ -68,11 +74,29 @@ public class RestApi {
     }
 
     // create okHttpClient singleton
-    private OkHttpClient createOkHttpClient(boolean debug) {
+    private OkHttpClient createOkHttpClient() {
         return new OkHttpClient.Builder()
                 .addNetworkInterceptor(new HttpCacheInterceptor())
                 .addInterceptor(
-                        new HttpLoggingInterceptor().setLevel(
-                                debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE)).build();
+                        new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                            @Override
+                            public void log(String message) {
+                                if (message.startsWith("{") || message.startsWith("[")) {
+                                    LoggerHelper.json(TAG,message);
+                                } else {
+                                    LoggerHelper.d(TAG,message);
+                                }
+                            }
+                        }).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
     }
+
+
+    interface LoadTaskCallback<T> {
+        void onTaskLoaded(T data);
+
+        void onDataNotAvailable(String msg);
+    }
+
+
+
 }
