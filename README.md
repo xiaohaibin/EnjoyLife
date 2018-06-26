@@ -19,8 +19,12 @@
 * **掘金**: <https://juejin.im/user/56fcba0a71cfe4005ca1a57b>
 * **简书**: <http://www.jianshu.com/users/42aed90cf5af/latest_articles>
 
+### Thanks
 
-### 如果觉得文章帮到你，喜欢我的文章可以关注我的微信公众号，将会定期推送优质技术文章，求关注
+* **Meizhi**: <https://github.com/drakeet/Meizhi>
+* **-Api**: <https://github.com/jokermonn/-Api>
+
+### 欢迎关注个人微信公众号，将会定期推送优质技术文章，求关注
 
 ![欢迎关注“大话微信”公众号](http://upload-images.jianshu.io/upload_images/1956769-2f49dcb0dc5195b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
