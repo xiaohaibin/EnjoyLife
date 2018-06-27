@@ -1,6 +1,7 @@
 package com.stx.xhb.enjoylife.presenter.tuchong;
 
-import com.xhb.core.base.BaseView;
+import com.xhb.core.base.IBaseView;
+import com.xhb.core.base.IModel;
 import com.xhb.core.model.annotation.Implement;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 
@@ -13,12 +14,14 @@ import java.util.List;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-@Implement(getFeedAppPresenterImpl.class)
+@Implement(getFeedAppIPresenterImpl.class)
 public interface getFeedAppContact {
 
-    void getFeedAppImage(int page, String type, String posId);
+    interface Model extends IModel {
+        void getFeedAppImage(int page, String type, String posId);
+    }
 
-    interface View extends BaseView {
+    interface View extends IBaseView {
 
         void onResponse(List<TuchongImagResponse.FeedListBean> feedList, boolean isMore);
 

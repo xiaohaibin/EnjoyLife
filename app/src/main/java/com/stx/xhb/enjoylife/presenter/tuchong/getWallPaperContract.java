@@ -1,8 +1,8 @@
 package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
-import com.xhb.core.base.BaseView;
+import com.xhb.core.base.IBaseView;
+import com.xhb.core.base.IModel;
 import com.xhb.core.model.annotation.Implement;
 
 import java.util.List;
@@ -14,12 +14,14 @@ import java.util.List;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-@Implement(getWallPaperPresenterImpl.class)
+@Implement(getWallPaperIPresenterImpl.class)
 public interface getWallPaperContract {
 
-    void getWallPaper(int page);
+    interface Model extends IModel {
+        void getWallPaper(int page);
+    }
 
-    interface View extends BaseView {
+    interface View extends IBaseView {
 
         void onResponse(List<TuChongWallPaperResponse.FeedListBean> feedList, boolean isMore);
 

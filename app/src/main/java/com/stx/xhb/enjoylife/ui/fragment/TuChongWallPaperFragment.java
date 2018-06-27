@@ -15,7 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
 import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperContract;
-import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperPresenterImpl;
+import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperIPresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.stx.xhb.enjoylife.ui.adapter.TuChongWallPaperAdapter;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
@@ -82,7 +82,7 @@ public class TuChongWallPaperFragment extends BaseFragment implements getWallPap
             @Override
             public void onLoadMoreRequested() {
                 page++;
-                ((getWallPaperPresenterImpl) mPresenter).getWallPaper(page);
+                ((getWallPaperIPresenterImpl) mPresenter).getWallPaper(page);
             }
         }, mRvTuChong);
     }
@@ -120,7 +120,7 @@ public class TuChongWallPaperFragment extends BaseFragment implements getWallPap
     @Override
     public void onRefresh() {
         page = 1;
-        ((getWallPaperPresenterImpl) mPresenter).getWallPaper(page);
+        ((getWallPaperIPresenterImpl) mPresenter).getWallPaper(page);
     }
 
     private void onLoadComplete(int page) {

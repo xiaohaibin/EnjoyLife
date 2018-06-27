@@ -2,11 +2,7 @@ package com.stx.xhb.enjoylife.presenter.zhihu;
 
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
-import com.xhb.core.base.BasePresenter;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.xhb.core.base.BaseIPresenter;
 
 /**
  * @author: xiaohaibin.
@@ -15,7 +11,7 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getZhiHuNewsPresenterImpl extends BasePresenter<ZhiHuNewsResponse, getZhiHuNewsContract.View> implements getZhiHuNewsContract {
+public class getZhiHuNewsIPresenterImpl extends BaseIPresenter<ZhiHuNewsResponse, getZhiHuNewsContract.View> implements getZhiHuNewsContract.Model {
 
     @Override
     public void getNews(String url) {
@@ -53,5 +49,10 @@ public class getZhiHuNewsPresenterImpl extends BasePresenter<ZhiHuNewsResponse, 
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestory() {
+
     }
 }

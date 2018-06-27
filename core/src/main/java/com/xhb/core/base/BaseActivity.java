@@ -31,9 +31,9 @@ import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
 
-    protected BasePresenter mPresenter;
+    protected BaseIPresenter mPresenter;
     //权限相关
     private final String TAG = "PermissionsUtil";
     private int REQUEST_CODE_PERMISSION = 0x00099;

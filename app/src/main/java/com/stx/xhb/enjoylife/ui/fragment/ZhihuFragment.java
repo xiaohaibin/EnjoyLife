@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsResponse;
 import com.stx.xhb.enjoylife.presenter.zhihu.getZhiHuNewsContract;
-import com.stx.xhb.enjoylife.presenter.zhihu.getZhiHuNewsPresenterImpl;
+import com.stx.xhb.enjoylife.presenter.zhihu.getZhiHuNewsIPresenterImpl;
 import com.stx.xhb.enjoylife.ui.adapter.NewsAdapter;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.xhb.core.base.BaseFragment;
@@ -90,13 +90,13 @@ public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.
     public void onRefresh() {
         date = "latest";
         isFirstLoad = true;
-        ((getZhiHuNewsPresenterImpl) mPresenter).getNews(date);
+        ((getZhiHuNewsIPresenterImpl) mPresenter).getNews(date);
     }
 
     public void onLoadMore() {
         if (!TextUtils.isEmpty(date)) {
             isFirstLoad = false;
-            ((getZhiHuNewsPresenterImpl) mPresenter).getNewsBefore(date);
+            ((getZhiHuNewsIPresenterImpl) mPresenter).getNewsBefore(date);
         }
     }
 

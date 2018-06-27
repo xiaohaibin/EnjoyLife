@@ -18,7 +18,7 @@ import com.stx.xhb.enjoylife.ui.adapter.TuChongListAdapter;
 import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppContact;
-import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppPresenterImpl;
+import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppIPresenterImpl;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
 
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class TuChongFeedFragment extends BaseFragment implements getFeedAppConta
             @Override
             public void onLoadMoreRequested() {
                 page++;
-                ((getFeedAppPresenterImpl) mPresenter).getFeedAppImage(page, "loadmore", posId);
+                ((getFeedAppIPresenterImpl) mPresenter).getFeedAppImage(page, "loadmore", posId);
             }
         },mRvTuChong);
     }
@@ -119,7 +119,7 @@ public class TuChongFeedFragment extends BaseFragment implements getFeedAppConta
     @Override
     public void onRefresh() {
         page = 1;
-        ((getFeedAppPresenterImpl) mPresenter).getFeedAppImage(page, "refresh", posId);
+        ((getFeedAppIPresenterImpl) mPresenter).getFeedAppImage(page, "refresh", posId);
     }
 
     private void onLoadComplete(int page) {

@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsContentResponse;
 import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentContract;
-import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentPresenterImpl;
+import com.stx.xhb.enjoylife.presenter.zhihu.getNewsContentIPresenterImpl;
 import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.stx.xhb.enjoylife.utils.WebHtmlUtil;
@@ -34,7 +34,7 @@ import butterknife.OnClick;
  *
  * @author Mr.xiao
  */
-public class NewsDetailsActivity extends BaseActivity implements getNewsContentPresenterImpl.View {
+public class NewsDetailsActivity extends BaseActivity implements getNewsContentIPresenterImpl.View {
 
     private static final String SHARE_FROM_ZHIHU = " 分享自知乎网";
     @Bind(R.id.web_webview)
@@ -115,7 +115,7 @@ public class NewsDetailsActivity extends BaseActivity implements getNewsContentP
         if (bundle != null) {
             if (bundle.containsKey("data")) {
                 String data = bundle.getString("data");
-                ((getNewsContentPresenterImpl) mPresenter).getNewsContent(data);
+                ((getNewsContentIPresenterImpl) mPresenter).getNewsContent(data);
             }
             if (bundle.containsKey("title")) {
                 String title = bundle.getString("title");

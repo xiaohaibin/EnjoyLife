@@ -1,7 +1,7 @@
 package com.xhb.core.model;
 
-import com.xhb.core.base.BasePresenter;
-import com.xhb.core.base.BaseView;
+import com.xhb.core.base.BaseIPresenter;
+import com.xhb.core.base.IBaseView;
 import com.xhb.core.model.annotation.Implement;
 
 import java.lang.annotation.Annotation;
@@ -42,11 +42,11 @@ public class LogicProxy {
     }
 
     // 初始化presenter add map
-    public <T> T bind(Class clzz, BaseView var1) {
+    public <T> T bind(Class clzz, IBaseView var1) {
         if (!m_objects.containsKey(clzz)) {
             init(clzz);
         }
-        BasePresenter presenter = ((BasePresenter) m_objects.get(clzz));
+        BaseIPresenter presenter = ((BaseIPresenter) m_objects.get(clzz));
         if (var1 != presenter.getView()) {
             if (presenter.getView() != null) {
                 presenter.detachView();
@@ -57,9 +57,9 @@ public class LogicProxy {
     }
 
     // 解除绑定 移除map
-    public void unbind(Class clzz, BaseView var1) {
+    public void unbind(Class clzz, IBaseView var1) {
         if (m_objects.containsKey(clzz)) {
-            BasePresenter presenter = ((BasePresenter) m_objects.get(clzz));
+            BaseIPresenter presenter = ((BaseIPresenter) m_objects.get(clzz));
             if (var1 != presenter.getView()) {
                 if (presenter.getView() != null) {
                     presenter.detachView();

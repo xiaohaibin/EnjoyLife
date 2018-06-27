@@ -1,7 +1,8 @@
 package com.stx.xhb.enjoylife.presenter.zhihu;
 
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsContentResponse;
-import com.xhb.core.base.BaseView;
+import com.xhb.core.base.IBaseView;
+import com.xhb.core.base.IModel;
 import com.xhb.core.model.annotation.Implement;
 
 /**
@@ -11,12 +12,14 @@ import com.xhb.core.model.annotation.Implement;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-@Implement(getNewsContentPresenterImpl.class)
+@Implement(getNewsContentIPresenterImpl.class)
 public interface getNewsContentContract {
 
-    void getNewsContent(String id);
+    interface Model extends IModel {
+        void getNewsContent(String id);
+    }
 
-    interface View extends BaseView {
+    interface View extends IBaseView {
 
         void onResponse(ZhiHuNewsContentResponse response);
 

@@ -16,7 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.presenter.video.getVideoContract;
-import com.stx.xhb.enjoylife.presenter.video.getVideoPresenterImpl;
+import com.stx.xhb.enjoylife.presenter.video.getVideoIPresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.VideoDetailActivity;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
 import com.stx.xhb.enjoylife.ui.adapter.provider.VideoItemProvider;
@@ -158,12 +158,12 @@ public class VideoFragment extends BaseFragment implements getVideoContract.getV
     public void onRefreshData() {
         isRefresh = true;
         mSwipeRefreshLayout.setRefreshing(true);
-        ((getVideoPresenterImpl) mPresenter).getVideoInfo("", 2);
+        ((getVideoIPresenterImpl) mPresenter).getVideoInfo("", 2);
     }
 
     public void onLoadMore() {
         isRefresh = false;
-        ((getVideoPresenterImpl) mPresenter).getVideoInfo(nextPublishTime, 2);
+        ((getVideoIPresenterImpl) mPresenter).getVideoInfo(nextPublishTime, 2);
     }
 
     private void setLvAdapter() {

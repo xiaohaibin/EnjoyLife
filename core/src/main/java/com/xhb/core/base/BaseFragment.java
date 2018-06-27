@@ -13,9 +13,9 @@ import com.xhb.core.model.LogicProxy;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment extends Fragment implements BaseView {
+public abstract class BaseFragment extends Fragment implements IBaseView {
 
-    protected BasePresenter mPresenter;
+    protected BaseIPresenter mPresenter;
     protected View rootView;
     protected Context mContext = null;
     //是否可见

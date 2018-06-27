@@ -2,20 +2,16 @@ package com.stx.xhb.enjoylife.presenter.video;
 
 import android.text.TextUtils;
 
-import com.xhb.core.base.BasePresenter;
+import com.xhb.core.base.BaseIPresenter;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
 
 import java.util.HashMap;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 /**
  * Created by Mr.xiao on 16/7/14.
  */
-public class getVideoPresenterImpl extends BasePresenter<VideoResponse, getVideoContract.getVideoView> implements getVideoContract {
+public class getVideoIPresenterImpl extends BaseIPresenter<VideoResponse, getVideoContract.getVideoView> implements getVideoContract.Model {
 
     @Override
     public void getVideoInfo(String date, int num) {
@@ -39,5 +35,12 @@ public class getVideoPresenterImpl extends BasePresenter<VideoResponse, getVideo
                 }
             }
         });
+
+
+    }
+
+    @Override
+    public void onDestory() {
+
     }
 }

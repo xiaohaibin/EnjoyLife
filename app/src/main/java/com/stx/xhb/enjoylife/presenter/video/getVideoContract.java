@@ -1,6 +1,7 @@
 package com.stx.xhb.enjoylife.presenter.video;
 
-import com.xhb.core.base.BaseView;
+import com.xhb.core.base.IBaseView;
+import com.xhb.core.base.IModel;
 import com.xhb.core.model.annotation.Implement;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 
@@ -11,12 +12,14 @@ import com.stx.xhb.enjoylife.model.entity.VideoResponse;
  * Github：https://github.com/xiaohaibin/
  * Describe：
  */
-@Implement(getVideoPresenterImpl.class)
+@Implement(getVideoIPresenterImpl.class)
 public interface getVideoContract {
 
-    void getVideoInfo(String date, int num);
+    interface Model extends IModel {
+        void getVideoInfo(String date, int num);
+    }
 
-    interface getVideoView extends BaseView{
+    interface getVideoView extends IBaseView {
 
         void onResponse(VideoResponse response);
 

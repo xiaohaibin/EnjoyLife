@@ -4,17 +4,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BasePresenter<T, V extends BaseView> implements Presenter<V> {
+public class BaseIPresenter<T, V extends IBaseView> implements IPresenter<V> {
 
     private V mView;
-
     private Call<T> mResponseCall;
 
     @Override
     public void attachView(V mvpView) {
         this.mView = mvpView;
     }
-
 
     @Override
     public void detachView() {
@@ -31,7 +29,7 @@ public class BasePresenter<T, V extends BaseView> implements Presenter<V> {
             public void onResponse(Call<T> call, Response<T> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     callback.onTaskLoaded(response.body());
-                }else {
+                } else {
                     callback.onDataNotAvailable(response.message());
                 }
             }
@@ -52,6 +50,7 @@ public class BasePresenter<T, V extends BaseView> implements Presenter<V> {
     }
 
     public interface LoadTaskCallback<T> {
+
         void onTaskLoaded(T data);
 
         void onDataNotAvailable(String msg);

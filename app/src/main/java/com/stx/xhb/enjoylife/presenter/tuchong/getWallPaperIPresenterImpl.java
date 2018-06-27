@@ -2,11 +2,7 @@ package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
-import com.xhb.core.base.BasePresenter;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.xhb.core.base.BaseIPresenter;
 
 /**
  * @author: xiaohaibin.
@@ -15,7 +11,7 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getWallPaperPresenterImpl extends BasePresenter<TuChongWallPaperResponse, getWallPaperContract.View> implements getWallPaperContract {
+public class getWallPaperIPresenterImpl extends BaseIPresenter<TuChongWallPaperResponse, getWallPaperContract.View> implements getWallPaperContract.Model {
 
     @Override
     public void getWallPaper(int page) {
@@ -36,4 +32,8 @@ public class getWallPaperPresenterImpl extends BasePresenter<TuChongWallPaperRes
         });
     }
 
+    @Override
+    public void onDestory() {
+
+    }
 }

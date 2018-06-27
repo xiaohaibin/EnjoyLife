@@ -2,15 +2,11 @@ package com.stx.xhb.enjoylife.presenter.tuchong;
 
 import android.text.TextUtils;
 
-import com.xhb.core.base.BasePresenter;
+import com.xhb.core.base.BaseIPresenter;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.model.http.ApiManager;
 
 import java.util.HashMap;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * @author: xiaohaibin.
@@ -19,7 +15,7 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getFeedAppPresenterImpl extends BasePresenter<TuchongImagResponse, getFeedAppContact.View> implements getFeedAppContact {
+public class getFeedAppIPresenterImpl extends BaseIPresenter<TuchongImagResponse, getFeedAppContact.View> implements getFeedAppContact.Model {
 
     @Override
     public void getFeedAppImage(int page, String type, String posId) {
@@ -44,5 +40,10 @@ public class getFeedAppPresenterImpl extends BasePresenter<TuchongImagResponse, 
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestory() {
+
     }
 }

@@ -1,4 +1,4 @@
 package com.xhb.core.base;
 
-public interface BaseView {
+public interface IBaseView {
 }
