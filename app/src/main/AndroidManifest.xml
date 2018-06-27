@@ -64,18 +64,11 @@
             android:name=".ui.activity.VideoPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape" />
+
+        <!--新闻详情页-->
         <activity
             android:name=".ui.activity.NewsDetailsActivity"
             android:screenOrientation="portrait" />
-
-        <!-- 注册广播 -->
-        <receiver android:name=".receiver.NetStateReceiver">
-            <intent-filter>
-
-                <!-- 接收网络连接改变广播 -->
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
 
         <!-- 友盟appid设置 -->
         <meta-data
@@ -84,6 +77,7 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="wandoujia" />
+
     </application>
 
 </manifest>
