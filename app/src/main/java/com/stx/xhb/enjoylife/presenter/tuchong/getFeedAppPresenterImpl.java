@@ -19,7 +19,7 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getFeedAppPresenterImpl extends BasePresenter<getFeedAppContact.View> implements getFeedAppContact {
+public class getFeedAppPresenterImpl extends BasePresenter<TuchongImagResponse, getFeedAppContact.View> implements getFeedAppContact {
 
     @Override
     public void getFeedAppImage(int page, String type, String posId) {
@@ -29,22 +29,20 @@ public class getFeedAppPresenterImpl extends BasePresenter<getFeedAppContact.Vie
         if (!TextUtils.isEmpty(posId)) {
             map.put("post_id", posId);
         }
-        Call<TuchongImagResponse> feedApp = ApiManager.ApiFactory.createTuChongApi().getFeedApp(map);
-        feedApp.enqueue(new Callback<TuchongImagResponse>() {
+        request(ApiManager.ApiFactory.createTuChongApi().getFeedApp(map), new LoadTaskCallback<TuchongImagResponse>() {
             @Override
-            public void onResponse(Call<TuchongImagResponse> call, Response<TuchongImagResponse> response) {
-                if (getView() != null && response.isSuccessful() && response.body() != null && response.body().getFeedList() != null && !response.body().getFeedList().isEmpty()) {
-                    getView().onResponse(response.body().getFeedList(), response.body().isMore());
+            public void onTaskLoaded(TuchongImagResponse data) {
+                if (getView() != null && data.getFeedList() != null && !data.getFeedList().isEmpty()) {
+                    getView().onResponse(data.getFeedList(), data.isMore());
                 }
             }
 
             @Override
-            public void onFailure(Call<TuchongImagResponse> call, Throwable t) {
+            public void onDataNotAvailable(String msg) {
                 if (getView() != null) {
-                    getView().onFailure(t.getMessage());
+                    getView().onFailure(msg);
                 }
             }
         });
-        addCall(feedApp);
     }
 }

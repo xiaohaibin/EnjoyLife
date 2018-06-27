@@ -90,13 +90,4 @@ public class RestApi {
                         }).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
     }
 
-
-    interface LoadTaskCallback<T> {
-        void onTaskLoaded(T data);
-
-        void onDataNotAvailable(String msg);
-    }
-
-
-
 }

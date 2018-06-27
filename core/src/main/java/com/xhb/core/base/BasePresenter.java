@@ -1,12 +1,14 @@
 package com.xhb.core.base;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class BasePresenter<V extends BaseView> implements Presenter<V> {
+public class BasePresenter<T, V extends BaseView> implements Presenter<V> {
 
     private V mView;
 
-    private Call<?> mResponseCall;
+    private Call<T> mResponseCall;
 
     @Override
     public void attachView(V mvpView) {
@@ -22,8 +24,23 @@ public class BasePresenter<V extends BaseView> implements Presenter<V> {
         }
     }
 
-    protected void addCall(Call<?> call) {
+    protected void request(Call<T> call, final LoadTaskCallback<T> callback) {
         this.mResponseCall = call;
+        call.enqueue(new Callback<T>() {
+            @Override
+            public void onResponse(Call<T> call, Response<T> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onTaskLoaded(response.body());
+                }else {
+                    callback.onDataNotAvailable(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<T> call, Throwable t) {
+                callback.onDataNotAvailable(t.getMessage());
+            }
+        });
     }
 
     public boolean isViewBind() {
@@ -32,6 +49,12 @@ public class BasePresenter<V extends BaseView> implements Presenter<V> {
 
     public V getView() {
         return mView;
+    }
+
+    public interface LoadTaskCallback<T> {
+        void onTaskLoaded(T data);
+
+        void onDataNotAvailable(String msg);
     }
 
 }

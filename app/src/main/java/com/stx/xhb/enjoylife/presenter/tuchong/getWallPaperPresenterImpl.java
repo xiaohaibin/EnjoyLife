@@ -15,28 +15,25 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getWallPaperPresenterImpl extends BasePresenter<getWallPaperContract.View> implements getWallPaperContract {
-
+public class getWallPaperPresenterImpl extends BasePresenter<TuChongWallPaperResponse, getWallPaperContract.View> implements getWallPaperContract {
 
     @Override
     public void getWallPaper(int page) {
-        Call<TuChongWallPaperResponse> wallPaper = ApiManager.ApiFactory.createTuChongApi().getWallPaper(page);
-        wallPaper.enqueue(new Callback<TuChongWallPaperResponse>() {
+        request(ApiManager.ApiFactory.createTuChongApi().getWallPaper(page), new LoadTaskCallback<TuChongWallPaperResponse>() {
             @Override
-            public void onResponse(Call<TuChongWallPaperResponse> call, Response<TuChongWallPaperResponse> response) {
-                if (getView() != null && response.isSuccessful() && response.body() != null && response.body().getFeedList() != null && !response.body().getFeedList().isEmpty()) {
-                    getView().onResponse(response.body().getFeedList(), response.body().isMore());
+            public void onTaskLoaded(TuChongWallPaperResponse data) {
+                if (getView() != null && data.getFeedList() != null && !data.getFeedList().isEmpty()) {
+                    getView().onResponse(data.getFeedList(), data.isMore());
                 }
             }
 
             @Override
-            public void onFailure(Call<TuChongWallPaperResponse> call, Throwable t) {
+            public void onDataNotAvailable(String msg) {
                 if (getView() != null) {
-                    getView().onFailure(t.getMessage());
+                    getView().onFailure(msg);
                 }
             }
         });
-        addCall(wallPaper);
     }
 
 }

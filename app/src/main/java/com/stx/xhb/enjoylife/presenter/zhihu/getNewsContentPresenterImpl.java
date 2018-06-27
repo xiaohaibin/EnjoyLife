@@ -16,30 +16,26 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getNewsContentPresenterImpl extends BasePresenter<getNewsContentContract.View> implements getNewsContentContract {
-
+public class getNewsContentPresenterImpl extends BasePresenter<ZhiHuNewsContentResponse, getNewsContentContract.View> implements getNewsContentContract {
 
     @Override
     public void getNewsContent(String id) {
+        if (getView() == null) {
+            return;
+        }
         getView().showLoading();
-        Call<ZhiHuNewsContentResponse> zhiHuNewsContent = ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNewsContent(id);
-        zhiHuNewsContent.enqueue(new Callback<ZhiHuNewsContentResponse>() {
+        request(ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNewsContent(id), new LoadTaskCallback<ZhiHuNewsContentResponse>() {
             @Override
-            public void onResponse(Call<ZhiHuNewsContentResponse> call, Response<ZhiHuNewsContentResponse> response) {
+            public void onTaskLoaded(ZhiHuNewsContentResponse data) {
                 getView().hideLoading();
-                if (response.isSuccessful() && response.body() != null) {
-                    getView().onResponse(response.body());
-                } else {
-                    ToastUtil.show(response.message());
-                }
+                getView().onResponse(data);
             }
 
             @Override
-            public void onFailure(Call<ZhiHuNewsContentResponse> call, Throwable t) {
-                ToastUtil.show(t.getMessage());
+            public void onDataNotAvailable(String msg) {
                 getView().hideLoading();
+                getView().onFailed(msg);
             }
         });
-        addCall(zhiHuNewsContent);
     }
 }

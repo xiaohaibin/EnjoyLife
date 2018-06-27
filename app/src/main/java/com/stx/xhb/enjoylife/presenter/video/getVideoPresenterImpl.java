@@ -15,7 +15,7 @@ import retrofit2.Response;
 /**
  * Created by Mr.xiao on 16/7/14.
  */
-public class getVideoPresenterImpl extends BasePresenter<getVideoContract.getVideoView> implements getVideoContract {
+public class getVideoPresenterImpl extends BasePresenter<VideoResponse, getVideoContract.getVideoView> implements getVideoContract {
 
     @Override
     public void getVideoInfo(String date, int num) {
@@ -24,22 +24,20 @@ public class getVideoPresenterImpl extends BasePresenter<getVideoContract.getVid
         if (!TextUtils.isEmpty(date)) {
             map.put("date", String.valueOf(date));
         }
-        Call<VideoResponse> responseCall = ApiManager.ApiFactory.createVideoApi().getVideoList(map);
-        responseCall.enqueue(new Callback<VideoResponse>() {
+        request(ApiManager.ApiFactory.createVideoApi().getVideoList(map), new LoadTaskCallback<VideoResponse>() {
             @Override
-            public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
-                if (getView()!=null&&response.isSuccessful()) {
-                    getView().onResponse(response.body());
+            public void onTaskLoaded(VideoResponse data) {
+                if (getView() != null) {
+                    getView().onResponse(data);
                 }
             }
 
             @Override
-            public void onFailure(Call<VideoResponse> call, Throwable t) {
-                if (getView()!=null) {
-                    getView().onFailure(t.getMessage());
+            public void onDataNotAvailable(String msg) {
+                if (getView() != null) {
+                    getView().onFailure(msg);
                 }
             }
         });
-        addCall(responseCall);
     }
 }

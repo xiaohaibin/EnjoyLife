@@ -15,22 +15,22 @@ import retrofit2.Response;
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-public class getZhiHuNewsPresenterImpl extends BasePresenter<getZhiHuNewsContract.View> implements getZhiHuNewsContract {
+public class getZhiHuNewsPresenterImpl extends BasePresenter<ZhiHuNewsResponse, getZhiHuNewsContract.View> implements getZhiHuNewsContract {
 
     @Override
     public void getNews(String url) {
-        ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNews(url).enqueue(new Callback<ZhiHuNewsResponse>() {
+        request(ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNews(url), new LoadTaskCallback<ZhiHuNewsResponse>() {
             @Override
-            public void onResponse(Call<ZhiHuNewsResponse> call, Response<ZhiHuNewsResponse> response) {
-                if (getView()!=null&&response.isSuccessful()) {
-                    getView().onResponse(response.body());
+            public void onTaskLoaded(ZhiHuNewsResponse data) {
+                if (getView() != null) {
+                    getView().onResponse(data);
                 }
             }
 
             @Override
-            public void onFailure(Call<ZhiHuNewsResponse> call, Throwable t) {
-                if (getView()!=null) {
-                    getView().onFailure(t.getMessage());
+            public void onDataNotAvailable(String msg) {
+                if (getView() != null) {
+                    getView().onFailure(msg);
                 }
             }
         });
@@ -38,18 +38,18 @@ public class getZhiHuNewsPresenterImpl extends BasePresenter<getZhiHuNewsContrac
 
     @Override
     public void getNewsBefore(String time) {
-        ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNewsBefore(time).enqueue(new Callback<ZhiHuNewsResponse>() {
+        request(ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNewsBefore(time), new LoadTaskCallback<ZhiHuNewsResponse>() {
             @Override
-            public void onResponse(Call<ZhiHuNewsResponse> call, Response<ZhiHuNewsResponse> response) {
-                if (getView()!=null&&response.isSuccessful()) {
-                    getView().onResponse(response.body());
+            public void onTaskLoaded(ZhiHuNewsResponse data) {
+                if (getView() != null) {
+                    getView().onResponse(data);
                 }
             }
 
             @Override
-            public void onFailure(Call<ZhiHuNewsResponse> call, Throwable t) {
-                if (getView()!=null) {
-                    getView().onFailure(t.getMessage());
+            public void onDataNotAvailable(String msg) {
+                if (getView() != null) {
+                    getView().onFailure(msg);
                 }
             }
         });
