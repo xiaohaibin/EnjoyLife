@@ -1,7 +1,7 @@
 # EnjoyLife
 :wink:【乐享】每天一张精选妹纸图、一个精选短视频，知乎美文的精美应用
 
-**乐享Kotlin版本**:<https://github.com/xiaohaibin/KotlinEnjoyLife>
+**【Kotlin版本】**:<https://github.com/xiaohaibin/KotlinEnjoyLife>
 
 ### 效果图
 
