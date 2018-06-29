@@ -34,7 +34,7 @@ import butterknife.OnClick;
  *
  * @author Mr.xiao
  */
-public class NewsDetailsActivity extends BaseActivity implements getNewsContentIPresenterImpl.View {
+public class NewsDetailsActivity extends BaseActivity implements getNewsContentContract.View {
 
     private static final String SHARE_FROM_ZHIHU = " 分享自知乎网";
     @Bind(R.id.web_webview)

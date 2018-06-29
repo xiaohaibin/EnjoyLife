@@ -34,8 +34,6 @@ public class MyApplication extends BaseApplication {
         super.onCreate();
         //初始化日志工具类
         LoggerHelper.initLogger(true);
-        //Android Crash异常处理
-        AndroidCrash.getInstance().init(this);
         RestApi.getInstance();
         Bugly.init(getApplicationContext(), "784b642b7a", true);
         //初始化Toast

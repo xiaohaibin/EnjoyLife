@@ -4,12 +4,12 @@ package com.stx.xhb.enjoylife.config;
  * Created by Mr.xiao on 16/7/7.
  * 接口统一管理工具类
  */
-public interface Constants {
+public class Constants {
 
     /**
      * 开眼视频推荐接口
      */
-     String VIDEO_API = "http://baobab.kaiyanapp.com/api/";
+     public static String VIDEO_API = "http://baobab.kaiyanapp.com/api/";
 
     /**
      * 图虫推荐API
@@ -19,12 +19,12 @@ public interface Constants {
      * <p>
      * 图片地址：https://photo.tuchong.com/ + user_id +/f/ + img_id 即图片地址 例如：https://photo.tuchong.com/1673709/f/25389444.jpg
      */
-    String TUCHONG_API = "https://api.tuchong.com/";
+    public static String TUCHONG_API = "https://api.tuchong.com/";
 
     /**
      * 知乎日报API
      */
-    String ZHIHU_API="https://news-at.zhihu.com/api/4/news/";
+    public static String ZHIHU_API="https://news-at.zhihu.com/api/4/news/";
 
 
 }
