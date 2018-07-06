@@ -24,7 +24,7 @@ import com.xhb.core.base.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * @link https://xiaohaibin.github.io/
@@ -34,9 +34,9 @@ import butterknife.Bind;
  */
 public class TuChongWallPaperFragment extends BaseFragment implements getWallPaperContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recly_view)
+    @BindView(R.id.recly_view)
     RecyclerView mRvTuChong;
-    @Bind(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private int page = 1;
     private TuChongWallPaperAdapter mTuChongListAdapter;

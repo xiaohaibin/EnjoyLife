@@ -1,9 +1,7 @@
 package com.stx.xhb.enjoylife.ui.activity;
 
 import android.Manifest;
-import android.app.WallpaperManager;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,12 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
 import com.stx.xhb.enjoylife.utils.ShareUtils;
@@ -29,10 +23,9 @@ import com.xhb.core.base.BaseActivity;
 import com.xhb.core.util.RxImage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -40,11 +33,11 @@ import rx.functions.Action1;
 public class PhotoViewActivity extends BaseActivity {
 
     public static final int PERMISS_REQUEST_CODE = 0x001;
-    @Bind(R.id.photo_viewpager)
+    @BindView(R.id.photo_viewpager)
     ViewPager photoViewpager;
-    @Bind(R.id.tv_indicator)
+    @BindView(R.id.tv_indicator)
     TextView mTvIndicator;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private ArrayList<String> imageList;
     private int mPos;
@@ -206,18 +199,18 @@ public class PhotoViewActivity extends BaseActivity {
     }
 
     private void setWallpaper() {
-        Glide.with(this).load(saveImgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                WallpaperManager manager = WallpaperManager.getInstance(PhotoViewActivity.this);
-                try {
-                    manager.setBitmap(resource);
-                    ToastUtil.show("设置壁纸成功");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ToastUtil.show("设置壁纸失败");
-                }
-            }
-        });
+//        Glide.with(this).load(saveImgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+//            @Override
+//            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                WallpaperManager manager = WallpaperManager.getInstance(PhotoViewActivity.this);
+//                try {
+//                    manager.setBitmap(resource);
+//                    ToastUtil.show("设置壁纸成功");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    ToastUtil.show("设置壁纸失败");
+//                }
+//            }
+//        });
     }
 }

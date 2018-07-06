@@ -41,9 +41,4 @@ public class getFeedAppIPresenterImpl extends BaseIPresenter<TuchongImagResponse
             }
         });
     }
-
-    @Override
-    public void onDestory() {
-
-    }
 }

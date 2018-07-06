@@ -12,6 +12,7 @@ import com.orhanobut.logger.Logger;
 import com.xhb.core.model.LogicProxy;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment implements IBaseView {
 
@@ -26,6 +27,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     //标记已加载完成，保证懒加载只能加载一次
     protected boolean hasLoaded = false;
+    private Unbinder mBind;
 
     protected abstract int getLayoutResource();
 
@@ -50,7 +52,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
             rootView = super.onCreateView(inflater, container, savedInstanceState);
         }
         onInitData2Remote();
-        ButterKnife.bind(this, rootView);
+        mBind = ButterKnife.bind(this, rootView);
         onInitView(savedInstanceState);
         return rootView;
     }
@@ -87,7 +89,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        mBind.unbind();
         if (mPresenter != null) {
             mPresenter.detachView();
         }

@@ -16,30 +16,30 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.stx.xhb.enjoylife.ui.fragment.TuChongFeedFragment;
-import com.stx.xhb.enjoylife.ui.fragment.TuChongWallPaperFragment;
-import com.xhb.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.Config;
+import com.stx.xhb.enjoylife.ui.fragment.TuChongFeedFragment;
+import com.stx.xhb.enjoylife.ui.fragment.TuChongWallPaperFragment;
 import com.stx.xhb.enjoylife.ui.fragment.VideoFragment;
 import com.stx.xhb.enjoylife.ui.fragment.ZhihuFragment;
 import com.stx.xhb.enjoylife.utils.SnackbarUtil;
+import com.xhb.core.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.ctl_main)
+    @BindView(R.id.ctl_main)
     CoordinatorLayout ctlMain;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView navView;
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     private List<android.app.Fragment> mFragments;
     private android.app.Fragment mCurrentFragment;

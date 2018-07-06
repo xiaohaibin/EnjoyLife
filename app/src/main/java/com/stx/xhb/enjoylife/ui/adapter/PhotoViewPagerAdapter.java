@@ -1,22 +1,20 @@
 package com.stx.xhb.enjoylife.ui.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.ImageViewTarget;
 import com.github.chrisbanes.photoview.OnViewTapListener;
-import com.github.chrisbanes.photoview.PhotoView;
-import com.github.chrisbanes.photoview.PhotoViewAttacher;
-import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
+import com.stx.xhb.enjoylife.config.GlideApp;
+import com.xhb.core.ui.ProgressImageView;
 
 import java.util.ArrayList;
 
@@ -48,18 +46,15 @@ public class PhotoViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        PhotoView photoView = new PhotoView(context);
+        final ProgressImageView photoView = new ProgressImageView(context);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         final String imgUrl = imageList.get(position);
-        Glide.with(context)
+        GlideApp.with(context)
                 .load(imgUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(new GlideDrawableImageViewTarget(photoView) {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
-                        super.onResourceReady(resource, animation);
-                    }
-                });
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(photoView);
+
         photoView.setOnViewTapListener(new OnViewTapListener() {
             @Override
             public void onViewTap(View view, float v, float v1) {

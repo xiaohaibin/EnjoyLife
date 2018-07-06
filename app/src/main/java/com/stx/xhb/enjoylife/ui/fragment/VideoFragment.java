@@ -25,16 +25,16 @@ import com.xhb.core.base.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 视频推荐
  */
 public class VideoFragment extends BaseFragment implements getVideoContract.getVideoView {
 
-    @Bind(R.id.recly_view)
+    @BindView(R.id.recly_view)
     RecyclerView mReclyView;
-    @Bind(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private List<VideoResponse.IssueListEntity.ItemListEntity> list;
     private String nextPublishTime = "";

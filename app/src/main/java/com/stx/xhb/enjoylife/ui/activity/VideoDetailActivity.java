@@ -11,31 +11,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.stx.xhb.enjoylife.R;
+import com.stx.xhb.enjoylife.config.GlideApp;
+import com.stx.xhb.enjoylife.utils.NetConnectedUtils;
 import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.xhb.core.base.BaseSwipeBackActivity;
 import com.xhb.core.ui.SwipeBackLayout;
-import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.utils.NetConnectedUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class VideoDetailActivity extends BaseSwipeBackActivity {
 
-    @Bind(R.id.video_detail_iv)
+    @BindView(R.id.video_detail_iv)
     ImageView videoDetailIv;
-    @Bind(R.id.video_detail_ivmo)
+    @BindView(R.id.video_detail_ivmo)
     ImageView videoDetailIvmo;
-    @Bind(R.id.video_detail_title)
+    @BindView(R.id.video_detail_title)
     TextView videoDetailTitle;
-    @Bind(R.id.video_detail_time)
+    @BindView(R.id.video_detail_time)
     TextView videoDetailTime;
-    @Bind(R.id.video_detail_desc)
+    @BindView(R.id.video_detail_desc)
     TextView videoDetailDesc;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     private String video;
     private String title;
@@ -76,11 +77,11 @@ public class VideoDetailActivity extends BaseSwipeBackActivity {
         String blurred = getIntent().getStringExtra("blurred");//模糊图片
         video = getIntent().getStringExtra("video");//视频播放地址
         //给控件设置数据
-        Glide.with(this).load(mFeed).diskCacheStrategy(DiskCacheStrategy.ALL).into(videoDetailIv);
+        GlideApp.with(this).load(mFeed).diskCacheStrategy(DiskCacheStrategy.ALL).transition(DrawableTransitionOptions.withCrossFade()).into(videoDetailIv);
         videoDetailTitle.setText(title);
         videoDetailTime.setText(time);
         videoDetailDesc.setText(desc);
-        Glide.with(this).load(blurred).diskCacheStrategy(DiskCacheStrategy.ALL).into(videoDetailIvmo);
+        GlideApp.with(this).load(blurred).diskCacheStrategy(DiskCacheStrategy.ALL).transition(DrawableTransitionOptions.withCrossFade()).into(videoDetailIvmo);
     }
 
     @OnClick({R.id.video_paly, R.id.article_share})

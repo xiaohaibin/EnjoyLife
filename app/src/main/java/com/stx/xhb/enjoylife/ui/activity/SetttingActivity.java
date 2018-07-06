@@ -10,7 +10,7 @@ import com.xhb.core.base.BaseSwipeBackActivity;
 import com.xhb.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class SetttingActivity extends BaseSwipeBackActivity {
 
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     public static void start(Context context) {

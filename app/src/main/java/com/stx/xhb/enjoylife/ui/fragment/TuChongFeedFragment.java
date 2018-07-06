@@ -12,19 +12,19 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
-import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
-import com.stx.xhb.enjoylife.ui.adapter.TuChongListAdapter;
-import com.xhb.core.base.BaseFragment;
 import com.stx.xhb.enjoylife.R;
+import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppContact;
 import com.stx.xhb.enjoylife.presenter.tuchong.getFeedAppIPresenterImpl;
+import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
+import com.stx.xhb.enjoylife.ui.adapter.TuChongListAdapter;
 import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
+import com.xhb.core.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  *
@@ -35,9 +35,9 @@ import butterknife.Bind;
  */
 public class TuChongFeedFragment extends BaseFragment implements getFeedAppContact.View, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recly_view)
+    @BindView(R.id.recly_view)
     RecyclerView mRvTuChong;
-    @Bind(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private int page = 1;

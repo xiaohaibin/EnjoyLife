@@ -25,14 +25,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.stx.xhb.enjoylife.R;
+import com.stx.xhb.enjoylife.config.GlideApp;
 import com.stx.xhb.enjoylife.model.entity.TuchongImagResponse;
 import com.stx.xhb.enjoylife.ui.widget.RatioImageView;
-import com.xhb.core.adapter.RecyclerAdapter;
-import com.xhb.core.adapter.RecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,6 @@ public class TuChongListAdapter extends BaseQuickAdapter<TuchongImagResponse.Fee
 
     public static final String TAG = "TuChongListAdapter";
 
-    private Context mContext;
     private OnImageItemClickListener mOnImageItemClickListener;
 
     public TuChongListAdapter(int layoutResId) {
@@ -64,9 +63,10 @@ public class TuChongListAdapter extends BaseQuickAdapter<TuchongImagResponse.Fee
         TuchongImagResponse.FeedListBean.ImagesBean imagesBean = images.get(0);
         if (imagesBean != null) {
             String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
-            Glide.with(mContext)
+            GlideApp.with(mContext)
                     .load(url)
                     .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     .into(imageView)
                     .getSize(new SizeReadyCallback() {
                         @Override

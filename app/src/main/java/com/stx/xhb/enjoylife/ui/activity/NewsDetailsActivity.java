@@ -26,7 +26,7 @@ import com.stx.xhb.enjoylife.utils.WebHtmlUtil;
 import com.xhb.core.base.BaseActivity;
 import com.xhb.core.util.ScreenUtil;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -37,11 +37,11 @@ import butterknife.OnClick;
 public class NewsDetailsActivity extends BaseActivity implements getNewsContentContract.View {
 
     private static final String SHARE_FROM_ZHIHU = " 分享自知乎网";
-    @Bind(R.id.web_webview)
+    @BindView(R.id.web_webview)
     WebView webView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.iv_banner)
+    @BindView(R.id.iv_banner)
     ImageView mIvBanner;
     private ZhiHuNewsContentResponse mZhiHuNewsContentResponse;
     private ProgressDialog mProgressDialog;

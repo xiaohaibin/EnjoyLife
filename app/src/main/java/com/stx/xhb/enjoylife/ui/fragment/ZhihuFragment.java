@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.model.entity.ZhiHuNewsResponse;
@@ -14,7 +15,8 @@ import com.stx.xhb.enjoylife.presenter.zhihu.getZhiHuNewsIPresenterImpl;
 import com.stx.xhb.enjoylife.ui.adapter.NewsAdapter;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
 import com.xhb.core.base.BaseFragment;
-import butterknife.Bind;
+
+import butterknife.BindView;
 
 /**
  * 知乎Fragment
@@ -22,9 +24,9 @@ import butterknife.Bind;
 public class ZhihuFragment extends BaseFragment implements getZhiHuNewsContract.View, SwipeRefreshLayout.OnRefreshListener {
 
 
-    @Bind(R.id.recly_view)
+    @BindView(R.id.recly_view)
     RecyclerView mReclyView;
-    @Bind(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     private String date = "";
     /**

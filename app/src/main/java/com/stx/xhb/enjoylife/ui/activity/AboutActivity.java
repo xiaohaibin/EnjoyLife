@@ -10,13 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.xhb.core.base.BaseSwipeBackActivity;
-import com.xhb.core.ui.SwipeBackLayout;
 import com.stx.xhb.enjoylife.BuildConfig;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.utils.ShareUtils;
+import com.xhb.core.base.BaseSwipeBackActivity;
+import com.xhb.core.ui.SwipeBackLayout;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
  */
 public class AboutActivity extends BaseSwipeBackActivity {
 
-    @Bind(R.id.tv_version)
+    @BindView(R.id.tv_version)
     TextView tvVersion;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.collapsing_toolbar)
+    @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
 
     public static void start(Context context) {

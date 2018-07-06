@@ -5,24 +5,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
-import com.xhb.core.base.BaseActivity;
 import com.stx.xhb.enjoylife.R;
+import com.xhb.core.base.BaseActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 启动页面
  */
 public class SplashActivity extends BaseActivity {
-    @Bind(R.id.splash_view)
+    @BindView(R.id.splash_view)
     ImageView splashView;
-    int milliseconds = 1300;
+    int milliseconds = 500;
 
     @Override
     protected int getLayoutResource() {

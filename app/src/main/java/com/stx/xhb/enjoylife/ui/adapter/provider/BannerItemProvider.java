@@ -5,9 +5,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.stx.xhb.enjoylife.R;
+import com.stx.xhb.enjoylife.config.GlideApp;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
 
@@ -32,8 +34,9 @@ public class BannerItemProvider extends BaseItemProvider<VideoResponse.IssueList
     @Override
     public void convert(BaseViewHolder holder, VideoResponse.IssueListEntity.ItemListEntity itemListEntity, int i) {
         ImageView imageView = holder.getView(R.id.iv_banner);
-        Glide.with(imageView.getContext())
+        GlideApp.with(imageView.getContext())
                 .load(itemListEntity.getData().getImage())
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }

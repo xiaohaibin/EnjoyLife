@@ -8,5 +8,4 @@ package com.xhb.core.base;
  * @describe:
  */
 public interface IModel {
-    void onDestory();
 }

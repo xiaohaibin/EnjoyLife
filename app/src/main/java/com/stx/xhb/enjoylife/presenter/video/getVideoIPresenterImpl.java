@@ -38,9 +38,4 @@ public class getVideoIPresenterImpl extends BaseIPresenter<VideoResponse, getVid
 
 
     }
-
-    @Override
-    public void onDestory() {
-
-    }
 }

@@ -31,9 +31,4 @@ public class getWallPaperIPresenterImpl extends BaseIPresenter<TuChongWallPaperR
             }
         });
     }
-
-    @Override
-    public void onDestory() {
-
-    }
 }

@@ -33,9 +33,4 @@ public class getNewsContentIPresenterImpl extends BaseIPresenter<ZhiHuNewsConten
             }
         });
     }
-
-    @Override
-    public void onDestory() {
-
-    }
 }

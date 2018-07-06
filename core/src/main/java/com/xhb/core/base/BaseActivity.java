@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -37,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     //权限相关
     private final String TAG = "PermissionsUtil";
     private int REQUEST_CODE_PERMISSION = 0x00099;
+    private Unbinder mUnbinder;
 
     protected abstract int getLayoutResource();
 
@@ -62,7 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             setContentView(getLayoutResource());
         }
         onInitData2Remote();
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
         onInitialization(savedInstanceState);
     }
 
@@ -82,7 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
         LogicProxy.getInstance().unbind(getLogicClazz(), this);
         if (mPresenter != null) {
             mPresenter.detachView();

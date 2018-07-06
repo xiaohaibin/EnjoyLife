@@ -5,9 +5,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.provider.BaseItemProvider;
 import com.stx.xhb.enjoylife.R;
+import com.stx.xhb.enjoylife.config.GlideApp;
 import com.stx.xhb.enjoylife.model.entity.VideoResponse;
 import com.stx.xhb.enjoylife.ui.adapter.VideoRecyclerAdapter;
 
@@ -56,7 +58,7 @@ public class VideoItemProvider extends BaseItemProvider<VideoResponse.IssueListE
         String stringTime = durationString + "' " + stringLast + '"';
 
         final ImageView view = holder.getView(R.id.iv);
-        Glide.with(view.getContext()).load(feed).diskCacheStrategy(DiskCacheStrategy.ALL).into(view);
+        GlideApp.with(view.getContext()).load(feed).diskCacheStrategy(DiskCacheStrategy.ALL).transition(DrawableTransitionOptions.withCrossFade()).into(view);
         holder.setText(R.id.tv_title, title);
         holder.setText(R.id.tv_time, String.valueOf(category + stringTime));
     }
