@@ -30,21 +30,17 @@ public class RatioImageView extends ImageView {
     private int originalWidth;
     private int originalHeight;
 
-
     public RatioImageView(Context context) {
         super(context);
     }
-
 
     public RatioImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-
     public RatioImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
 
     public void setOriginalSize(int originalWidth, int originalHeight) {
         this.originalWidth = originalWidth;

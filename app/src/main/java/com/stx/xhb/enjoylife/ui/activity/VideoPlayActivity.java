@@ -37,7 +37,6 @@ public class VideoPlayActivity extends AppCompatActivity {
 
     private CustomVideoView  mVideoPlayer;
     private OrientationUtils orientationUtils;
-
     private boolean isTransition;
     private boolean isPlay;
     private boolean isPause;

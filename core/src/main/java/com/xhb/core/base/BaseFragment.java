@@ -130,7 +130,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         } else {
             onInVisible();
         }
-
     }
     /**
      * 当界面可见时的操作

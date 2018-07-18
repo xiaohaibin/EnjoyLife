@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
 import com.stx.xhb.enjoylife.R;
+import com.stx.xhb.enjoylife.config.GlideApp;
 import com.xhb.core.base.BaseActivity;
 
 import butterknife.BindView;
@@ -32,7 +33,7 @@ public class SplashActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //设置状态栏透明
         StatusBarUtil.setTranslucent(this,0);
-        Glide.with(this).load("https://pic1.zhimg.com/v2-9639852750175df1b80ed995729e64e8.jpg").into(splashView);
+        GlideApp.with(this).load("https://pic1.zhimg.com/v2-9639852750175df1b80ed995729e64e8.jpg").dontAnimate().into(splashView);
         //设置动画
         AlphaAnimation alphaAnimation = new AlphaAnimation(1f, 0f);
         alphaAnimation.setDuration(milliseconds);//设置动画持续时间

@@ -52,7 +52,6 @@ public class TuChongWallPaperFragment extends BaseFragment implements getWallPap
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        mRvTuChong.setLayoutManager(new LinearLayoutManager(getActivity()));
         RecyclerViewNoBugStaggeredGridLayoutManger layoutManager = new RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary);

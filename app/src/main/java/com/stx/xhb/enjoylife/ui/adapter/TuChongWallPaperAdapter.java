@@ -50,7 +50,7 @@ public class TuChongWallPaperAdapter extends BaseQuickAdapter<TuChongWallPaperRe
         if ("video".equals(feedListBeanEntry.getType())) {
             return;
         }
-        final RatioImageView imageView = (RatioImageView) holder.getView(R.id.iv_img);
+        final RatioImageView imageView = holder.getView(R.id.iv_img);
         imageView.setOriginalSize(50, 50);
         int limit = 48;
         String text = feedListBeanEntry.getTitle().length() > limit ? feedListBeanEntry.getTitle().substring(0, limit) +

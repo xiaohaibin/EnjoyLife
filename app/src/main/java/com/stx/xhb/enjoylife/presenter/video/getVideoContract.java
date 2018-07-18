@@ -13,7 +13,7 @@ import com.stx.xhb.enjoylife.model.entity.VideoResponse;
  * Describe：
  */
 @Implement(getVideoIPresenterImpl.class)
-public interface getVideoContract {
+public interface   getVideoContract {
 
     interface Model extends IModel {
         void getVideoInfo(String date, int num);
