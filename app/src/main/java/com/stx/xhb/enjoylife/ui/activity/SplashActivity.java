@@ -7,7 +7,6 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.jaeger.library.StatusBarUtil;
 import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.GlideApp;
