@@ -1,4 +1,4 @@
-package com.stx.xhb.enjoylife.base;
+package com.stx.xhb.enjoylife;
 
 import android.app.Application;
 import android.content.Context;
@@ -68,6 +68,5 @@ public class MyApplication extends BaseApplication {
                 toast.show();
             }
         }
-
     }
 }

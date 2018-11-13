@@ -62,7 +62,7 @@ public class TuChongFeedFragment extends BaseFragment implements getFeedAppConta
         mRvTuChong.setLayoutManager(layoutManager);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mTuChongListAdapter = new TuChongListAdapter(R.layout.list_item_list_tuchong);
+        mTuChongListAdapter = new TuChongListAdapter(R.layout.list_item_tuchong);
         mTuChongListAdapter.openLoadAnimation();
         mRvTuChong.setAdapter(mTuChongListAdapter);
 

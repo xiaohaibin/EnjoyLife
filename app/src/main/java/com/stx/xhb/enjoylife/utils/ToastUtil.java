@@ -1,6 +1,6 @@
 package com.stx.xhb.enjoylife.utils;
 import android.widget.Toast;
-import com.stx.xhb.enjoylife.base.MyApplication;
+import com.stx.xhb.enjoylife.MyApplication;
 
 /**
  * Description:Toast工具

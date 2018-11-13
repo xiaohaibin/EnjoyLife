@@ -21,9 +21,13 @@ package com.stx.xhb.enjoylife.ui.adapter;
 
 import android.support.v4.view.ViewCompat;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -32,6 +36,7 @@ import com.stx.xhb.enjoylife.R;
 import com.stx.xhb.enjoylife.config.GlideApp;
 import com.stx.xhb.enjoylife.model.entity.TuChongWallPaperResponse;
 import com.stx.xhb.enjoylife.ui.widget.RatioImageView;
+import com.xhb.core.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,13 +55,10 @@ public class TuChongWallPaperAdapter extends BaseQuickAdapter<TuChongWallPaperRe
         if ("video".equals(feedListBeanEntry.getType())) {
             return;
         }
-        final RatioImageView imageView = holder.getView(R.id.iv_img);
-        imageView.setOriginalSize(50, 50);
-        int limit = 48;
-        String text = feedListBeanEntry.getTitle().length() > limit ? feedListBeanEntry.getTitle().substring(0, limit) +
-                "..." : feedListBeanEntry.getTitle();
-        ((TextView) holder.getView(R.id.tv_title)).setText(text);
-
+        final ImageView imageView = holder.getView(R.id.iv_img);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenUtil.getScreenWidth(imageView.getContext()) / 3, ScreenUtil.getScreenWidth(imageView.getContext()) / 3 * 2);
+        layoutParams.setMargins(2,2,2,2);
+        imageView.setLayoutParams(layoutParams);
         List<TuChongWallPaperResponse.FeedListBean.EntryBean.ImagesBean> images = feedListBeanEntry.getImages();
         if (images == null || images.isEmpty()) {
             return;
@@ -64,19 +66,12 @@ public class TuChongWallPaperAdapter extends BaseQuickAdapter<TuChongWallPaperRe
         TuChongWallPaperResponse.FeedListBean.EntryBean.ImagesBean imagesBean = images.get(0);
         if (imagesBean != null) {
             String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
-            GlideApp.with(mContext)
+            GlideApp.with(imageView.getContext())
                     .load(url)
                     .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(imageView)
-                    .getSize(new SizeReadyCallback() {
-                        @Override
-                        public void onSizeReady(int width, int height) {
-                            if (!holder.itemView.isShown()) {
-                                holder.itemView.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    });
+                    .transition(DrawableTransitionOptions.withCrossFade(500))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView);
             holder.itemView.setTag(url);
             ViewCompat.setTransitionName(imageView, url);
         }

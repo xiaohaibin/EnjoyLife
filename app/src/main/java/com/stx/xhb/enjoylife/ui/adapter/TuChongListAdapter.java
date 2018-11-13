@@ -49,7 +49,7 @@ public class TuChongListAdapter extends BaseQuickAdapter<TuchongImagResponse.Fee
 
     @Override
     protected void convert(final BaseViewHolder holder, TuchongImagResponse.FeedListBean feedListBean) {
-        final RatioImageView imageView = (RatioImageView) holder.getView(R.id.iv_img);
+        final RatioImageView imageView = holder.getView(R.id.iv_img);
         imageView.setOriginalSize(50, 50);
         int limit = 48;
         String text = feedListBean.getTitle().length() > limit ? feedListBean.getTitle().substring(0, limit) +
@@ -63,10 +63,10 @@ public class TuChongListAdapter extends BaseQuickAdapter<TuchongImagResponse.Fee
         TuchongImagResponse.FeedListBean.ImagesBean imagesBean = images.get(0);
         if (imagesBean != null) {
             String url = "https://photo.tuchong.com/" + imagesBean.getUser_id() + "/f/" + imagesBean.getImg_id() + ".jpg";
-            GlideApp.with(mContext)
+            GlideApp.with(imageView.getContext())
                     .load(url)
                     .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .transition(DrawableTransitionOptions.withCrossFade(500))
                     .into(imageView)
                     .getSize(new SizeReadyCallback() {
                         @Override

@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,8 +17,9 @@ import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperContract;
 import com.stx.xhb.enjoylife.presenter.tuchong.getWallPaperIPresenterImpl;
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity;
 import com.stx.xhb.enjoylife.ui.adapter.TuChongWallPaperAdapter;
-import com.stx.xhb.enjoylife.ui.widget.RecyclerViewNoBugStaggeredGridLayoutManger;
 import com.xhb.core.base.BaseFragment;
+import com.xhb.core.ui.DividerDecoration;
+import com.xhb.core.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +52,12 @@ public class TuChongWallPaperFragment extends BaseFragment implements getWallPap
 
     @Override
     protected void onInitView(Bundle savedInstanceState) {
-        RecyclerViewNoBugStaggeredGridLayoutManger layoutManager = new RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary);
-        mRvTuChong.setLayoutManager(layoutManager);
-
-        mTuChongListAdapter = new TuChongWallPaperAdapter(R.layout.list_item_list_tuchong);
+        mRvTuChong.setLayoutManager(gridLayoutManager);
+        mTuChongListAdapter = new TuChongWallPaperAdapter(R.layout.list_item_wall_paper);
         mTuChongListAdapter.openLoadAnimation();
+        mRvTuChong.addItemDecoration(new DividerDecoration(getResources().getColor(R.color.colorWhite),ScreenUtil.dp2px(getActivity(),1)));
         mRvTuChong.setAdapter(mTuChongListAdapter);
         mTuChongListAdapter.setOnImageItemClickListener(new TuChongWallPaperAdapter.OnImageItemClickListener() {
             @Override
