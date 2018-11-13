@@ -23,7 +23,6 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
     private int mPaddingLeft;
     private int mPaddingRight;
     private boolean mDrawLastItem = true;
-    private boolean mDrawHeaderFooter = false;
 
     public DividerDecoration(int color, int height) {
         this.mColorDrawable = new ColorDrawable(color);
@@ -40,9 +39,6 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         this.mDrawLastItem = mDrawLastItem;
     }
 
-    public void setDrawHeaderFooter(boolean mDrawHeaderFooter) {
-        this.mDrawHeaderFooter = mDrawHeaderFooter;
-    }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -96,8 +92,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
 
             if (position>=dataStartPosition&&position<dataEndPosition-1//数据项除了最后一项
                     ||(position == dataEndPosition-1&&mDrawLastItem)//数据项最后一项
-                    ||(!(position>=dataStartPosition&&position<dataEndPosition)&&mDrawHeaderFooter)//header&footer且可绘制
-                    ){
+                    ||(!(position>=dataStartPosition&&position<dataEndPosition))){
 
                 if (orientation == OrientationHelper.VERTICAL){
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
