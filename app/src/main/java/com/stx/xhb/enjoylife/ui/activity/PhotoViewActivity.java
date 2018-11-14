@@ -1,11 +1,14 @@
 package com.stx.xhb.enjoylife.ui.activity;
 
 import android.Manifest;
+import android.app.WallpaperManager;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.stx.xhb.enjoylife.R;
+import com.stx.xhb.enjoylife.config.GlideApp;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
 import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
@@ -23,6 +30,7 @@ import com.xhb.core.base.BaseActivity;
 import com.xhb.core.util.RxImage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -199,18 +207,18 @@ public class PhotoViewActivity extends BaseActivity {
     }
 
     private void setWallpaper() {
-//        Glide.with(this).load(saveImgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
-//            @Override
-//            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                WallpaperManager manager = WallpaperManager.getInstance(PhotoViewActivity.this);
-//                try {
-//                    manager.setBitmap(resource);
-//                    ToastUtil.show("设置壁纸成功");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    ToastUtil.show("设置壁纸失败");
-//                }
-//            }
-//        });
+        Glide.with(this).asBitmap().load(saveImgUrl).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                WallpaperManager manager = WallpaperManager.getInstance(PhotoViewActivity.this);
+                try {
+                    manager.setBitmap(resource);
+                    ToastUtil.show("设置壁纸成功");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ToastUtil.show("设置壁纸失败");
+                }
+            }
+        });
     }
 }

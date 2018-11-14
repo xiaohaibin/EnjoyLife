@@ -19,12 +19,10 @@
 
 package com.stx.xhb.enjoylife.ui.adapter;
 
-import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.chad.library.adapter.base.BaseQuickAdapter;
