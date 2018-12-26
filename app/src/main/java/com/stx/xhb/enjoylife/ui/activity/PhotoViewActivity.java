@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.stx.xhb.enjoylife.R;
-import com.stx.xhb.enjoylife.config.GlideApp;
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter;
 import com.stx.xhb.enjoylife.utils.ShareUtils;
 import com.stx.xhb.enjoylife.utils.ToastUtil;
@@ -75,7 +74,9 @@ public class PhotoViewActivity extends BaseActivity {
 
     private void initView() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,18 +208,18 @@ public class PhotoViewActivity extends BaseActivity {
     }
 
     private void setWallpaper() {
-        Glide.with(this).asBitmap().load(saveImgUrl).into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                WallpaperManager manager = WallpaperManager.getInstance(PhotoViewActivity.this);
-                try {
-                    manager.setBitmap(resource);
-                    ToastUtil.show("设置壁纸成功");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ToastUtil.show("设置壁纸失败");
-                }
-            }
-        });
+        RxImage.setWallPaper(this,saveImgUrl)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        ToastUtil.show("设置壁纸成功");
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        ToastUtil.show("设置壁纸失败");
+                    }
+                });
     }
 }
